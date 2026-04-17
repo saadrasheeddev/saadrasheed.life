@@ -8,21 +8,20 @@ const About = () => {
           <div className="space-y-6">
             <p className="text-xs uppercase tracking-[0.2em] text-primary-glow">About</p>
             <h2 className="text-3xl md:text-5xl font-bold leading-tight">
-              I build the systems<br />top operators run on.
+              I build the systems<br />that replace human follow-up.
             </h2>
             <div className="space-y-4 text-muted-foreground text-lg leading-relaxed">
               <p>
-                I'm Saad — an AI automations specialist who's spent the last few years
-                building workflows that quietly run the back-office of fast-growing founders
-                and lean teams across 12 countries.
+                I'm Saad — a specialist in AI calling agents and revenue automation.
+                I work with busy founders and agencies who are tired of losing leads
+                because no one followed up in time.
               </p>
               <p>
-                I obsess over the boring work most people hate: the lead routing, the
-                onboarding, the reporting, the follow-ups. I turn it into AI-powered systems
-                that work 24/7 — accurately, predictably, at a fraction of a hire.
+                Every system I build is tied to one thing: more booked meetings, less
+                manual work, and revenue that no longer depends on you being online.
               </p>
               <p className="text-foreground font-medium pt-2">
-                I don't just build automations — I build systems that run while you sleep.
+                I don't build AI demos — I build systems that directly impact your revenue.
               </p>
             </div>
           </div>

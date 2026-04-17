@@ -7,24 +7,24 @@ import {
 
 const faqs = [
   {
-    q: "How much does it cost to work with you?",
-    a: "Engagements start at $99 for a focused audit, $499 for the Done-For-You Growth package, and $1,499/month for ongoing Scale support. No hidden fees, no surprise retainers.",
+    q: "Will this work in my country / time zone?",
+    a: "Yes. The AI calling agent runs 24/7 and supports US, UK, EU, MENA, APAC and more. Calls happen in your prospect's time zone — not mine. I'm based in Pakistan but ship globally.",
   },
   {
-    q: "I'm not technical — can you still help me?",
-    a: "Absolutely. 80% of my clients are non-technical founders. I handle the build, document everything in plain English, and record Loom walkthroughs so anyone on your team can use the systems.",
+    q: "What if I don't have many leads yet?",
+    a: "That's actually the best time to set this up. The system pays off the moment lead #1 arrives — and scales with you, so you never have to rebuild as volume grows.",
   },
   {
-    q: "How fast can you deliver?",
-    a: "The Growth package ships in 7 days or it's free. Audits are delivered within 72 hours. Scale clients get continuous delivery throughout the month.",
+    q: "Do I need technical knowledge?",
+    a: "No. 80% of my clients are non-technical founders. I handle the build, document everything in plain English, and record Loom walkthroughs so anyone on your team can run it.",
   },
   {
-    q: "What time zone do you work in?",
-    a: "I'm based in Pakistan (PKT) but work async with clients across 12 countries. I keep overlap windows for US, EU and APAC and respond within 24 hours, always.",
+    q: "How fast can this be set up?",
+    a: "The Appointment Booking System ships in 7 days. Audits are delivered within 72 hours. Scale clients get continuous delivery every month.",
   },
   {
-    q: "What if the automations break later?",
-    a: "Every Growth build includes a 30-day fix guarantee. Scale clients get continuous monitoring and unlimited fixes. Your systems are built to last — and I stand behind them.",
+    q: "What tools do you use?",
+    a: "AI voice agents (Vapi, Retell, Bland), Make.com, n8n, Zapier, OpenAI/GPT-4, plus your CRM of choice — HubSpot, Pipedrive, GoHighLevel, Airtable or Google Sheets.",
   },
 ];
 
