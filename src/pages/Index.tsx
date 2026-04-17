@@ -1,16 +1,40 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+import Hero from "@/components/sections/Hero";
+import SocialProof from "@/components/sections/SocialProof";
+import Stats from "@/components/sections/Stats";
+import Problems from "@/components/sections/Problems";
+import About from "@/components/sections/About";
+import Packages from "@/components/sections/Packages";
+import HowItWorks from "@/components/sections/HowItWorks";
+import Testimonials from "@/components/sections/Testimonials";
+import FAQ from "@/components/sections/FAQ";
+import LeadMagnet from "@/components/sections/LeadMagnet";
+import FinalCTA from "@/components/sections/FinalCTA";
+import { useScrollFadeIn } from "@/hooks/useScrollFadeIn";
 
-// IMPORTANT: Fully REPLACE this with your own code
-const PlaceholderIndex = () => {
-  // PLACEHOLDER: Replace this entire return statement with the user's app.
-  // The inline background color is intentionally not part of the design system.
+const Index = () => {
+  useScrollFadeIn();
+
   return (
-    <div className="flex min-h-screen items-center justify-center" style={{ backgroundColor: '#fcfbf8' }}>
-      <img data-lovable-blank-page-placeholder="REMOVE_THIS" src="/placeholder.svg" alt="Your app will live here!" />
+    <div className="min-h-screen bg-background">
+      <Navbar />
+      <main>
+        <Hero />
+        <SocialProof />
+        <Stats />
+        <Problems />
+        <About />
+        <Packages />
+        <HowItWorks />
+        <Testimonials />
+        <FAQ />
+        <LeadMagnet />
+        <FinalCTA />
+      </main>
+      <Footer />
     </div>
   );
 };
-
-const Index = PlaceholderIndex;
 
 export default Index;
