@@ -12,17 +12,17 @@ const FinalCTA = () => {
           <div className="relative max-w-2xl mx-auto space-y-6">
             <div className="inline-flex items-center gap-2 rounded-full border border-primary-glow/40 bg-primary/10 px-4 py-1.5 text-xs font-medium text-primary-glow">
               <span className="h-2 w-2 rounded-full bg-primary-glow animate-pulse" />
-              Only 5 strategy calls available this week
+              Only 5 new clients accepted this month
             </div>
 
             <h2 className="text-3xl md:text-5xl lg:text-6xl font-extrabold leading-tight">
-              Ready to Stop Doing<br />
-              <span className="gradient-text">Everything Manually?</span>
+              Stop Losing Leads Because<br />
+              <span className="gradient-text">No One Followed Up.</span>
             </h2>
 
             <p className="text-lg text-muted-foreground max-w-xl mx-auto">
-              Book your free 30-minute strategy call and walk away with a clear
-              automation plan — even if we don't end up working together.
+              Let AI handle your calls and bookings while you focus on closing.
+              30-minute strategy call. Walk away with a clear plan — even if we don't work together.
             </p>
 
             <div className="pt-4">
@@ -33,7 +33,7 @@ const FinalCTA = () => {
                 </a>
               </Button>
               <p className="text-xs text-muted-foreground mt-4">
-                No obligation. No pitch deck. Just clarity.
+                Takes 30 seconds to book · No commitment · No pitch deck
               </p>
             </div>
           </div>

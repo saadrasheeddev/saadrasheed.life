@@ -7,30 +7,30 @@ import { useScrollFadeIn } from "@/hooks/useScrollFadeIn";
 // [REPLACE WITH REAL PROJECTS]
 const projects = [
   {
-    title: "AI Lead Qualifier for B2B Agency",
-    problem: "Reps wasted 12 hrs/week qualifying cold inbound leads.",
+    title: "AI Calling Agent for Real Estate Agency",
+    problem: "Half of inbound leads went unanswered after hours and on weekends.",
     solution:
-      "Built an OpenAI + Make.com workflow that scores, enriches and routes every lead into HubSpot in under 60 seconds.",
-    result: "Saved 14 hrs/week & $3,200/month in SDR time.",
-    tags: ["Make.com", "GPT-4", "HubSpot", "Clearbit"],
+      "Deployed an AI voice agent that calls every new lead in under 60 seconds, qualifies intent, and books a viewing into the agent's calendar.",
+    result: "+32% more booked calls in 14 days. Saved 22 hrs/week.",
+    tags: ["Vapi", "GPT-4", "GoHighLevel", "Calendly"],
     gradient: "from-purple-500/30 via-fuchsia-500/20 to-blue-500/20",
   },
   {
-    title: "Automated Client Onboarding System",
-    problem: "Onboarding new clients took 4 hours of manual setup per account.",
+    title: "Lead Follow-Up Engine for B2B Agency",
+    problem: "Reps were manually chasing 200+ leads/month and missing half.",
     solution:
-      "n8n flow that provisions Slack, Notion, Drive folders + sends a personalized welcome sequence — triggered by Stripe payment.",
-    result: "Onboarding time cut from 4 hrs → 6 minutes.",
-    tags: ["n8n", "Stripe", "Notion", "Slack"],
+      "Built an AI follow-up sequence that calls, emails and DMs every lead on a multi-touch cadence — escalating only hot ones to humans.",
+    result: "+47% show-rate. $11k MRR added in 6 weeks.",
+    tags: ["Make.com", "OpenAI", "HubSpot", "Twilio"],
     gradient: "from-blue-500/30 via-cyan-500/20 to-emerald-500/20",
   },
   {
-    title: "AI Content Repurposing Engine",
-    problem: "Founder posted on 1 channel and ignored 5 others.",
+    title: "Automated Client Onboarding for SaaS",
+    problem: "Onboarding new accounts took 4 hours of manual setup each.",
     solution:
-      "Zapier + GPT-4 pipeline that turns one long-form post into LinkedIn, Twitter, Instagram and newsletter drafts — auto-scheduled.",
-    result: "10x content output with zero extra hours.",
-    tags: ["Zapier", "GPT-4", "Buffer", "Airtable"],
+      "n8n flow that provisions Slack, Notion and Drive + sends a personalized welcome sequence — triggered the moment Stripe fires.",
+    result: "Onboarding time cut from 4 hrs → 6 minutes.",
+    tags: ["n8n", "Stripe", "Notion", "Slack"],
     gradient: "from-pink-500/30 via-rose-500/20 to-orange-500/20",
   },
   {
@@ -60,7 +60,7 @@ const Projects = () => {
               Work I've <span className="gradient-text">Done</span>
             </h1>
             <p className="text-lg text-muted-foreground">
-              Real automations. Real results. Zero fluff.
+              Real AI calling agents and automations. Real revenue results. Zero fluff.
             </p>
           </div>
 
@@ -141,7 +141,7 @@ const Projects = () => {
                   Want results like these?
                 </h2>
                 <p className="text-lg text-muted-foreground max-w-xl mx-auto">
-                  Let's map your highest-ROI automation in a free 30-minute call.
+                  Let's map your AI calling system in a free 30-minute call.
                 </p>
                 <Button variant="hero" size="xl" asChild>
                   <a href="https://cal.com" target="_blank" rel="noopener noreferrer">
@@ -149,6 +149,7 @@ const Projects = () => {
                     <ArrowRight className="ml-1 h-4 w-4" />
                   </a>
                 </Button>
+                <p className="text-xs text-muted-foreground">Takes 30 seconds to book · No commitment</p>
               </div>
             </div>
           </div>

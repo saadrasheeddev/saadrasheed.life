@@ -1,19 +1,19 @@
 import { Star } from "lucide-react";
 
-// [REPLACE WITH REAL TESTIMONIALS]
+// [REPLACE WITH REAL TESTIMONIAL]
 const testimonials = [
   {
-    quote: "Saad rebuilt our entire lead-routing system in a week. We're saving 18 hours/week and our reps actually follow up on time now. ROI in the first 10 days.",
+    quote: "Before this, we missed half our inbound leads. Now every lead gets called within 60 seconds and booked straight into our calendar. Saved 18+ hours/week and added $11k MRR in 6 weeks.",
     name: "Sarah Lindgren",
     role: "Founder, NorthScale Agency",
   },
   {
-    quote: "I was drowning in onboarding tasks. Saad built an AI workflow that handles 90% of it automatically. Game-changer for our 4-person team.",
+    quote: "Our reps used to spend their mornings on follow-up calls. Saad's AI agent now handles all of it — we went from 22% to 47% show-rate. ROI in the first 10 days.",
     name: "Daniel Okafor",
     role: "CEO, Lumen SaaS",
   },
   {
-    quote: "The Growth package paid for itself in 2 weeks. Clean docs, clean handover, zero hand-holding needed afterwards. Would hire again.",
+    quote: "We used to lose deals to whoever called first. Now we're whoever calls first — automatically. +32% more booked calls in 14 days, zero extra headcount.",
     name: "Priya Mehta",
     role: "COO, Hatchwise Studio",
   },
@@ -25,7 +25,7 @@ const Testimonials = () => {
       <div className="container">
         <div className="text-center max-w-2xl mx-auto mb-14">
           <p className="text-xs uppercase tracking-[0.2em] text-primary-glow mb-3">Testimonials</p>
-          <h2 className="text-3xl md:text-5xl font-bold">Founders who got their week back.</h2>
+          <h2 className="text-3xl md:text-5xl font-bold">Founders who stopped losing leads.</h2>
         </div>
 
         <div className="grid md:grid-cols-3 gap-5">

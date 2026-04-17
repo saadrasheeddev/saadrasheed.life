@@ -3,18 +3,18 @@ import { AlertTriangle, TrendingDown, HelpCircle } from "lucide-react";
 const problems = [
   {
     icon: AlertTriangle,
-    title: "You're stuck doing repetitive manual work every day",
-    desc: "Copy-pasting, chasing leads, formatting reports — the same loops, every single week.",
+    title: "Leads come in… but no one follows up fast enough",
+    desc: "You see the notifications. You promise to call back. By the time you do, they've already booked with someone else.",
   },
   {
     icon: TrendingDown,
-    title: "Slow processes are quietly costing you money",
-    desc: "Lost leads, missed follow-ups and human errors silently eat into your revenue.",
+    title: "You're manually calling or messaging every prospect",
+    desc: "Your day is a treadmill of dials, DMs and reminders — instead of closing, building or growing.",
   },
   {
     icon: HelpCircle,
-    title: "You know AI can help but don't know where to start",
-    desc: "Overwhelmed by tools, hype and YouTube tutorials that go nowhere. You need a system.",
+    title: "Hot opportunities go cold because of delays",
+    desc: "A 5-minute response wins. A 5-hour one loses. Without a system, you're losing revenue you'll never see.",
   },
 ];
 

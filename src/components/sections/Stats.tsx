@@ -1,10 +1,10 @@
-import { Clock, Workflow, Globe2, ShieldCheck } from "lucide-react";
+import { Clock, Workflow, Zap, ShieldCheck } from "lucide-react";
 
 const stats = [
   { icon: Clock, value: "10–20 hrs", label: "Saved per week" },
-  { icon: Workflow, value: "50+", label: "Workflows built" },
-  { icon: Globe2, value: "12", label: "Countries served" },
-  { icon: ShieldCheck, value: "0", label: "Retainers ever" },
+  { icon: Workflow, value: "50+", label: "Automations deployed" },
+  { icon: Zap, value: "< 60 sec", label: "Lead response time" },
+  { icon: ShieldCheck, value: "0", label: "Missed follow-ups" },
 ];
 
 const Stats = () => {

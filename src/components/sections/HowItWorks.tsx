@@ -4,20 +4,20 @@ const steps = [
   {
     icon: CalendarCheck,
     number: "01",
-    title: "Book your free strategy call",
-    desc: "30 minutes. We diagnose your biggest time-drains and pick the workflows with the highest ROI.",
+    title: "Book your free call",
+    desc: "30 minutes. We pinpoint where leads are leaking and what to automate first.",
   },
   {
     icon: Map,
     number: "02",
-    title: "I map your exact automations",
-    desc: "You get a clear plan: tools, triggers, outcomes, timeline. No jargon. No guesswork.",
+    title: "I design your AI calling system",
+    desc: "Voice agent, follow-up sequences, calendar + CRM — mapped to your exact pipeline.",
   },
   {
     icon: Rocket,
     number: "03",
-    title: "You get your time back",
-    desc: "I build, test and deploy. Your systems run 24/7. You focus on the work only you can do.",
+    title: "Your leads get contacted and booked automatically",
+    desc: "The system runs 24/7. Every lead gets called, followed up, and booked — without you.",
   },
 ];
 
@@ -27,7 +27,7 @@ const HowItWorks = () => {
       <div className="container">
         <div className="text-center max-w-2xl mx-auto mb-14">
           <p className="text-xs uppercase tracking-[0.2em] text-primary-glow mb-3">How it works</p>
-          <h2 className="text-3xl md:text-5xl font-bold">From overloaded to automated in 3 steps.</h2>
+          <h2 className="text-3xl md:text-5xl font-bold">From missed leads to booked meetings in 3 steps.</h2>
         </div>
 
         <div className="grid md:grid-cols-3 gap-5 relative">
