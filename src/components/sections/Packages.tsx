@@ -60,12 +60,18 @@ const Packages = () => {
   return (
     <section id="packages" className="py-20 md:py-28 fade-in-up">
       <div className="container">
-        <div className="text-center max-w-2xl mx-auto mb-14">
+        <div className="flex justify-center mb-6">
+          <div className="inline-flex items-center gap-2 rounded-full border border-primary-glow/40 bg-primary/10 px-4 py-1.5 text-xs font-medium text-primary-glow">
+            <span className="h-2 w-2 rounded-full bg-primary-glow animate-pulse" />
+            Only 5 new clients accepted this month
+          </div>
+        </div>
+        <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-14">
           <p className="text-xs uppercase tracking-[0.2em] text-primary-glow mb-3">Offerings</p>
           <h2 className="text-3xl md:text-5xl font-bold">
             Pick the system that fits your growth.
           </h2>
-          <p className="mt-4 text-muted-foreground text-lg">
+          <p className="mt-4 text-muted-foreground text-base sm:text-lg">
             Transparent pricing. No retainers. No fluff.
           </p>
         </div>

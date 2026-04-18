@@ -1,7 +1,7 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, ExternalLink } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { useScrollFadeIn } from "@/hooks/useScrollFadeIn";
 
 // [REPLACE WITH REAL PROJECTS]
@@ -117,13 +117,6 @@ const Projects = () => {
                     ))}
                   </div>
 
-                  <a
-                    href="#"
-                    className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary-glow hover:text-foreground transition-colors"
-                  >
-                    View Details
-                    <ExternalLink className="h-3.5 w-3.5" />
-                  </a>
                 </div>
               </article>
             ))}
