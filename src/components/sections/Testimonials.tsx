@@ -19,20 +19,24 @@ const testimonials = [
   },
 ];
 
+const logos = ["NorthScale", "Lumen SaaS", "Hatchwise Studio"];
+
 const Testimonials = () => {
   return (
     <section className="py-20 md:py-28 fade-in-up">
       <div className="container">
-        <div className="text-center max-w-2xl mx-auto mb-14">
+        <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-14">
           <p className="text-xs uppercase tracking-[0.2em] text-primary-glow mb-3">Testimonials</p>
-          <h2 className="text-3xl md:text-5xl font-bold">Founders who stopped losing leads.</h2>
+          <h2 className="text-3xl md:text-5xl font-bold">
+            Real Results from <span className="gradient-text">Real Founders</span>
+          </h2>
         </div>
 
         <div className="grid md:grid-cols-3 gap-5">
           {testimonials.map((t) => (
             <div
               key={t.name}
-              className="rounded-2xl bg-card border border-border/60 p-7 flex flex-col hover:border-primary-glow/40 transition-all"
+              className="rounded-2xl bg-card border border-border/60 p-6 sm:p-7 flex flex-col hover:border-primary-glow/40 transition-all"
             >
               <div className="flex gap-1 mb-5">
                 {Array.from({ length: 5 }).map((_, i) => (
@@ -47,6 +51,29 @@ const Testimonials = () => {
             </div>
           ))}
         </div>
+
+        {/* Client logos */}
+        <div className="mt-12 sm:mt-14">
+          <p className="text-center text-xs uppercase tracking-[0.2em] text-muted-foreground mb-5">
+            Trusted by
+          </p>
+          <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 sm:gap-x-12">
+            {logos.map((l) => (
+              <span
+                key={l}
+                className="text-base sm:text-lg font-semibold text-muted-foreground/80 hover:text-foreground transition-colors"
+              >
+                {l}
+              </span>
+            ))}
+          </div>
+        </div>
+
+        {/* Metrics line */}
+        <p className="mt-8 sm:mt-10 text-center text-sm sm:text-base text-foreground/90 max-w-3xl mx-auto px-2">
+          <span className="text-primary-glow font-semibold">Average results:</span>{" "}
+          +19 booked meetings per month · 47% higher show-up rate · 12–18 hours saved weekly
+        </p>
       </div>
     </section>
   );
