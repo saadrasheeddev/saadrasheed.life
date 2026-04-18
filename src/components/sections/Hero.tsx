@@ -62,10 +62,6 @@ const Hero = () => {
             </p>
 
             <div className="flex flex-wrap items-center gap-x-6 gap-y-2 pt-2 text-sm text-muted-foreground">
-              <div className="flex items-center gap-2">
-                <span className="h-2 w-2 rounded-full bg-green-400 animate-pulse" />
-                Accepting 5 new clients this month
-              </div>
               <div>⚡ Leads contacted in &lt; 60 seconds</div>
             </div>
           </div>
