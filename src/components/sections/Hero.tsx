@@ -46,14 +46,17 @@ const Hero = () => {
             </ul>
 
             <div className="flex flex-col sm:flex-row gap-3 pt-2">
-              <Button variant="hero" size="xl" className="w-full sm:w-auto" asChild>
+              <Button variant="hero" size="xl" className="w-full sm:w-auto whitespace-normal h-auto min-h-14 py-3 px-5 sm:px-9 text-sm sm:text-base text-center leading-tight" asChild>
                 <a href="https://cal.com" target="_blank" rel="noopener noreferrer">
                   Book a Free Strategy Call
-                  <ArrowRight className="ml-1 h-4 w-4" />
+                  <ArrowRight className="ml-1 h-4 w-4 shrink-0" />
                 </a>
               </Button>
-              <Button variant="heroOutline" size="xl" className="w-full sm:w-auto" asChild>
-                <a href="#lead-magnet">Get 5 AI Workflows That Save 10+ Hours/Week</a>
+              <Button variant="heroOutline" size="xl" className="w-full sm:w-auto whitespace-normal h-auto min-h-14 py-3 px-5 sm:px-9 text-sm sm:text-base text-center leading-tight" asChild>
+                <a href="#lead-magnet">
+                  <span className="sm:hidden">Get 5 Free AI Workflows</span>
+                  <span className="hidden sm:inline">Get 5 AI Workflows That Save 10+ Hours/Week</span>
+                </a>
               </Button>
             </div>
 
