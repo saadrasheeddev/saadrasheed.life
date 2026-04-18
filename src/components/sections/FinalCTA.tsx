@@ -21,10 +21,11 @@ const FinalCTA = () => {
             </p>
 
             <div className="pt-2 sm:pt-4">
-              <Button variant="hero" size="xl" className="w-full sm:w-auto" asChild>
+              <Button variant="hero" size="xl" className="w-full sm:w-auto whitespace-normal h-auto min-h-14 py-3 px-5 sm:px-9 text-sm sm:text-base text-center leading-tight" asChild>
                 <a href="https://cal.com" target="_blank" rel="noopener noreferrer">
-                  Book Your Free Strategy Call Now
-                  <ArrowRight className="ml-1 h-4 w-4" />
+                  <span className="sm:hidden">Book Your Free Call Now</span>
+                  <span className="hidden sm:inline">Book Your Free Strategy Call Now</span>
+                  <ArrowRight className="ml-1 h-4 w-4 shrink-0" />
                 </a>
               </Button>
               <p className="text-xs text-muted-foreground mt-4">
