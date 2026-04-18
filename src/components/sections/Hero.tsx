@@ -10,7 +10,7 @@ const heroBullets = [
 
 const Hero = () => {
   return (
-    <section className="relative pt-28 md:pt-36 pb-20 md:pb-32 overflow-hidden">
+    <section className="relative pt-24 sm:pt-28 md:pt-36 pb-16 sm:pb-20 md:pb-32 overflow-hidden">
       {/* Background grid + glow */}
       <div className="absolute inset-0 grid-bg opacity-60" />
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] radial-glow animate-pulse-glow pointer-events-none" />
@@ -24,12 +24,12 @@ const Hero = () => {
               AI Calling Agents · Built for Founders & Agencies
             </div>
 
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-extrabold leading-[1.05]">
+            <h1 className="text-[2rem] leading-[1.1] sm:text-5xl lg:text-6xl xl:text-7xl font-extrabold sm:leading-[1.05]">
               AI Calling Agents That{" "}
               <span className="gradient-text">Book Appointments For You 24/7</span>
             </h1>
 
-            <p className="text-lg md:text-xl text-muted-foreground max-w-2xl leading-relaxed">
+            <p className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-2xl leading-relaxed">
               I build AI voice agents that call, follow up, and convert your leads into
               booked meetings — so you never lose opportunities or waste time chasing prospects.
             </p>
@@ -46,13 +46,13 @@ const Hero = () => {
             </ul>
 
             <div className="flex flex-col sm:flex-row gap-3 pt-2">
-              <Button variant="hero" size="xl" asChild>
+              <Button variant="hero" size="xl" className="w-full sm:w-auto" asChild>
                 <a href="https://cal.com" target="_blank" rel="noopener noreferrer">
                   Book a Free Strategy Call
                   <ArrowRight className="ml-1 h-4 w-4" />
                 </a>
               </Button>
-              <Button variant="heroOutline" size="xl" asChild>
+              <Button variant="heroOutline" size="xl" className="w-full sm:w-auto" asChild>
                 <a href="#lead-magnet">Get 5 AI Workflows That Save 10+ Hours/Week</a>
               </Button>
             </div>
@@ -62,10 +62,6 @@ const Hero = () => {
             </p>
 
             <div className="flex flex-wrap items-center gap-x-6 gap-y-2 pt-2 text-sm text-muted-foreground">
-              <div className="flex items-center gap-2">
-                <span className="h-2 w-2 rounded-full bg-green-400 animate-pulse" />
-                Accepting 5 new clients this month
-              </div>
               <div>⚡ Leads contacted in &lt; 60 seconds</div>
             </div>
           </div>

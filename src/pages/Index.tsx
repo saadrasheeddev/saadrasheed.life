@@ -1,6 +1,8 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import ChatWidget from "@/components/ChatWidget";
 import Hero from "@/components/sections/Hero";
+import IntroVideo from "@/components/sections/IntroVideo";
 import SocialProof from "@/components/sections/SocialProof";
 import Stats from "@/components/sections/Stats";
 import Problems from "@/components/sections/Problems";
@@ -22,6 +24,8 @@ const Index = () => {
       <Navbar />
       <main>
         <Hero />
+        <IntroVideo />
+        <Testimonials />
         <WhatYouGet />
         <SocialProof />
         <Stats />
@@ -29,12 +33,12 @@ const Index = () => {
         <About />
         <Packages />
         <HowItWorks />
-        <Testimonials />
         <FAQ />
         <LeadMagnet />
         <FinalCTA />
       </main>
       <Footer />
+      <ChatWidget />
     </div>
   );
 };
