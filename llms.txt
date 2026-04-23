@@ -55,6 +55,5 @@ Tools: OpenAI, Notion, Slack, Pinecone
 
 ## Contact
 
-- Test Update
 - Book a free 30-minute strategy call: https://saadrasheed.life/ (Book a Free Strategy Call button)
 - Free resource: 5 AI Workflows Every Founder Should Steal — available via email opt-in on the homepage
