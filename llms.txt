@@ -1,0 +1,59 @@
+# Saad Rasheed — AI Calling Agents Specialist
+
+> Saad Rasheed builds AI voice agents and revenue automation systems for founders and agencies. His systems call leads in under 60 seconds, follow up automatically, and book meetings directly into calendars — 24/7, without human involvement.
+
+## About
+
+Saad Rasheed is a specialist in AI calling agents and backend revenue automation. He works with busy founders and agencies who lose leads due to slow or missed follow-up. Every system he builds is tied to a measurable outcome: more booked meetings, less manual work, and revenue that no longer depends on the founder being online.
+
+- 50+ automations deployed
+- Average results: +19 booked meetings/month, 47% higher show-up rate, 12–18 hrs saved weekly
+- Lead response time: under 60 seconds
+- Tools used: Vapi, Make.com, n8n, Zapier, OpenAI, GPT-4, HubSpot, Pipedrive, Airtable, Notion, Twilio, GoHighLevel, Calendly, Slack, Stripe, Pinecone
+
+## Services
+
+### Starter — Automation Audit ($99 one-time)
+Full audit of 1 workflow with a recorded Loom walkthrough, tool recommendations, and a 30-day action plan. Includes 7 days of async Q&A.
+
+### Appointment Booking System — Most Popular ($499 one-time)
+End-to-end AI calling agent setup: voice agent, lead follow-up automation, calendar booking integration, and basic CRM sync. Includes full handover and Loom walkthroughs. Money-back guarantee if it doesn't save time or book meetings.
+
+### Full Automation System ($1,499/month)
+Ongoing builds, custom AI agents, monthly optimization sprints, Slack support with 24-hour response time, and monthly performance reports. Cancel anytime.
+
+## Projects
+
+### AI Calling Agent for Real Estate Agency
+Problem: Inbound leads went unanswered after hours and on weekends.
+Solution: AI voice agent calls every new lead in under 60 seconds, qualifies intent, and books a property viewing.
+Result: +32% more booked calls in 14 days. Saved 22 hrs/week.
+Tools: Vapi, GPT-4, GoHighLevel, Calendly
+
+### Lead Follow-Up Engine for B2B Agency
+Problem: Reps were manually chasing 200+ leads/month and missing half.
+Solution: AI follow-up sequence that calls, emails, and DMs every lead on a multi-touch cadence — escalating only hot leads to humans.
+Result: +47% show-rate. $11k MRR added in 6 weeks.
+Tools: Make.com, OpenAI, HubSpot, Twilio
+
+### Automated Client Onboarding for SaaS
+Problem: Onboarding new accounts took 4 hours of manual setup each.
+Solution: n8n flow that provisions Slack, Notion, and Drive and sends a personalized welcome sequence triggered by Stripe payment.
+Result: Onboarding time cut from 4 hours to 6 minutes.
+Tools: n8n, Stripe, Notion, Slack
+
+### Internal AI Knowledge Assistant
+Problem: Team repeatedly asked the same SOP questions in Slack.
+Solution: Custom GPT trained on Notion docs, connected to Slack as an internal /ask bot that answers instantly with sources.
+Result: Saved 8 hrs/week of repeated answers across the team.
+Tools: OpenAI, Notion, Slack, Pinecone
+
+## Pages
+
+- Homepage: https://saadrasheed.life/
+- Projects: https://saadrasheed.life/projects
+
+## Contact
+
+- Book a free 30-minute strategy call: https://saadrasheed.life/ (Book a Free Strategy Call button)
+- Free resource: 5 AI Workflows Every Founder Should Steal — available via email opt-in on the homepage
