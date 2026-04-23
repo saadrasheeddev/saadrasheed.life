@@ -21,9 +21,9 @@ export default defineConfig(({ mode }) => ({
         staticDir: path.join(__dirname, "dist"),
         routes: ["/", "/projects"], // 👈 Add your actual routes here
         renderer: new Prerender.PuppeteerRenderer({
-          renderAfterDocumentEvent: "render-event", // fires after React mounts
+          renderAfterTime: 5000,
           headless: true,
-        }),
+        })
       }),
   ].filter(Boolean),
   resolve: {
