@@ -1,4 +1,4 @@
-import saadHeadshot from "@/assets/saad-headshot.jpg";
+import saadHeadshot from "@/assets/saad-headshot.png";
 
 const About = () => {
   return (

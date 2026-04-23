@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Sparkles, Check } from "lucide-react";
-import saadHeadshot from "@/assets/saad-headshot.jpg";
+import saadHeadshot from "@/assets/saad-hero.png";
 
 const heroBullets = [
   "Calls leads instantly after they sign up",
