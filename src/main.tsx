@@ -1,4 +1,3 @@
-// src/main.tsx
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import App from "./App.tsx";
@@ -9,6 +8,3 @@ createRoot(document.getElementById("root")!).render(
     <App />
   </StrictMode>
 );
-
-// Tell Puppeteer that React has finished rendering
-document.dispatchEvent(new Event("render-event"));
