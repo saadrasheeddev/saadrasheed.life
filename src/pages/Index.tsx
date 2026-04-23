@@ -47,5 +47,5 @@
 
 
 export default function Index() {
-  return <h1>TEST RENDER</h1>;
+  return <h1>TEST RENDER 2</h1>;
 }
