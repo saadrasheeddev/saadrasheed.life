@@ -11,7 +11,7 @@ const schema = z.object({
 });
 
 // 👇 REPLACE THIS with your n8n Webhook URL (Production URL from the Webhook node)
-const N8N_WEBHOOK_URL = "https://your-n8n-instance.com/webhook/lead-magnet";
+const N8N_WEBHOOK_URL = "https://n8n.saadrasheed.life/webhook/lead-magnet";
 
 const LeadMagnet = () => {
   const [name, setName] = useState("");
