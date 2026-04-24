@@ -2,9 +2,7 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import path from "path";
 import { componentTagger } from "lovable-tagger";
-import Prerender from "vite-plugin-prerender";
 
-// https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
   server: {
     host: "::",
@@ -16,15 +14,6 @@ export default defineConfig(({ mode }) => ({
   plugins: [
     react(),
     mode === "development" && componentTagger(),
-    mode === "production" &&
-      Prerender({
-        staticDir: path.join(__dirname, "dist"),
-        routes: ["/", "/projects"], // 👈 Add your actual routes here
-        renderer: new Prerender.PuppeteerRenderer({
-          renderAfterTime: 5000,
-          headless: true,
-        })
-      }),
   ].filter(Boolean),
   resolve: {
     alias: {
