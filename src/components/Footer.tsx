@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Linkedin, Mail } from "lucide-react";
-import logoS from "@/assets/logo-s-badge.png";
+import logoS from "@/assets/logo-s.png";
 
 const Footer = () => {
   return (
@@ -8,8 +8,8 @@ const Footer = () => {
       <div className="container py-12">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-8">
           <div className="flex items-center gap-2">
-            <div className="h-9 w-9 rounded-lg flex items-center justify-center overflow-hidden">
-              <img src={logoS} alt="Saad Rasheed logo" width={36} height={36} loading="lazy" className="h-full w-full object-contain" />
+            <div className="h-9 w-9 rounded-lg gradient-primary flex items-center justify-center p-1.5">
+              <img src={logoS} alt="Saad Rasheed logo" width={36} height={36} loading="lazy" className="h-full w-full object-contain brightness-0 invert" />
             </div>
             <span className="font-bold text-lg">Saad Rasheed</span>
           </div>
