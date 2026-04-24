@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, Sparkles } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import logoS from "@/assets/logo-s.png";
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -33,8 +34,8 @@ const Navbar = () => {
     >
       <div className="container flex h-16 md:h-20 items-center justify-between">
         <Link to="/" className="flex items-center gap-2 group">
-          <div className="h-9 w-9 rounded-lg gradient-primary flex items-center justify-center glow-primary">
-            <Sparkles className="h-4 w-4 text-white" />
+          <div className="h-9 w-9 rounded-lg flex items-center justify-center glow-primary overflow-hidden">
+            <img src={logoS} alt="Saad Rasheed logo" width={36} height={36} className="h-full w-full object-contain" />
           </div>
           <span className="font-bold text-base md:text-lg tracking-tight">
             Saad Rasheed

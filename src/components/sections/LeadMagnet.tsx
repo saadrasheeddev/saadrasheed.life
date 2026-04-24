@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Download, CheckCircle2 } from "lucide-react";
+import { Download, CheckCircle2, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { z } from "zod";
 
@@ -10,21 +10,48 @@ const schema = z.object({
   email: z.string().trim().email("Enter a valid email").max(200),
 });
 
+// 👇 REPLACE THIS with your n8n Webhook URL (Production URL from the Webhook node)
+const N8N_WEBHOOK_URL = "https://your-n8n-instance.com/webhook/lead-magnet";
+
 const LeadMagnet = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const result = schema.safeParse({ name, email });
     if (!result.success) {
       toast.error(result.error.issues[0].message);
       return;
     }
-    // [REPLACE WITH REAL EMAIL CAPTURE / EMAIL SERVICE]
-    setSubmitted(true);
-    toast.success("Check your inbox — your checklist is on the way!");
+
+    setLoading(true);
+    try {
+      await fetch(N8N_WEBHOOK_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        // mode: "no-cors" lets the request fire even if your n8n webhook
+        // doesn't return CORS headers. Response will be opaque, which is fine
+        // for fire-and-forget lead capture.
+        mode: "no-cors",
+        body: JSON.stringify({
+          name: result.data.name,
+          email: result.data.email,
+          source: "lead-magnet-5-ai-workflows",
+          submittedAt: new Date().toISOString(),
+          page: typeof window !== "undefined" ? window.location.href : "",
+        }),
+      });
+
+      setSubmitted(true);
+      toast.success("Check your inbox — your checklist is on the way!");
+    } catch (err) {
+      toast.error("Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -63,6 +90,7 @@ const LeadMagnet = () => {
                   onChange={(e) => setName(e.target.value)}
                   maxLength={80}
                   required
+                  disabled={loading}
                   className="h-12 bg-secondary border-border"
                 />
                 <Input
@@ -72,10 +100,18 @@ const LeadMagnet = () => {
                   onChange={(e) => setEmail(e.target.value)}
                   maxLength={200}
                   required
+                  disabled={loading}
                   className="h-12 bg-secondary border-border"
                 />
-                <Button type="submit" variant="hero" size="lg" className="w-full">
-                  Send Me The Checklist
+                <Button type="submit" variant="hero" size="lg" className="w-full" disabled={loading}>
+                  {loading ? (
+                    <>
+                      <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                      Sending...
+                    </>
+                  ) : (
+                    "Send Me The Checklist"
+                  )}
                 </Button>
                 <p className="text-xs text-muted-foreground text-center">
                   No spam. Unsubscribe in one click.
