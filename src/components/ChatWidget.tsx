@@ -16,6 +16,7 @@ const ChatWidget = () => {
   const [msgs, setMsgs] = useState<Msg[]>(initial);
   const [input, setInput] = useState("");
   const scrollRef = useRef<HTMLDivElement>(null);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: "smooth" });
@@ -27,6 +28,9 @@ const ChatWidget = () => {
     if (!text) return;
     setMsgs((m) => [...m, { from: "user", text }]);
     setInput("");
+    if (textareaRef.current) {
+      textareaRef.current.style.height = "auto";
+    }
     setTimeout(() => {
       setMsgs((m) => [
         ...m,
@@ -93,6 +97,7 @@ const ChatWidget = () => {
         {/* Input */}
         <form onSubmit={handleSend} className="p-3 border-t border-border bg-background/50 flex items-end gap-2">
           <textarea
+            ref={textareaRef}
             value={input}
             onChange={(e) => {
               setInput(e.target.value);
