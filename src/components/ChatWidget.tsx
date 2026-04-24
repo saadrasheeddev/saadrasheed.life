@@ -91,12 +91,24 @@ const ChatWidget = () => {
         </div>
 
         {/* Input */}
-        <form onSubmit={handleSend} className="p-3 border-t border-border bg-background/50 flex items-center gap-2">
-          <input
+        <form onSubmit={handleSend} className="p-3 border-t border-border bg-background/50 flex items-end gap-2">
+          <textarea
             value={input}
-            onChange={(e) => setInput(e.target.value)}
+            onChange={(e) => {
+              setInput(e.target.value);
+              const el = e.currentTarget;
+              el.style.height = "auto";
+              el.style.height = Math.min(el.scrollHeight, 120) + "px";
+            }}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" && !e.shiftKey) {
+                e.preventDefault();
+                handleSend(e as unknown as React.FormEvent);
+              }
+            }}
             placeholder="Type your question…"
-            className="flex-1 h-10 rounded-lg bg-secondary border border-border px-3 text-sm focus:outline-none focus:border-primary-glow"
+            rows={1}
+            className="flex-1 min-h-10 max-h-[120px] resize-none rounded-lg bg-secondary border border-border px-3 py-2 text-sm focus:outline-none focus:border-primary-glow leading-relaxed"
           />
           <button
             type="submit"
