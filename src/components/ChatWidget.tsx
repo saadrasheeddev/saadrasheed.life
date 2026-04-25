@@ -1,10 +1,29 @@
 import { useState, useRef, useEffect } from "react";
 import { MessageCircle, X, Send, Sparkles } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { z } from "zod";
+import { toast } from "sonner";
 
 type Msg = { from: "bot" | "user"; text: string };
 
-const initial: Msg[] = [
+// Shared site token — same one used in the lead magnet form.
+// In n8n verify either `x-site-token` header or `siteToken` body field.
+const SITE_TOKEN = "sr_site_8f3b29d1a74e4c5fbf91e6c2ad7b1e93";
+
+const LEAD_WEBHOOK_URL = "https://n8n.saadrasheed.life/webhook/lead-magnet";
+const CHAT_WEBHOOK_URL = "https://n8n.saadrasheed.life/webhook/chat-widget";
+
+const STORAGE_KEY = "sr_chat_user_v1";
+const REPLY_TIMEOUT_MS = 60_000;
+
+const gateSchema = z.object({
+  name: z.string().trim().min(1, "Name is required").max(80),
+  email: z.string().trim().email("Enter a valid email").max(200),
+});
+
+const initialMsgs: Msg[] = [
   {
     from: "bot",
     text: "Hey! I'm Saad's AI assistant 👋 Ask me anything about AI calling agents, pricing, or how the system works.",
@@ -13,33 +32,134 @@ const initial: Msg[] = [
 
 const ChatWidget = () => {
   const [open, setOpen] = useState(false);
-  const [msgs, setMsgs] = useState<Msg[]>(initial);
+  const [msgs, setMsgs] = useState<Msg[]>(initialMsgs);
   const [input, setInput] = useState("");
+  const [waiting, setWaiting] = useState(false);
+  const [user, setUser] = useState<{ name: string; email: string } | null>(null);
+  const [gateName, setGateName] = useState("");
+  const [gateEmail, setGateEmail] = useState("");
+  const [gateLoading, setGateLoading] = useState(false);
+
   const scrollRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
+  // Restore returning users
   useEffect(() => {
-    scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: "smooth" });
-  }, [msgs, open]);
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (raw) setUser(JSON.parse(raw));
+    } catch {
+      // ignore
+    }
+  }, []);
 
-  const handleSend = (e: React.FormEvent) => {
+  useEffect(() => {
+    scrollRef.current?.scrollTo({
+      top: scrollRef.current.scrollHeight,
+      behavior: "smooth",
+    });
+  }, [msgs, open, waiting]);
+
+  const handleGate = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const result = gateSchema.safeParse({ name: gateName, email: gateEmail });
+    if (!result.success) {
+      toast.error(result.error.issues[0].message);
+      return;
+    }
+
+    setGateLoading(true);
+    try {
+      // Send the contact details to the same lead webhook (fire-and-forget).
+      await fetch(LEAD_WEBHOOK_URL, {
+        method: "POST",
+        mode: "no-cors",
+        headers: {
+          "Content-Type": "application/json",
+          "x-site-token": SITE_TOKEN,
+        },
+        body: JSON.stringify({
+          name: result.data.name,
+          email: result.data.email,
+          source: "chat-widget",
+          siteToken: SITE_TOKEN,
+          submittedAt: new Date().toISOString(),
+          page: typeof window !== "undefined" ? window.location.href : "",
+        }),
+      });
+
+      const u = { name: result.data.name, email: result.data.email };
+      setUser(u);
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(u));
+      } catch {
+        // ignore
+      }
+      setMsgs([
+        {
+          from: "bot",
+          text: `Hey ${u.name.split(" ")[0]}! 👋 What would you like to know about AI calling agents?`,
+        },
+      ]);
+    } catch {
+      toast.error("Could not start chat. Please try again.");
+    } finally {
+      setGateLoading(false);
+    }
+  };
+
+  const sendToChatWebhook = async (message: string, email: string): Promise<string | null> => {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), REPLY_TIMEOUT_MS);
+    try {
+      const res = await fetch(CHAT_WEBHOOK_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-site-token": SITE_TOKEN,
+        },
+        body: JSON.stringify({
+          email,
+          message,
+          siteToken: SITE_TOKEN,
+        }),
+        signal: controller.signal,
+      });
+      clearTimeout(timer);
+      if (!res.ok) return null;
+      const data = await res.json().catch(() => null);
+      // Expected shape: { reply: "..." }   (also accepts { message: "..." })
+      const reply: unknown = data?.reply ?? data?.message;
+      return typeof reply === "string" && reply.trim() ? reply : null;
+    } catch {
+      clearTimeout(timer);
+      return null;
+    }
+  };
+
+  const handleSend = async (e: React.FormEvent) => {
     e.preventDefault();
     const text = input.trim();
-    if (!text) return;
+    if (!text || !user || waiting) return;
+
     setMsgs((m) => [...m, { from: "user", text }]);
     setInput("");
     if (textareaRef.current) {
       textareaRef.current.style.height = "auto";
     }
-    setTimeout(() => {
-      setMsgs((m) => [
-        ...m,
-        {
-          from: "bot",
-          text: "Thanks! For a tailored answer, the fastest path is a free 30-min strategy call. Want me to share the booking link?",
-        },
-      ]);
-    }, 700);
+    setWaiting(true);
+
+    const reply = await sendToChatWebhook(text, user.email);
+    setWaiting(false);
+    setMsgs((m) => [
+      ...m,
+      {
+        from: "bot",
+        text:
+          reply ??
+          "Hmm, I'm not able to reach the assistant right now. Please try again in a moment, or book a free 30-min strategy call and I'll personally reply.",
+      },
+    ]);
   };
 
   return (
@@ -77,52 +197,103 @@ const ChatWidget = () => {
           </div>
         </div>
 
-        {/* Messages */}
-        <div ref={scrollRef} className="flex-1 overflow-y-auto p-4 space-y-3 flex flex-col">
-          {msgs.map((m, i) => (
-            <div
-              key={i}
-              className={cn(
-                "max-w-[85%] w-fit rounded-2xl px-3.5 py-2.5 text-sm leading-relaxed break-words",
-                m.from === "bot"
-                  ? "bg-secondary text-foreground rounded-tl-sm self-start"
-                  : "gradient-primary text-white rounded-tr-sm self-end"
-              )}
-            >
-              {m.text}
+        {!user ? (
+          /* Gate form */
+          <form onSubmit={handleGate} className="flex-1 overflow-y-auto p-5 flex flex-col justify-center gap-3">
+            <div>
+              <h3 className="font-semibold text-base mb-1">Before we start</h3>
+              <p className="text-xs text-muted-foreground">
+                Quick intro so Saad knows who he's chatting with.
+              </p>
             </div>
-          ))}
-        </div>
+            <Input
+              type="text"
+              placeholder="Your name"
+              value={gateName}
+              onChange={(e) => setGateName(e.target.value)}
+              maxLength={80}
+              required
+              disabled={gateLoading}
+              className="h-11 bg-secondary border-border"
+            />
+            <Input
+              type="email"
+              placeholder="you@company.com"
+              value={gateEmail}
+              onChange={(e) => setGateEmail(e.target.value)}
+              maxLength={200}
+              required
+              disabled={gateLoading}
+              className="h-11 bg-secondary border-border"
+            />
+            <Button type="submit" variant="hero" className="w-full" disabled={gateLoading}>
+              {gateLoading ? "Starting..." : "Start Chat"}
+            </Button>
+            <p className="text-[11px] text-muted-foreground text-center">
+              No spam. Used only to follow up on your question.
+            </p>
+          </form>
+        ) : (
+          <>
+            {/* Messages */}
+            <div ref={scrollRef} className="flex-1 overflow-y-auto p-4 space-y-3 flex flex-col">
+              {msgs.map((m, i) => (
+                <div
+                  key={i}
+                  className={cn(
+                    "max-w-[85%] w-fit rounded-2xl px-3.5 py-2.5 text-sm leading-relaxed break-words",
+                    m.from === "bot"
+                      ? "bg-secondary text-foreground rounded-tl-sm self-start"
+                      : "gradient-primary text-white rounded-tr-sm self-end"
+                  )}
+                >
+                  {m.text}
+                </div>
+              ))}
+              {waiting && (
+                <div className="bg-secondary text-foreground rounded-2xl rounded-tl-sm self-start px-3.5 py-3 w-fit">
+                  <div className="flex items-center gap-1">
+                    <span className="h-1.5 w-1.5 rounded-full bg-muted-foreground/70 animate-bounce [animation-delay:-0.3s]" />
+                    <span className="h-1.5 w-1.5 rounded-full bg-muted-foreground/70 animate-bounce [animation-delay:-0.15s]" />
+                    <span className="h-1.5 w-1.5 rounded-full bg-muted-foreground/70 animate-bounce" />
+                  </div>
+                </div>
+              )}
+            </div>
 
-        {/* Input */}
-        <form onSubmit={handleSend} className="p-3 border-t border-border bg-background/50 flex items-end gap-2">
-          <textarea
-            ref={textareaRef}
-            value={input}
-            onChange={(e) => {
-              setInput(e.target.value);
-              const el = e.currentTarget;
-              el.style.height = "auto";
-              el.style.height = Math.min(el.scrollHeight, 120) + "px";
-            }}
-            onKeyDown={(e) => {
-              if (e.key === "Enter" && !e.shiftKey) {
-                e.preventDefault();
-                handleSend(e as unknown as React.FormEvent);
-              }
-            }}
-            placeholder="Type your question…"
-            rows={1}
-            className="flex-1 min-h-10 max-h-[120px] resize-none rounded-lg bg-secondary border border-border px-3 py-2 text-sm focus:outline-none focus:border-primary-glow leading-relaxed"
-          />
-          <button
-            type="submit"
-            aria-label="Send message"
-            className="h-10 w-10 rounded-lg gradient-primary text-white flex items-center justify-center shrink-0 hover:opacity-90"
-          >
-            <Send className="h-4 w-4" />
-          </button>
-        </form>
+            {/* Input */}
+            <form onSubmit={handleSend} className="p-3 border-t border-border bg-background/50 flex items-end gap-2">
+              <textarea
+                ref={textareaRef}
+                value={input}
+                onChange={(e) => {
+                  setInput(e.target.value);
+                  const el = e.currentTarget;
+                  el.style.height = "auto";
+                  el.style.height = Math.min(el.scrollHeight, 120) + "px";
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" && !e.shiftKey) {
+                    e.preventDefault();
+                    handleSend(e as unknown as React.FormEvent);
+                  }
+                }}
+                placeholder={waiting ? "Waiting for reply…" : "Type your question…"}
+                rows={1}
+                disabled={waiting}
+                className="flex-1 min-h-10 max-h-[120px] resize-none rounded-lg bg-secondary border border-border px-3 py-2 text-sm focus:outline-none focus:border-primary-glow leading-relaxed disabled:opacity-60"
+              />
+              <button
+                type="submit"
+                aria-label="Send message"
+                disabled={waiting}
+                className="h-10 w-10 rounded-lg gradient-primary text-white flex items-center justify-center shrink-0 hover:opacity-90 disabled:opacity-50"
+              >
+                <Send className="h-4 w-4" />
+              </button>
+            </form>
+          </>
+        )}
       </div>
     </>
   );
