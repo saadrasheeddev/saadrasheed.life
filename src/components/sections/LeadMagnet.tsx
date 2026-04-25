@@ -10,8 +10,13 @@ const schema = z.object({
   email: z.string().trim().email("Enter a valid email").max(200),
 });
 
-// 👇 REPLACE THIS with your n8n Webhook URL (Production URL from the Webhook node)
+// 👇 n8n Webhook URL (Production URL from the Webhook node)
 const N8N_WEBHOOK_URL = "https://n8n.saadrasheed.life/webhook/lead-magnet";
+
+// Shared site token sent with every request so n8n can verify the
+// request is coming from the website. Validate this in n8n by checking
+// either the `x-site-token` header or the `siteToken` body field.
+const SITE_TOKEN = "sr_site_8f3b29d1a74e4c5fbf91e6c2ad7b1e93";
 
 const LeadMagnet = () => {
   const [name, setName] = useState("");
