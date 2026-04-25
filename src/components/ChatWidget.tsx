@@ -119,6 +119,7 @@ const ChatWidget = () => {
           "x-site-token": SITE_TOKEN,
         },
         body: JSON.stringify({
+          name,
           email,
           message,
           siteToken: SITE_TOKEN,
