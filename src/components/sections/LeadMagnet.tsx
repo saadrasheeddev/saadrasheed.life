@@ -36,7 +36,10 @@ const LeadMagnet = () => {
     try {
       await fetch(N8N_WEBHOOK_URL, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          "x-site-token": SITE_TOKEN,
+        },
         // mode: "no-cors" lets the request fire even if your n8n webhook
         // doesn't return CORS headers. Response will be opaque, which is fine
         // for fire-and-forget lead capture.
@@ -45,6 +48,7 @@ const LeadMagnet = () => {
           name: result.data.name,
           email: result.data.email,
           source: "lead-magnet-5-ai-workflows",
+          siteToken: SITE_TOKEN,
           submittedAt: new Date().toISOString(),
           page: typeof window !== "undefined" ? window.location.href : "",
         }),
