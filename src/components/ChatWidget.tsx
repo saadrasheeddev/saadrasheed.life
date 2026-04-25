@@ -108,7 +108,7 @@ const ChatWidget = () => {
     }
   };
 
-  const sendToChatWebhook = async (message: string, email: string): Promise<string | null> => {
+  const sendToChatWebhook = async (message: string, email: string, name: string): Promise<string | null> => {
     const controller = new AbortController();
     const timer = setTimeout(() => controller.abort(), REPLY_TIMEOUT_MS);
     try {
@@ -150,7 +150,7 @@ const ChatWidget = () => {
     }
     setWaiting(true);
 
-    const reply = await sendToChatWebhook(text, user.email);
+    const reply = await sendToChatWebhook(text, user.email, user.name);
     setWaiting(false);
     setMsgs((m) => [
       ...m,
