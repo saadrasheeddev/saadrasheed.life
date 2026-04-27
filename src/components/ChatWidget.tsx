@@ -199,9 +199,9 @@ const ChatWidget = () => {
 
   return (
     <>
-      {/* Greeting - waving hand pops up from chat button */}
+      {/* Greeting - waving hand pops up from top-left of chat button */}
       {!open && showGreeting && !greetingDismissed && (
-        <div className="fixed bottom-[72px] right-5 sm:bottom-[80px] sm:right-7 z-[59] animate-fade-in">
+        <div className="fixed bottom-[58px] right-[58px] sm:bottom-[64px] sm:right-[64px] z-[59] animate-greeting-pop origin-bottom-right">
           <div 
             className="relative cursor-pointer"
             onClick={() => {
