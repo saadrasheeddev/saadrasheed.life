@@ -215,21 +215,6 @@ const ChatWidget = () => {
               }
             }}
           >
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                setShowGreeting(false);
-                setGreetingDismissed(true);
-                try {
-                  localStorage.setItem(GREETING_KEY, "true");
-                } catch {
-                  // ignore
-                }
-              }}
-              className="absolute -top-2 -right-2 h-5 w-5 rounded-full bg-card border border-border shadow-sm flex items-center justify-center text-muted-foreground hover:bg-muted transition-colors z-10"
-            >
-              <X className="h-3 w-3" />
-            </button>
             <span className="text-4xl origin-bottom-right animate-wave-hand select-none block drop-shadow-lg">👋</span>
           </div>
         </div>
