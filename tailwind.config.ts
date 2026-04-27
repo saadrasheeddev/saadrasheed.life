@@ -84,6 +84,11 @@ export default {
           "60%": { transform: "rotate(0deg)" },
           "100%": { transform: "rotate(0deg)" },
         },
+        "greeting-pop": {
+          "0%": { transform: "scale(0) translate(20px, 20px)", opacity: "0" },
+          "60%": { transform: "scale(1.15) translate(0, 0)", opacity: "1" },
+          "100%": { transform: "scale(1) translate(0, 0)", opacity: "1" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -91,6 +96,7 @@ export default {
         "gradient-shift": "gradient-shift 8s ease infinite",
         "pulse-glow": "pulse-glow 4s ease-in-out infinite",
         "wave-hand": "wave-hand 2s ease-in-out infinite",
+        "greeting-pop": "greeting-pop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards",
       },
     },
   },
