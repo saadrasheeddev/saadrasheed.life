@@ -203,7 +203,7 @@ const ChatWidget = () => {
       {!open && showGreeting && !greetingDismissed && (
         <div className="fixed bottom-[88px] right-4 sm:right-6 z-[59] animate-fade-in">
           <div 
-            className="bg-card border border-border rounded-2xl shadow-xl p-4 pr-8 max-w-[220px] relative cursor-pointer hover:bg-accent/50 transition-colors"
+            className="bg-card border border-border rounded-2xl shadow-xl p-4 pr-10 max-w-[240px] relative cursor-pointer hover:bg-accent/50 transition-colors"
             onClick={() => {
               setOpen(true);
               setShowGreeting(false);
@@ -226,14 +226,16 @@ const ChatWidget = () => {
                   // ignore
                 }
               }}
-              className="absolute top-2 right-2 h-5 w-5 rounded-full hover:bg-muted flex items-center justify-center text-muted-foreground"
+              className="absolute top-2 right-2 h-6 w-6 rounded-full hover:bg-muted flex items-center justify-center text-muted-foreground transition-colors"
             >
-              <X className="h-3 w-3" />
+              <X className="h-4 w-4" />
             </button>
-            <p className="text-sm leading-relaxed">
-              <span className="inline-block animate-bounce mr-1">👋</span>
-              Hi! I'm Saad's AI assistant. Let's talk?
-            </p>
+            <div className="flex items-start gap-3">
+              <span className="text-3xl origin-bottom-right animate-wave-hand select-none">👋</span>
+              <p className="text-sm leading-relaxed pt-1">
+                Hi! I'm Saad's AI assistant. Let's talk?
+              </p>
+            </div>
             <div className="absolute bottom-[-8px] right-6 w-4 h-4 bg-card border-r border-b border-border rotate-45" />
           </div>
         </div>
