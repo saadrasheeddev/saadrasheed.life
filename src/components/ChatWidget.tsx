@@ -16,6 +16,7 @@ const LEAD_WEBHOOK_URL = "https://n8n.saadrasheed.life/webhook/lead-magnet";
 const CHAT_WEBHOOK_URL = "https://n8n.saadrasheed.life/webhook/chat-widget";
 
 const STORAGE_KEY = "sr_chat_user_v1";
+const GREETING_KEY = "sr_chat_greeting_shown";
 const REPLY_TIMEOUT_MS = 60_000;
 
 const gateSchema = z.object({
@@ -39,19 +40,44 @@ const ChatWidget = () => {
   const [gateName, setGateName] = useState("");
   const [gateEmail, setGateEmail] = useState("");
   const [gateLoading, setGateLoading] = useState(false);
+  const [showGreeting, setShowGreeting] = useState(false);
+  const [greetingDismissed, setGreetingDismissed] = useState(false);
 
   const scrollRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-  // Restore returning users
+  // Restore returning users and check if greeting should show
   useEffect(() => {
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
       if (raw) setUser(JSON.parse(raw));
+      
+      const greetingShown = localStorage.getItem(GREETING_KEY);
+      if (!greetingShown && !raw) {
+        // Delay greeting slightly for better UX
+        const timer = setTimeout(() => setShowGreeting(true), 1500);
+        return () => clearTimeout(timer);
+      }
     } catch {
       // ignore
     }
   }, []);
+
+  // Auto-hide greeting after 8 seconds if not clicked
+  useEffect(() => {
+    if (showGreeting && !open) {
+      const timer = setTimeout(() => {
+        setShowGreeting(false);
+        setGreetingDismissed(true);
+        try {
+          localStorage.setItem(GREETING_KEY, "true");
+        } catch {
+          // ignore
+        }
+      }, 8000);
+      return () => clearTimeout(timer);
+    }
+  }, [showGreeting, open]);
 
   useEffect(() => {
     scrollRef.current?.scrollTo({
@@ -69,6 +95,14 @@ const ChatWidget = () => {
     }
 
     setGateLoading(true);
+    // Mark greeting as shown when user engages
+    setShowGreeting(false);
+    setGreetingDismissed(true);
+    try {
+      localStorage.setItem(GREETING_KEY, "true");
+    } catch {
+      // ignore
+    }
     try {
       // Send the contact details to the same lead webhook (fire-and-forget).
       await fetch(LEAD_WEBHOOK_URL, {
@@ -165,9 +199,41 @@ const ChatWidget = () => {
 
   return (
     <>
+      {/* Greeting - waving hand pops up from top-left of chat button */}
+      {!open && showGreeting && !greetingDismissed && (
+        <div className="fixed bottom-[58px] right-[58px] sm:bottom-[64px] sm:right-[64px] z-[59] animate-greeting-pop origin-bottom-right">
+          <div 
+            className="relative cursor-pointer"
+            onClick={() => {
+              setOpen(true);
+              setShowGreeting(false);
+              setGreetingDismissed(true);
+              try {
+                localStorage.setItem(GREETING_KEY, "true");
+              } catch {
+                // ignore
+              }
+            }}
+          >
+            <span className="text-4xl origin-bottom-right animate-wave-hand select-none block drop-shadow-lg">👋</span>
+          </div>
+        </div>
+      )}
+
       {/* Floating button */}
       <button
-        onClick={() => setOpen((v) => !v)}
+        onClick={() => {
+          setOpen((v) => !v);
+          if (!open) {
+            setShowGreeting(false);
+            setGreetingDismissed(true);
+            try {
+              localStorage.setItem(GREETING_KEY, "true");
+            } catch {
+              // ignore
+            }
+          }
+        }}
         aria-label={open ? "Close chat" : "Chat with Saad's AI Assistant"}
         className={cn(
           "fixed bottom-5 right-5 sm:bottom-6 sm:right-6 z-[60] h-14 w-14 rounded-full gradient-primary text-white shadow-[0_15px_40px_-10px_hsl(270_85%_55%/0.7)] flex items-center justify-center hover:scale-105 active:scale-95 transition-transform"
