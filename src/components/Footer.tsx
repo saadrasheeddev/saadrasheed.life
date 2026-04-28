@@ -22,7 +22,7 @@ const Footer = () => {
 
           <div className="flex items-center gap-3">
             <a
-              href="https://linkedin.com"
+              href="https://www.linkedin.com/in/saadrasheeddev/"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="LinkedIn"
@@ -31,7 +31,7 @@ const Footer = () => {
               <Linkedin className="h-4 w-4" />
             </a>
             <a
-              href="mailto:hello@saadrasheed.com"
+              href="mailto:hello@saadrasheed.life"
               aria-label="Email"
               className="h-10 w-10 rounded-lg bg-secondary border border-border flex items-center justify-center hover:border-primary-glow transition-colors"
             >

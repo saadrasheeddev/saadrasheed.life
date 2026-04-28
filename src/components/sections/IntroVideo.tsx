@@ -28,7 +28,7 @@ const IntroVideo = () => {
           </div>
 
           <p className="text-center text-sm sm:text-base text-muted-foreground leading-relaxed mt-6 sm:mt-8 max-w-2xl mx-auto px-2">
-            Hi, I'm Saad Rasheed. In this quick video I show you exactly how my AI voice agents
+            Hi, I'm Saad Rasheed. In this quick video I show you exactly how my AI agents
             book appointments on autopilot.
           </p>
         </div>
