@@ -122,7 +122,7 @@ const Packages = () => {
               )}
 
               <Button variant={p.popular ? "hero" : "heroOutline"} className="w-full" size="lg" asChild>
-                <a href="https://cal.com" target="_blank" rel="noopener noreferrer">
+                <a href="https://cal.com/saadrasheed/free-strategy-call" target="_blank" rel="noopener noreferrer">
                   {p.cta}
                 </a>
               </Button>

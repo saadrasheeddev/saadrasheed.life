@@ -22,7 +22,7 @@ const FinalCTA = () => {
 
             <div className="pt-2 sm:pt-4">
               <Button variant="hero" size="xl" className="w-full sm:w-auto whitespace-normal h-auto min-h-14 py-3 px-5 sm:px-9 text-sm sm:text-base text-center leading-tight" asChild>
-                <a href="https://cal.com" target="_blank" rel="noopener noreferrer">
+                <a href="https://cal.com/saadrasheed/free-strategy-call" target="_blank" rel="noopener noreferrer">
                   <span className="sm:hidden">Book Your Free Call Now</span>
                   <span className="hidden sm:inline">Book Your Free Strategy Call Now</span>
                   <ArrowRight className="ml-1 h-4 w-4 shrink-0" />

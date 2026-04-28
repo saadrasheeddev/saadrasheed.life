@@ -17,7 +17,7 @@ const Footer = () => {
           <nav className="flex flex-wrap items-center gap-6 text-sm text-muted-foreground">
             <Link to="/" className="hover:text-foreground transition-colors">Home</Link>
             <Link to="/projects" className="hover:text-foreground transition-colors">Projects</Link>
-            <a href="#contact" className="hover:text-foreground transition-colors">Contact</a>
+            {/* <a href="#contact" className="hover:text-foreground transition-colors">Contact</a> */}
           </nav>
 
           <div className="flex items-center gap-3">

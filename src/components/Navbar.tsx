@@ -53,7 +53,7 @@ const Navbar = () => {
 
         <div className="hidden md:block">
           <Button variant="hero" size="default" asChild>
-            <a href="https://cal.com" target="_blank" rel="noopener noreferrer">
+            <a href="https://cal.com/saadrasheed/free-strategy-call" target="_blank" rel="noopener noreferrer">
               Book a Free Strategy Call
             </a>
           </Button>
@@ -78,7 +78,7 @@ const Navbar = () => {
               Projects
             </Link>
             <Button variant="hero" className="w-full" asChild>
-              <a href="https://cal.com" target="_blank" rel="noopener noreferrer">
+              <a href="https://cal.com/saadrasheed/free-strategy-call" target="_blank" rel="noopener noreferrer">
                 Book a Free Strategy Call
               </a>
             </Button>

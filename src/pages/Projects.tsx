@@ -137,7 +137,7 @@ const Projects = () => {
                   Let's map your AI calling system in a free 30-minute call.
                 </p>
                 <Button variant="hero" size="xl" className="w-full sm:w-auto whitespace-normal h-auto min-h-14 py-3 px-5 sm:px-9 text-sm sm:text-base text-center leading-tight" asChild>
-                  <a href="https://cal.com" target="_blank" rel="noopener noreferrer">
+                  <a href="https://cal.com/saadrasheed/free-strategy-call" target="_blank" rel="noopener noreferrer">
                     Book a Free Strategy Call
                     <ArrowRight className="ml-1 h-4 w-4 shrink-0" />
                   </a>
