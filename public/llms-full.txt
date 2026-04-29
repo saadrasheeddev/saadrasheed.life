@@ -1,0 +1,197 @@
+# Saad Rasheed — AI Calling Agents & Revenue Automation Specialist
+
+> Saad Rasheed builds AI voice agents and revenue automation systems for founders and agencies. His systems call leads in under 60 seconds, follow up automatically, and book meetings directly into calendars — 24/7, without human involvement. He has deployed 50+ automations and consistently delivers measurable outcomes: more booked meetings, higher show rates, and hours saved every week.
+
+## About Saad Rasheed
+
+Saad Rasheed is an AI automation specialist based remotely, working with clients globally. He focuses exclusively on revenue-generating automation — systems that directly impact lead conversion, meeting bookings, and client onboarding. His work sits at the intersection of AI voice technology, CRM integration, and workflow automation.
+
+He works primarily with:
+- Busy founders who are losing leads due to slow or missed follow-up
+- Agencies that need to scale outreach without scaling headcount
+- SaaS companies that want to reduce manual onboarding time
+- Real estate agencies, B2B service firms, and consulting businesses
+
+Saad does not build generic automations. Every system is scoped around a specific outcome and delivered with full documentation, Loom walkthroughs, and async support.
+
+### Key Stats
+- 50+ automations deployed across industries
+- Average results per client: +19 booked meetings/month
+- Average show-up rate improvement: 47%
+- Weekly time saved per client: 12–18 hours
+- Lead response time achieved: under 60 seconds
+- Onboarding time reduction achieved: from 4 hours to 6 minutes (SaaS client case study)
+
+### Tools & Platforms Saad Works With
+**AI & Voice:** Vapi, OpenAI, GPT-4
+**Automation:** Make.com, n8n, Zapier
+**CRM:** HubSpot, Pipedrive, GoHighLevel, Airtable
+**Communication:** Twilio, Slack
+**Scheduling:** Calendly
+**Payments:** Stripe
+**Knowledge & Docs:** Notion, Pinecone
+**Infrastructure:** Any webhook-compatible platform
+
+---
+
+## Services & Pricing
+
+### 1. Starter — Automation Audit ($99 one-time)
+**Best for:** Founders or agency owners who want clarity before committing to a full build.
+
+What's included:
+- Full audit of 1 existing workflow or process
+- Recorded Loom walkthrough explaining what to fix and how
+- Tool recommendations tailored to your stack
+- A clear 30-day action plan you can implement yourself or hand off
+- 7 days of async Q&A via email or DM after delivery
+
+Turnaround: 3–5 business days
+No ongoing commitment required.
+
+---
+
+### 2. Appointment Booking System — Most Popular ($499 one-time)
+**Best for:** Founders and agencies who want a fully working AI calling + booking system without ongoing retainer costs.
+
+What's included:
+- AI voice agent setup (via Vapi + GPT-4) configured to call new leads within 60 seconds of form submission
+- Lead qualification script customized to your offer and ICP
+- Automated follow-up sequences (call, SMS, email) for non-responders
+- Calendar booking integration (Calendly or equivalent)
+- Basic CRM sync to HubSpot, Pipedrive, GoHighLevel, or Airtable
+- Full handover documentation
+- Loom walkthrough of the entire system
+- Money-back guarantee if the system doesn't save time or book meetings
+
+Turnaround: 5–10 business days
+One-time cost. No monthly fees unless you choose to add on.
+
+---
+
+### 3. Full Automation System ($1,499/month)
+**Best for:** Founders and agencies who want ongoing builds, optimizations, and dedicated support.
+
+What's included:
+- Everything in the Appointment Booking System
+- Custom AI agents built to your specifications each month
+- Monthly optimization sprints (reviewing performance, improving scripts, fixing drop-offs)
+- Dedicated Slack channel with 24-hour response time
+- Monthly performance report with metrics and recommendations
+- Priority access for new build requests
+- Cancel anytime — no lock-in contracts
+
+This is an ongoing engagement. Clients on this plan typically see compounding results as more systems are built and refined over time.
+
+---
+
+## Case Studies & Project Results
+
+### Case Study 1: AI Calling Agent for Real Estate Agency
+**Industry:** Real Estate
+**Problem:** Inbound leads were going unanswered after business hours and on weekends. Agents were manually calling back hours or days later, losing warm leads to competitors.
+**Solution:** Built an AI voice agent (Vapi + GPT-4) that calls every new inbound lead within 60 seconds of form submission — at any hour, any day. The agent qualifies the lead's intent (buying, selling, renting), answers common questions, and books a property viewing directly into the agent's calendar.
+**Results:**
+- +32% more booked calls within 14 days of going live
+- 22 hours/week saved in manual follow-up time
+- Zero leads missed after hours
+**Tools Used:** Vapi, GPT-4, GoHighLevel, Calendly
+
+---
+
+### Case Study 2: Lead Follow-Up Engine for B2B Agency
+**Industry:** B2B Services / Agency
+**Problem:** Sales reps were manually chasing 200+ leads per month across email, phone, and LinkedIn. More than half of leads were falling through the cracks with no follow-up after the first touchpoint.
+**Solution:** Built a multi-touch AI follow-up system that automatically calls, emails, and DMs every lead on a structured cadence. The system escalates only hot leads (those who respond positively) to human reps, reducing manual work and ensuring no lead goes cold without contact.
+**Results:**
+- +47% improvement in show-up rate for booked calls
+- $11,000 MRR added within 6 weeks of launch
+- Sales reps now focus only on qualified, interested leads
+**Tools Used:** Make.com, OpenAI, HubSpot, Twilio
+
+---
+
+### Case Study 3: Automated Client Onboarding for SaaS Company
+**Industry:** SaaS
+**Problem:** Onboarding new accounts required 4 hours of manual work per client — creating Slack channels, setting up Notion workspaces, provisioning Google Drive folders, and sending welcome emails. The founder was doing this personally.
+**Solution:** Built an n8n automation triggered by a successful Stripe payment. The flow automatically provisions a Slack channel, creates a Notion workspace from a template, sets up a Drive folder, and sends a personalized welcome email sequence — all within minutes of payment.
+**Results:**
+- Onboarding time reduced from 4 hours to 6 minutes per client
+- Zero manual involvement required from the founder
+- Scalable to any volume of new signups
+**Tools Used:** n8n, Stripe, Notion, Slack, Google Drive
+
+---
+
+### Case Study 4: Internal AI Knowledge Assistant
+**Industry:** Agency / Internal Operations
+**Problem:** Team members were repeatedly asking the same SOP and process questions in Slack, pulling senior team members away from client work to answer basic internal questions.
+**Solution:** Built a custom GPT trained on the company's Notion documentation and connected it to Slack as an internal /ask bot. Team members can ask any question and receive an instant, sourced answer pulled directly from the company's own knowledge base.
+**Results:**
+- 8 hours/week saved in repeated internal Q&A
+- Faster onboarding for new team members
+- Senior team no longer interrupted by routine process questions
+**Tools Used:** OpenAI, Notion, Slack, Pinecone
+
+---
+
+## Ideal Client Profile
+
+Saad works best with:
+- **Founders** running service businesses, agencies, or SaaS products with $10k–$200k MRR
+- **Agencies** with high lead volume and manual follow-up bottlenecks
+- **Operators** who are already using tools like HubSpot, GoHighLevel, or Notion but aren't automating the connections between them
+- **Anyone** who is paying for leads but losing them to slow response times
+
+Saad does NOT work with:
+- Businesses looking for basic virtual assistant work
+- Projects with no clear measurable outcome
+- Clients who want to own and maintain complex systems without proper handover
+
+---
+
+## How to Work with Saad
+
+**Step 1:** Book a free 30-minute strategy call via the homepage at https://saadrasheed.life/
+**Step 2:** Saad audits your current workflow and identifies the highest-leverage automation opportunity
+**Step 3:** Choose a service tier (Audit, Booking System, or Full System)
+**Step 4:** Saad builds, tests, and delivers the system with full documentation and a Loom walkthrough
+**Step 5:** Ongoing support or iteration if on the monthly plan
+
+---
+
+## Frequently Asked Questions
+
+**Do I need technical knowledge to use these systems?**
+No. Every system is delivered with a full Loom walkthrough and documentation written for non-technical users. You don't need to understand how it works — just how to use it.
+
+**What if it doesn't work?**
+The Appointment Booking System comes with a money-back guarantee. If the system doesn't save time or book meetings, you get a full refund.
+
+**How long does it take to build?**
+The Automation Audit takes 3–5 business days. The Appointment Booking System takes 5–10 business days. The Full Automation System is an ongoing monthly engagement.
+
+**Can you integrate with my existing CRM or tools?**
+Yes. Saad works with HubSpot, Pipedrive, GoHighLevel, Airtable, Notion, Slack, Calendly, Stripe, and most webhook-compatible platforms.
+
+**Do you offer custom builds outside the listed packages?**
+Yes. Book a strategy call to discuss custom scopes.
+
+---
+
+## Free Resource
+
+Saad offers a free guide — **"5 AI Workflows Every Founder Should Steal"** — available via email opt-in on the homepage at https://saadrasheed.life/
+
+---
+
+## Pages
+
+- Homepage: https://saadrasheed.life/
+- Projects: https://saadrasheed.life/projects
+- llms.txt: https://saadrasheed.life/llms.txt
+
+## Contact & Booking
+
+- Book a free 30-minute strategy call: https://saadrasheed.life/ (click "Book a Free Strategy Call")
+- For direct inquiries, use the contact form on the homepage

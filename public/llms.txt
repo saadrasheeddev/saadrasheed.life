@@ -52,6 +52,7 @@ Tools: OpenAI, Notion, Slack, Pinecone
 
 - Homepage: https://saadrasheed.life/
 - Projects: https://saadrasheed.life/projects
+- Full details: https://saadrasheed.life/llms-full.txt
 
 ## Contact
 
