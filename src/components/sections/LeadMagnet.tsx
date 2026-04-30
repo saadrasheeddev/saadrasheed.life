@@ -47,7 +47,7 @@ const LeadMagnet = () => {
         body: JSON.stringify({
           name: result.data.name,
           email: result.data.email,
-          source: "lead-magnet-5-ai-workflows",
+          source: "lead-magnet-real-estate-speed-to-lead",
           siteToken: SITE_TOKEN,
           submittedAt: new Date().toISOString(),
           page: typeof window !== "undefined" ? window.location.href : "",
@@ -75,10 +75,11 @@ const LeadMagnet = () => {
                 Free Lead Magnet
               </div>
               <h2 className="text-2xl md:text-3xl font-bold mb-3 leading-tight">
-                The 5 AI Workflows<br />Every Founder Should Steal.
+                How Top Real Estate Agents<br />Respond to Leads in Under 60 Seconds.
               </h2>
               <p className="text-muted-foreground">
-                Instant download — 5 proven AI workflows you can implement this week.
+                Free guide — the exact speed-to-lead playbook top-producing agents and
+                brokerages use to win more property viewings.
               </p>
             </div>
 
