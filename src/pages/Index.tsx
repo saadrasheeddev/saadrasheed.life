@@ -3,6 +3,7 @@ import Footer from "@/components/Footer";
 import ChatWidget from "@/components/ChatWidget";
 import Hero from "@/components/sections/Hero";
 import IntroVideo from "@/components/sections/IntroVideo";
+import RealEstateBanner from "@/components/sections/RealEstateBanner";
 import SocialProof from "@/components/sections/SocialProof";
 import Stats from "@/components/sections/Stats";
 import Problems from "@/components/sections/Problems";
@@ -29,6 +30,7 @@ const Index = () => {
         {/* <Testimonials /> */}
         <Problems />
         <WhatYouGet />
+        <RealEstateBanner />
         <HowItWorks />
         {/* SocialProof hidden — re-enable when needed */}
         {/* <SocialProof /> */}
