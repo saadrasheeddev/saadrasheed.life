@@ -1,7 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Sparkles, Check } from "lucide-react";
 import saadHeadshot from "@/assets/saad-hero.png";
-import realestateBg from "@/assets/realestate-bg.jpg";
 
 const heroBullets = [
   "Calls every new lead in under 60 seconds",
@@ -12,19 +11,6 @@ const heroBullets = [
 const Hero = () => {
   return (
     <section className="relative pt-24 sm:pt-28 md:pt-36 pb-16 sm:pb-20 md:pb-32 overflow-hidden">
-      {/* Real estate backdrop — anchored to the bottom-left, visible around the CTA area */}
-      <div
-        className="absolute inset-0 bg-no-repeat opacity-90 pointer-events-none"
-        style={{
-          backgroundImage: `url(${realestateBg})`,
-          backgroundSize: "55% auto",
-          backgroundPosition: "left bottom",
-        }}
-      />
-      {/* Soft fades on top/right/bottom so the image stays subtle but clearly visible */}
-      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-background/30 to-background pointer-events-none" />
-      <div className="absolute inset-0 bg-gradient-to-b from-background/60 via-transparent to-background/80 pointer-events-none" />
-
       {/* Background grid + glow */}
       <div className="absolute inset-0 grid-bg opacity-50" />
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] radial-glow animate-pulse-glow pointer-events-none" />
