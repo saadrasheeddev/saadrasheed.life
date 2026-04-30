@@ -12,12 +12,18 @@ const heroBullets = [
 const Hero = () => {
   return (
     <section className="relative pt-24 sm:pt-28 md:pt-36 pb-16 sm:pb-20 md:pb-32 overflow-hidden">
-      {/* Real estate backdrop */}
+      {/* Real estate backdrop — anchored to the bottom-left, visible around the CTA area */}
       <div
-        className="absolute inset-0 bg-cover bg-center opacity-60 pointer-events-none"
-        style={{ backgroundImage: `url(${realestateBg})` }}
+        className="absolute inset-0 bg-no-repeat opacity-90 pointer-events-none"
+        style={{
+          backgroundImage: `url(${realestateBg})`,
+          backgroundSize: "55% auto",
+          backgroundPosition: "left bottom",
+        }}
       />
-      <div className="absolute inset-0 bg-gradient-to-b from-background/40 via-background/55 to-background pointer-events-none" />
+      {/* Soft fades on top/right/bottom so the image stays subtle but clearly visible */}
+      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-background/30 to-background pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-b from-background/60 via-transparent to-background/80 pointer-events-none" />
 
       {/* Background grid + glow */}
       <div className="absolute inset-0 grid-bg opacity-50" />
