@@ -16,6 +16,7 @@ import FAQ from "@/components/sections/FAQ";
 import LeadMagnet from "@/components/sections/LeadMagnet";
 import FinalCTA from "@/components/sections/FinalCTA";
 import { useScrollFadeIn } from "@/hooks/useScrollFadeIn";
+import HeroWithBanner from "@/components/sections/HeroWithBanner";
 
 const Index = () => {
   useScrollFadeIn();

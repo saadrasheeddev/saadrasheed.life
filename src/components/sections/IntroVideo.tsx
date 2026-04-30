@@ -1,6 +1,6 @@
 const IntroVideo = () => {
   return (
-    <section className="py-16 sm:py-20 md:py-28 fade-in-up">
+    <section className="relative py-16 sm:py-20 md:py-28 fade-in-up">
       <div className="container">
         <div className="text-center max-w-2xl mx-auto mb-8 sm:mb-12">
           <p className="text-xs uppercase tracking-[0.2em] text-primary-glow mb-3">
