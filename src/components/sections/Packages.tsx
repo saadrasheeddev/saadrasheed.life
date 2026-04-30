@@ -4,51 +4,51 @@ import { cn } from "@/lib/utils";
 
 const packages = [
   {
-    name: "Starter",
+    name: "Real Estate Lead Response Audit",
     price: "$99",
     cadence: "one-time",
-    tagline: "Automation Audit",
-    description: "1 workflow reviewed + recorded Loom walkthrough + actionable plan.",
+    tagline: "For solo agents",
+    description: "I audit how your inbound leads are being handled today and show you exactly where viewings are slipping through the cracks.",
     features: [
-      "Full workflow audit (1 process)",
-      "Recorded Loom walkthrough",
-      "Tool & stack recommendations",
-      "Actionable 30-day plan",
-      "Async Q&A for 7 days",
+      "Full lead-flow audit (portals, ads, website)",
+      "Speed-to-lead benchmark vs top agents in your market",
+      "Recorded Loom walkthrough with fixes",
+      "Tool & CRM recommendations",
+      "30-day action plan to recover lost deals",
     ],
     cta: "Get Started",
     popular: false,
     note: "",
   },
   {
-    name: "Appointment Booking System",
+    name: "AI Appointment Booking System for Agents",
     price: "$499",
     cadence: "one-time",
     tagline: "Most Popular",
-    description: "Your AI calling agent + lead follow-up engine, built and deployed end-to-end.",
+    description: "Your AI calling agent + viewing-booking engine, built and deployed end-to-end for your real estate business.",
     features: [
-      "AI calling agent setup",
-      "Lead follow-up automation",
-      "Calendar booking integration",
-      "Basic CRM sync (HubSpot / Pipedrive / Sheets)",
-      "Full handover + Loom walkthroughs",
+      "AI calling agent trained on your listings",
+      "Buyer / seller / renter qualification flows",
+      "Calendar booking for property viewings",
+      "CRM sync (Follow Up Boss, kvCORE, HubSpot, Sheets)",
+      "Full handover + Loom walkthroughs for your team",
     ],
     cta: "Get Started",
     popular: true,
-    note: "If it doesn't save you time or book meetings, you don't pay.",
+    note: "If it doesn't book more viewings, you don't pay.",
   },
   {
-    name: "Scale",
+    name: "Full Automation for Real Estate Agencies",
     price: "$1,499",
     cadence: "/month",
-    tagline: "Full Automation System",
-    description: "Ongoing builds, AI agents, monthly support & optimization.",
+    tagline: "For brokerages & teams",
+    description: "Multi-agent AI calling, lead distribution, and ongoing optimization for brokerages and growing teams.",
     features: [
-      "Unlimited workflow requests (1 active)",
-      "Custom AI agents & assistants",
-      "Monthly optimization sprint",
+      "AI calling across all incoming lead sources",
+      "Smart lead routing to the right agent",
+      "Custom qualification per listing type",
+      "Monthly optimization & performance reports",
       "Slack support, 24h response",
-      "Performance reports each month",
     ],
     cta: "Get Started",
     popular: false,
@@ -63,13 +63,13 @@ const Packages = () => {
         <div className="flex justify-center mb-6">
           <div className="inline-flex items-center gap-2 rounded-full border border-primary-glow/40 bg-primary/10 px-4 py-1.5 text-xs font-medium text-primary-glow">
             <span className="h-2 w-2 rounded-full bg-primary-glow animate-pulse" />
-            Only 5 new clients accepted this month
+            Only 5 new real estate clients accepted this month
           </div>
         </div>
         <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-14">
-          <p className="text-xs uppercase tracking-[0.2em] text-primary-glow mb-3">Offerings</p>
+          <p className="text-xs uppercase tracking-[0.2em] text-primary-glow mb-3">Services</p>
           <h2 className="text-3xl md:text-5xl font-bold">
-            Pick the system that fits your growth.
+            Built for agents. Priced for ROI.
           </h2>
           <p className="mt-4 text-muted-foreground text-base sm:text-lg">
             Transparent pricing. No retainers. No fluff.
@@ -95,7 +95,7 @@ const Packages = () => {
               )}
 
               <div className="mb-5">
-                <h3 className="text-lg font-semibold">{p.name}</h3>
+                <h3 className="text-lg font-semibold leading-snug">{p.name}</h3>
                 <p className="text-sm text-muted-foreground">{p.tagline}</p>
               </div>
 

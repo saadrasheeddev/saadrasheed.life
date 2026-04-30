@@ -1,20 +1,20 @@
-import { PhoneCall, Inbox, Database } from "lucide-react";
+import { PhoneCall, Inbox, CalendarCheck } from "lucide-react";
 
 const items = [
   {
     icon: PhoneCall,
-    title: "AI Calling Agent",
-    desc: "Calls, follows up, and books meetings automatically — without a human lifting a finger.",
+    title: "AI Calling Agent for Listings",
+    desc: "Calls every new buyer, seller or renter inquiry within 60 seconds — answers common property questions in a natural human voice.",
   },
   {
     icon: Inbox,
-    title: "Lead Capture + Routing",
-    desc: "Instantly responds to new leads and routes them to the right place in under 60 seconds.",
+    title: "Lead Qualification on Autopilot",
+    desc: "Your AI asks budget, timeline, financing and location preference — so your agents only spend time with serious, ready-to-tour prospects.",
   },
   {
-    icon: Database,
-    title: "Backend Automation",
-    desc: "CRMs, sheets, and internal systems updated automatically — no manual data entry, ever.",
+    icon: CalendarCheck,
+    title: "Automatic Viewing Bookings",
+    desc: "Qualified leads are booked straight into your agent's calendar and synced to your CRM — HubSpot, Follow Up Boss, kvCORE, or Sheets.",
   },
 ];
 
@@ -24,11 +24,14 @@ const WhatYouGet = () => {
       <div className="container">
         <div className="text-center max-w-2xl mx-auto mb-14">
           <p className="text-xs uppercase tracking-[0.2em] text-primary-glow mb-3">
-            What You Actually Get
+            The Solution
           </p>
           <h2 className="text-3xl md:text-5xl font-bold">
-            Three systems. One outcome: <span className="gradient-text">more booked meetings.</span>
+            Three systems. One outcome: <span className="gradient-text">more booked viewings.</span>
           </h2>
+          <p className="mt-4 text-muted-foreground text-base sm:text-lg">
+            Built specifically for real estate agents and brokerages — no generic SaaS playbooks.
+          </p>
         </div>
 
         <div className="grid md:grid-cols-3 gap-5 lg:gap-6">
