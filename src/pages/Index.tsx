@@ -25,12 +25,12 @@ const Index = () => {
       <Navbar />
       <main>
         <Hero />
+        <RealEstateBanner />
         <IntroVideo />
         {/* Testimonials hidden until real estate testimonials are collected */}
         {/* <Testimonials /> */}
         <Problems />
         <WhatYouGet />
-        <RealEstateBanner />
         <HowItWorks />
         {/* SocialProof hidden — re-enable when needed */}
         {/* <SocialProof /> */}
