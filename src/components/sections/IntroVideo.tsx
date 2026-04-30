@@ -4,10 +4,10 @@ const IntroVideo = () => {
       <div className="container">
         <div className="text-center max-w-2xl mx-auto mb-8 sm:mb-12">
           <p className="text-xs uppercase tracking-[0.2em] text-primary-glow mb-3">
-            Meet Saad & See How It Works
+            See How It Works
           </p>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold">
-            Watch this <span className="gradient-text">90-second intro</span>
+            How AI books viewings for <span className="gradient-text">real estate agents</span>
           </h2>
         </div>
 
@@ -28,8 +28,8 @@ const IntroVideo = () => {
           </div>
 
           <p className="text-center text-sm sm:text-base text-muted-foreground leading-relaxed mt-6 sm:mt-8 max-w-2xl mx-auto px-2">
-            Hi, I'm Saad Rasheed. In this quick video I show you exactly how my AI agents
-            book appointments on autopilot.
+            Hi, I'm Saad Rasheed. In this quick video I show real estate agents and agencies
+            exactly how my AI agents call leads in 60 seconds and book viewings on autopilot.
           </p>
         </div>
       </div>

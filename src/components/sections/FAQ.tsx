@@ -7,24 +7,28 @@ import {
 
 const faqs = [
   {
-    q: "Will this work in my country / time zone?",
-    a: "Yes. The AI calling agent runs 24/7 and supports US, UK, EU, MENA, APAC and more. Calls happen in your prospect's time zone — not mine. I'm based in Pakistan but ship globally.",
+    q: "Will the AI sound robotic to my buyers and sellers?",
+    a: "No. The voice agents I deploy use the latest natural-voice models (Vapi, Retell, Bland) and are trained specifically on real estate scripts. Most prospects don't realize they're speaking with AI — and the ones who do are simply impressed you respond instantly.",
   },
   {
-    q: "What if I don't have many leads yet?",
-    a: "That's actually the best time to set this up. The system pays off the moment lead #1 arrives — and scales with you, so you never have to rebuild as volume grows.",
+    q: "Can it actually answer property questions?",
+    a: "Yes. The AI is trained on your listings, neighborhoods, pricing, financing options and showing availability. It handles the common 80% — square footage, bedrooms, school district, viewing times — and books a human follow-up for anything complex.",
   },
   {
-    q: "Do I need technical knowledge?",
-    a: "No. 80% of my clients are non-technical founders. I handle the build, document everything in plain English, and record Loom walkthroughs so anyone on your team can run it.",
+    q: "Will it integrate with my CRM?",
+    a: "Yes. I integrate with the CRMs real estate teams actually use — Follow Up Boss, kvCORE, BoomTown, LionDesk, HubSpot, Pipedrive, GoHighLevel, Salesforce, or even Google Sheets. Every qualified lead and viewing flows in automatically.",
+  },
+  {
+    q: "What lead sources does it work with?",
+    a: "Anywhere a lead can come from: Zillow, Realtor.com, Rightmove, Bayut, Property Finder, your website forms, Facebook & Instagram ads, Google Local Service Ads, and portal email parsers. If it can hit a webhook, the AI can call it.",
   },
   {
     q: "How fast can this be set up?",
-    a: "The Appointment Booking System ships in 7 days. Audits are delivered within 72 hours. Scale clients get continuous delivery every month.",
+    a: "The AI Appointment Booking System ships in 7 days. Audits are delivered within 72 hours. Agency rollouts with multiple agents typically launch in 2–3 weeks.",
   },
   {
-    q: "What tools do you use?",
-    a: "AI voice agents (Vapi, Retell, Bland), Make.com, n8n, Zapier, OpenAI/GPT-4, plus your CRM of choice — HubSpot, Pipedrive, GoHighLevel, Airtable or Google Sheets.",
+    q: "What if I'm a solo agent — is this overkill?",
+    a: "Solo agents see the biggest impact, because you can't physically answer every lead in 60 seconds. The AI is essentially your 24/7 ISA at a fraction of the cost of hiring one.",
   },
 ];
 
@@ -33,8 +37,8 @@ const FAQ = () => {
     <section className="py-20 md:py-28 fade-in-up">
       <div className="container max-w-3xl">
         <div className="text-center mb-14">
-          <p className="text-xs uppercase tracking-[0.2em] text-primary-glow mb-3">FAQ</p>
-          <h2 className="text-3xl md:text-5xl font-bold">Questions, answered.</h2>
+          <p className="text-xs uppercase tracking-[0.2em] text-primary-glow mb-3">Objections, handled</p>
+          <h2 className="text-3xl md:text-5xl font-bold">What agents always ask.</h2>
         </div>
 
         <Accordion type="single" collapsible className="space-y-3">

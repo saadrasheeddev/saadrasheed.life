@@ -25,14 +25,16 @@ const Index = () => {
       <main>
         <Hero />
         <IntroVideo />
-        <Testimonials />
-        <WhatYouGet />
-        <SocialProof />
-        <Stats />
+        {/* Testimonials hidden until real estate testimonials are collected */}
+        {/* <Testimonials /> */}
         <Problems />
+        <WhatYouGet />
+        <HowItWorks />
+        {/* SocialProof hidden — re-enable when needed */}
+        {/* <SocialProof /> */}
+        <Stats />
         <About />
         <Packages />
-        <HowItWorks />
         <FAQ />
         <LeadMagnet />
         <FinalCTA />

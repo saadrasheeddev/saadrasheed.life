@@ -1,20 +1,25 @@
-import { AlertTriangle, TrendingDown, HelpCircle } from "lucide-react";
+import { AlertTriangle, TrendingDown, HelpCircle, Moon } from "lucide-react";
 
 const problems = [
   {
+    icon: Moon,
+    title: "Inbound listing inquiries die after hours",
+    desc: "Leads come in at 9pm from Zillow, Rightmove, Bayut or your website. By morning, they've already toured a property with another agent.",
+  },
+  {
     icon: AlertTriangle,
-    title: "Leads come in… but no one follows up fast enough",
-    desc: "You see the notifications. You promise to call back. By the time you do, they've already booked with someone else.",
+    title: "Manual follow-up is killing your day",
+    desc: "Hours lost dialing buyers, chasing renters and re-qualifying tire-kickers — instead of closing deals and showing properties.",
   },
   {
     icon: TrendingDown,
-    title: "You're manually calling or messaging every prospect",
-    desc: "Your day is a treadmill of dials, DMs and reminders — instead of closing, building or growing.",
+    title: "You're losing deals to faster agents",
+    desc: "Studies show 78% of buyers go with the first agent who responds. If you're not calling in 60 seconds, you're losing commission.",
   },
   {
     icon: HelpCircle,
-    title: "Hot opportunities go cold because of delays",
-    desc: "A 5-minute response wins. A 5-hour one loses. Without a system, you're losing revenue you'll never see.",
+    title: "Your team can't keep up with lead volume",
+    desc: "Paid ads and portals push leads in faster than your agents can call. Hot inquiries sit unattended and go cold within an hour.",
   },
 ];
 
@@ -25,11 +30,14 @@ const Problems = () => {
         <div className="text-center max-w-2xl mx-auto mb-14">
           <p className="text-xs uppercase tracking-[0.2em] text-primary-glow mb-3">The Problem</p>
           <h2 className="text-3xl md:text-5xl font-bold">
-            Sound familiar?
+            Sound familiar, agent?
           </h2>
+          <p className="mt-4 text-muted-foreground text-base sm:text-lg">
+            Every missed inquiry is a viewing booked with someone else.
+          </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-5">
+        <div className="grid md:grid-cols-2 gap-5">
           {problems.map((p) => (
             <div
               key={p.title}

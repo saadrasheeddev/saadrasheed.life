@@ -11,12 +11,12 @@ const FinalCTA = () => {
 
           <div className="relative max-w-2xl mx-auto space-y-5 sm:space-y-6">
             <h2 className="text-[1.75rem] leading-tight sm:text-4xl md:text-5xl lg:text-6xl font-extrabold">
-              Stop Losing Leads Because<br className="hidden sm:block" />{" "}
-              <span className="gradient-text">No One Followed Up.</span>
+              Never Miss Another Listing Inquiry.<br className="hidden sm:block" />{" "}
+              <span className="gradient-text">Book More Viewings on Autopilot.</span>
             </h2>
 
             <p className="text-base sm:text-lg text-muted-foreground max-w-xl mx-auto leading-relaxed">
-              Let AI handle your calls and bookings while you focus on closing.
+              Let AI call, qualify and book your real estate leads while you focus on closing.
               30-minute strategy call. Walk away with a clear plan — even if we don't work together.
             </p>
 
