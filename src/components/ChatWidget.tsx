@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { MessageCircle, X, Send, Sparkles } from "lucide-react";
+import { MessageCircle, X, Send, Sparkles, ArrowLeft } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -7,17 +7,22 @@ import { z } from "zod";
 import { toast } from "sonner";
 
 type Msg = { from: "bot" | "user"; text: string };
+type Stage = "gate" | "verify" | "chat";
 
 // Shared site token — same one used in the lead magnet form.
-// In n8n verify either `x-site-token` header or `siteToken` body field.
 const SITE_TOKEN = "sr_site_8f3b29d1a74e4c5fbf91e6c2ad7b1e93";
 
 const LEAD_WEBHOOK_URL = "https://n8n.saadrasheed.life/webhook/lead-magnet";
 const CHAT_WEBHOOK_URL = "https://n8n.saadrasheed.life/webhook/chat-widget";
+const SEND_CODE_WEBHOOK_URL = "https://n8n.saadrasheed.life/webhook/send-code";
+const VERIFY_CODE_WEBHOOK_URL = "https://n8n.saadrasheed.life/webhook/verify-code";
 
 const STORAGE_KEY = "sr_chat_user_v1";
 const GREETING_KEY = "sr_chat_greeting_shown";
 const REPLY_TIMEOUT_MS = 60_000;
+
+// Resend cooldown progression in seconds: 1m, 5m, 10m, 15m, 30m, then 30m repeating.
+const RESEND_COOLDOWNS = [60, 300, 600, 900, 1800];
 
 const gateSchema = z.object({
   name: z.string().trim().min(1, "Name is required").max(80),
@@ -31,30 +36,48 @@ const initialMsgs: Msg[] = [
   },
 ];
 
+const fmtCountdown = (s: number) => {
+  const m = Math.floor(s / 60);
+  const sec = s % 60;
+  return m > 0 ? `${m}:${String(sec).padStart(2, "0")}` : `${sec}s`;
+};
+
 const ChatWidget = () => {
   const [open, setOpen] = useState(false);
   const [msgs, setMsgs] = useState<Msg[]>(initialMsgs);
   const [input, setInput] = useState("");
   const [waiting, setWaiting] = useState(false);
   const [user, setUser] = useState<{ name: string; email: string } | null>(null);
+
+  // gate
+  const [stage, setStage] = useState<Stage>("gate");
   const [gateName, setGateName] = useState("");
   const [gateEmail, setGateEmail] = useState("");
   const [gateLoading, setGateLoading] = useState(false);
+
+  // verify
+  const [code, setCode] = useState("");
+  const [verifyLoading, setVerifyLoading] = useState(false);
+  const [resendCount, setResendCount] = useState(0);
+  const [cooldownEndsAt, setCooldownEndsAt] = useState<number | null>(null);
+  const [now, setNow] = useState(Date.now());
+
   const [showGreeting, setShowGreeting] = useState(false);
   const [greetingDismissed, setGreetingDismissed] = useState(false);
 
   const scrollRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-  // Restore returning users and check if greeting should show
+  // Restore returning users (already verified)
   useEffect(() => {
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
-      if (raw) setUser(JSON.parse(raw));
-      
+      if (raw) {
+        setUser(JSON.parse(raw));
+        setStage("chat");
+      }
       const greetingShown = localStorage.getItem(GREETING_KEY);
       if (!greetingShown && !raw) {
-        // Delay greeting slightly for better UX
         const timer = setTimeout(() => setShowGreeting(true), 1500);
         return () => clearTimeout(timer);
       }
@@ -63,7 +86,6 @@ const ChatWidget = () => {
     }
   }, []);
 
-  // Auto-hide greeting after 8 seconds if not clicked
   useEffect(() => {
     if (showGreeting && !open) {
       const timer = setTimeout(() => {
@@ -86,6 +108,39 @@ const ChatWidget = () => {
     });
   }, [msgs, open, waiting]);
 
+  // Cooldown ticker
+  useEffect(() => {
+    if (!cooldownEndsAt) return;
+    const t = setInterval(() => setNow(Date.now()), 500);
+    return () => clearInterval(t);
+  }, [cooldownEndsAt]);
+
+  const cooldownRemaining =
+    cooldownEndsAt && cooldownEndsAt > now ? Math.ceil((cooldownEndsAt - now) / 1000) : 0;
+
+  const sendCode = async (name: string, email: string): Promise<boolean> => {
+    try {
+      const res = await fetch(SEND_CODE_WEBHOOK_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-site-token": SITE_TOKEN,
+        },
+        body: JSON.stringify({
+          name,
+          email,
+          siteToken: SITE_TOKEN,
+          submittedAt: new Date().toISOString(),
+          page: typeof window !== "undefined" ? window.location.href : "",
+        }),
+      });
+      const data = await res.json().catch(() => null);
+      return !!data?.success;
+    } catch {
+      return false;
+    }
+  };
+
   const handleGate = async (e: React.FormEvent) => {
     e.preventDefault();
     const result = gateSchema.safeParse({ name: gateName, email: gateEmail });
@@ -95,7 +150,6 @@ const ChatWidget = () => {
     }
 
     setGateLoading(true);
-    // Mark greeting as shown when user engages
     setShowGreeting(false);
     setGreetingDismissed(true);
     try {
@@ -103,43 +157,119 @@ const ChatWidget = () => {
     } catch {
       // ignore
     }
+
+    // Fire-and-forget capture to lead webhook (so contact lands in CRM regardless).
+    fetch(LEAD_WEBHOOK_URL, {
+      method: "POST",
+      mode: "no-cors",
+      headers: {
+        "Content-Type": "application/json",
+        "x-site-token": SITE_TOKEN,
+      },
+      body: JSON.stringify({
+        name: result.data.name,
+        email: result.data.email,
+        source: "chat-widget",
+        siteToken: SITE_TOKEN,
+        submittedAt: new Date().toISOString(),
+        page: typeof window !== "undefined" ? window.location.href : "",
+      }),
+    }).catch(() => {});
+
+    const ok = await sendCode(result.data.name, result.data.email);
+    setGateLoading(false);
+
+    if (!ok) {
+      toast.error("Couldn't send your code. Please try again.");
+      return;
+    }
+
+    toast.success("Code sent! Check your inbox.");
+    setStage("verify");
+    setCode("");
+    setResendCount(0);
+    setCooldownEndsAt(null);
+  };
+
+  const handleVerify = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const trimmed = code.trim();
+    if (trimmed.length < 4) {
+      toast.error("Enter the code from your email.");
+      return;
+    }
+    setVerifyLoading(true);
     try {
-      // Send the contact details to the same lead webhook (fire-and-forget).
-      await fetch(LEAD_WEBHOOK_URL, {
+      const res = await fetch(VERIFY_CODE_WEBHOOK_URL, {
         method: "POST",
-        mode: "no-cors",
         headers: {
           "Content-Type": "application/json",
           "x-site-token": SITE_TOKEN,
         },
         body: JSON.stringify({
-          name: result.data.name,
-          email: result.data.email,
-          source: "chat-widget",
+          name: gateName,
+          email: gateEmail,
+          code: trimmed,
           siteToken: SITE_TOKEN,
-          submittedAt: new Date().toISOString(),
-          page: typeof window !== "undefined" ? window.location.href : "",
         }),
       });
+      const raw = await res.json().catch(() => null);
+      // Accept either { success, reason } or n8n's [{ json: { ... } }]
+      const payload = Array.isArray(raw) ? raw[0]?.json ?? raw[0] : raw;
 
-      const u = { name: result.data.name, email: result.data.email };
-      setUser(u);
-      try {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(u));
-      } catch {
-        // ignore
+      if (payload?.success) {
+        const u = { name: gateName.trim(), email: gateEmail.trim() };
+        setUser(u);
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(u));
+        } catch {
+          // ignore
+        }
+        setStage("chat");
+        setMsgs([
+          {
+            from: "bot",
+            text: `Hey ${u.name.split(" ")[0]}! 👋 You're in. What would you like to know about AI calling agents?`,
+          },
+        ]);
+      } else {
+        const reason: string = payload?.reason || "Invalid code";
+        const friendly =
+          reason === "Code expired"
+            ? "That code expired. Tap resend to get a fresh one."
+            : reason === "No code found"
+              ? "No active code for this email. Tap resend below."
+              : "That code didn't match. Double-check and try again.";
+        toast.error(friendly);
       }
-      setMsgs([
-        {
-          from: "bot",
-          text: `Hey ${u.name.split(" ")[0]}! 👋 What would you like to know about AI calling agents?`,
-        },
-      ]);
     } catch {
-      toast.error("Could not start chat. Please try again.");
+      toast.error("Verification failed. Please try again.");
     } finally {
-      setGateLoading(false);
+      setVerifyLoading(false);
     }
+  };
+
+  const handleResend = async () => {
+    if (cooldownRemaining > 0) return;
+    setVerifyLoading(true);
+    const ok = await sendCode(gateName, gateEmail);
+    setVerifyLoading(false);
+    if (!ok) {
+      toast.error("Couldn't resend. Please try again in a moment.");
+      return;
+    }
+    toast.success("New code sent.");
+    const idx = Math.min(resendCount, RESEND_COOLDOWNS.length - 1);
+    const wait = RESEND_COOLDOWNS[idx];
+    setCooldownEndsAt(Date.now() + wait * 1000);
+    setResendCount((c) => c + 1);
+  };
+
+  const handleChangeEmail = () => {
+    setStage("gate");
+    setCode("");
+    setCooldownEndsAt(null);
+    setResendCount(0);
   };
 
   const sendToChatWebhook = async (message: string, email: string, name: string): Promise<string | null> => {
@@ -163,7 +293,6 @@ const ChatWidget = () => {
       clearTimeout(timer);
       if (!res.ok) return null;
       const data = await res.json().catch(() => null);
-      // Expected shape: { reply: "..." }   (also accepts { message: "..." })
       const reply: unknown = data?.reply ?? data?.message;
       return typeof reply === "string" && reply.trim() ? reply : null;
     } catch {
@@ -199,10 +328,10 @@ const ChatWidget = () => {
 
   return (
     <>
-      {/* Greeting - waving hand pops up from top-left of chat button */}
+      {/* Greeting */}
       {!open && showGreeting && !greetingDismissed && (
         <div className="fixed bottom-[58px] right-[58px] sm:bottom-[64px] sm:right-[64px] z-[59] animate-greeting-pop origin-bottom-right">
-          <div 
+          <div
             className="relative cursor-pointer"
             onClick={() => {
               setOpen(true);
@@ -236,7 +365,7 @@ const ChatWidget = () => {
         }}
         aria-label={open ? "Close chat" : "Chat with Saad's AI Assistant"}
         className={cn(
-          "fixed bottom-5 right-5 sm:bottom-6 sm:right-6 z-[60] h-14 w-14 rounded-full gradient-primary text-white shadow-[0_15px_40px_-10px_hsl(270_85%_55%/0.7)] flex items-center justify-center hover:scale-105 active:scale-95 transition-transform"
+          "fixed bottom-5 right-5 sm:bottom-6 sm:right-6 z-[60] h-14 w-14 rounded-full gradient-primary text-white shadow-[0_15px_40px_-10px_hsl(270_85%_55%/0.7)] flex items-center justify-center hover:scale-105 active:scale-95 transition-transform",
         )}
       >
         {open ? <X className="h-6 w-6" /> : <MessageCircle className="h-6 w-6" />}
@@ -247,7 +376,7 @@ const ChatWidget = () => {
         className={cn(
           "fixed z-[60] bg-card border border-border rounded-2xl shadow-2xl overflow-hidden flex flex-col transition-all origin-bottom-right",
           "bottom-24 right-4 left-4 sm:left-auto sm:right-6 sm:bottom-24 sm:w-[360px] h-[70vh] max-h-[520px]",
-          open ? "opacity-100 scale-100 pointer-events-auto" : "opacity-0 scale-95 pointer-events-none"
+          open ? "opacity-100 scale-100 pointer-events-auto" : "opacity-0 scale-95 pointer-events-none",
         )}
       >
         {/* Header */}
@@ -264,13 +393,12 @@ const ChatWidget = () => {
           </div>
         </div>
 
-        {!user ? (
-          /* Gate form */
+        {stage === "gate" && (
           <form onSubmit={handleGate} className="flex-1 overflow-y-auto p-5 flex flex-col justify-center gap-3">
             <div>
               <h3 className="font-semibold text-base mb-1">Before we start</h3>
               <p className="text-xs text-muted-foreground">
-                Quick intro so Saad knows who he's chatting with.
+                Quick intro so Saad knows who he's chatting with. We'll email you a quick code to verify.
               </p>
             </div>
             <Input
@@ -294,15 +422,66 @@ const ChatWidget = () => {
               className="h-11 bg-secondary border-border"
             />
             <Button type="submit" variant="hero" className="w-full" disabled={gateLoading}>
-              {gateLoading ? "Starting..." : "Start Chat"}
+              {gateLoading ? "Sending your code…" : "✨ Send my verification code"}
             </Button>
             <p className="text-[11px] text-muted-foreground text-center">
               No spam. Used only to follow up on your question.
             </p>
           </form>
-        ) : (
+        )}
+
+        {stage === "verify" && (
+          <form onSubmit={handleVerify} className="flex-1 overflow-y-auto p-5 flex flex-col justify-center gap-3">
+            <button
+              type="button"
+              onClick={handleChangeEmail}
+              className="self-start text-xs text-muted-foreground hover:text-foreground flex items-center gap-1"
+            >
+              <ArrowLeft className="h-3 w-3" /> Change email
+            </button>
+            <div>
+              <h3 className="font-semibold text-base mb-1">Check your inbox 📬</h3>
+              <p className="text-xs text-muted-foreground">
+                We sent a verification code to <span className="text-foreground font-medium">{gateEmail}</span>.
+              </p>
+            </div>
+            <Input
+              type="text"
+              inputMode="numeric"
+              autoComplete="one-time-code"
+              placeholder="Enter your code"
+              value={code}
+              onChange={(e) => setCode(e.target.value)}
+              maxLength={10}
+              required
+              disabled={verifyLoading}
+              className="h-11 bg-secondary border-border tracking-widest text-center text-lg"
+            />
+            <Button type="submit" variant="hero" className="w-full" disabled={verifyLoading}>
+              {verifyLoading ? "Unlocking chat…" : "🔓 Unlock the chat"}
+            </Button>
+            <div className="flex items-center justify-between text-xs">
+              <button
+                type="button"
+                onClick={handleResend}
+                disabled={verifyLoading || cooldownRemaining > 0}
+                className="text-primary-glow hover:underline disabled:opacity-50 disabled:no-underline disabled:cursor-not-allowed"
+              >
+                {cooldownRemaining > 0 ? `Resend in ${fmtCountdown(cooldownRemaining)}` : "Resend code"}
+              </button>
+              <button
+                type="button"
+                onClick={handleChangeEmail}
+                className="text-muted-foreground hover:text-foreground"
+              >
+                Wrong email?
+              </button>
+            </div>
+          </form>
+        )}
+
+        {stage === "chat" && user && (
           <>
-            {/* Messages */}
             <div ref={scrollRef} className="flex-1 overflow-y-auto p-4 space-y-3 flex flex-col">
               {msgs.map((m, i) => (
                 <div
@@ -311,7 +490,7 @@ const ChatWidget = () => {
                     "max-w-[85%] w-fit rounded-2xl px-3.5 py-2.5 text-sm leading-relaxed break-words",
                     m.from === "bot"
                       ? "bg-secondary text-foreground rounded-tl-sm self-start"
-                      : "gradient-primary text-white rounded-tr-sm self-end"
+                      : "gradient-primary text-white rounded-tr-sm self-end",
                   )}
                 >
                   {m.text}
@@ -328,7 +507,6 @@ const ChatWidget = () => {
               )}
             </div>
 
-            {/* Input */}
             <form onSubmit={handleSend} className="p-3 border-t border-border bg-background/50 flex items-end gap-2">
               <textarea
                 ref={textareaRef}
