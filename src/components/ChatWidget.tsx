@@ -14,8 +14,7 @@ const SITE_TOKEN = "sr_site_8f3b29d1a74e4c5fbf91e6c2ad7b1e93";
 
 const LEAD_WEBHOOK_URL = "https://n8n.saadrasheed.life/webhook/lead-magnet";
 const CHAT_WEBHOOK_URL = "https://n8n.saadrasheed.life/webhook/chat-widget";
-const SEND_CODE_WEBHOOK_URL = "https://n8n.saadrasheed.life/webhook/send-code";
-const VERIFY_CODE_WEBHOOK_URL = "https://n8n.saadrasheed.life/webhook/verify-code";
+const CODE_WEBHOOK_URL = "https://n8n.saadrasheed.life/webhook/code";
 
 const STORAGE_KEY = "sr_chat_user_v1";
 const GREETING_KEY = "sr_chat_greeting_shown";
@@ -120,7 +119,7 @@ const ChatWidget = () => {
 
   const sendCode = async (name: string, email: string): Promise<boolean> => {
     try {
-      const res = await fetch(SEND_CODE_WEBHOOK_URL, {
+      const res = await fetch(CODE_WEBHOOK_URL, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -129,6 +128,7 @@ const ChatWidget = () => {
         body: JSON.stringify({
           name,
           email,
+          action: "send_code",
           siteToken: SITE_TOKEN,
           submittedAt: new Date().toISOString(),
           page: typeof window !== "undefined" ? window.location.href : "",
@@ -200,7 +200,7 @@ const ChatWidget = () => {
     }
     setVerifyLoading(true);
     try {
-      const res = await fetch(VERIFY_CODE_WEBHOOK_URL, {
+      const res = await fetch(CODE_WEBHOOK_URL, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -209,6 +209,7 @@ const ChatWidget = () => {
         body: JSON.stringify({
           name: gateName,
           email: gateEmail,
+          action: "verify_code",
           code: trimmed,
           siteToken: SITE_TOKEN,
         }),
