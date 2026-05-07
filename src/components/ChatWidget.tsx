@@ -158,24 +158,6 @@ const ChatWidget = () => {
       // ignore
     }
 
-    // Fire-and-forget capture to lead webhook (so contact lands in CRM regardless).
-    fetch(LEAD_WEBHOOK_URL, {
-      method: "POST",
-      mode: "no-cors",
-      headers: {
-        "Content-Type": "application/json",
-        "x-site-token": SITE_TOKEN,
-      },
-      body: JSON.stringify({
-        name: result.data.name,
-        email: result.data.email,
-        source: "chat-widget",
-        siteToken: SITE_TOKEN,
-        submittedAt: new Date().toISOString(),
-        page: typeof window !== "undefined" ? window.location.href : "",
-      }),
-    }).catch(() => {});
-
     const ok = await sendCode(result.data.name, result.data.email);
     setGateLoading(false);
 
