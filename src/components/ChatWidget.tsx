@@ -423,7 +423,7 @@ const ChatWidget = () => {
               className="h-11 bg-secondary border-border"
             />
             <Button type="submit" variant="hero" className="w-full" disabled={gateLoading}>
-              {gateLoading ? "Sending your code…" : "✨ Send my verification code"}
+              {gateLoading ? "Sending your code…" : "Send my verification code"}
             </Button>
             <p className="text-[11px] text-muted-foreground text-center">
               No spam. Used only to follow up on your question.
