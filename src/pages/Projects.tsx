@@ -180,8 +180,9 @@ const Projects = () => {
                     className="w-full group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-300" 
                     asChild
                   >
-                    <a href={`/project-details#s${projects.indexOf(p) + 1}`}>
-                      View more details about the project
+                    <a href={`/project-details#s${projects.indexOf(p) + 1}`} className="whitespace-normal h-auto text-center py-2 flex items-center justify-center">
+                      <span className="hidden sm:inline">View more details about the project</span>
+                      <span className="sm:hidden">View project details</span>
                       <ArrowRight className="ml-2 h-4 w-4 shrink-0 transition-transform group-hover:translate-x-1" />
                     </a>
                   </Button>

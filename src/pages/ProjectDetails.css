@@ -321,6 +321,11 @@ section.visible{display:block}
   .cta{flex-direction:column;padding:32px 24px}
   .contact-bar{flex-direction:column;gap:16px;align-items:flex-start}
   .contact-bar .info{flex-direction:column;gap:12px}
+  .cmt-row{flex-direction:column;align-items:stretch;gap:12px}
+  .cmt-box{width:100%}
+  .arr{padding-top:0;align-self:center;transform:rotate(90deg)}
+  .demo-bar{flex-wrap:wrap;justify-content:center}
+  .demo-body{padding:16px 20px}
 }
 
 }
