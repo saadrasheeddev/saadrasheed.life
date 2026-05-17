@@ -76,6 +76,8 @@ const Hero = () => {
                 alt="Saad Rasheed, AI Calling Agents Specialist for Real Estate"
                 width={1024}
                 height={1024}
+                fetchPriority="high"
+                decoding="async"
                 className="w-full h-full object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent" />
