@@ -155,16 +155,16 @@ const Projects = () => {
                     {p.description}
                   </p>
 
-                  <blockquote className="relative rounded-xl bg-primary/10 border border-primary/20 px-4 py-3">
+                  <blockquote className="relative rounded-xl bg-primary/10 border border-primary/20 px-4 py-3 mb-4">
                     <span className="absolute -top-2 left-3 text-xs px-2 py-0.5 rounded-md bg-primary text-primary-foreground font-semibold">
-                      The Hook
+                      Consider this
                     </span>
                     <p className="text-sm italic text-foreground mt-1">
                       "{p.hook}"
                     </p>
                   </blockquote>
 
-                  <div className="flex flex-wrap gap-2 pt-1">
+                  <div className="flex flex-wrap gap-2 pt-1 mb-4">
                     {p.tags.map((tag) => (
                       <span
                         key={tag}
@@ -174,6 +174,17 @@ const Projects = () => {
                       </span>
                     ))}
                   </div>
+
+                  <Button 
+                    variant="outline" 
+                    className="w-full group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-300" 
+                    asChild
+                  >
+                    <a href={`/project-details#s${projects.indexOf(p) + 1}`}>
+                      View more details about the project
+                      <ArrowRight className="ml-2 h-4 w-4 shrink-0 transition-transform group-hover:translate-x-1" />
+                    </a>
+                  </Button>
                 </div>
               </article>
             ))}
