@@ -2,6 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import './ProjectDetails.css';
 
 const ProjectDetails = () => {
@@ -31,16 +38,30 @@ const ProjectDetails = () => {
       <div className="project-details-page flex-grow pt-20">
         {/* The content */}
         
-{/* PROJECT TABS */}
-<div className="tabnav">
-  <div className={`tab ${activeTab === 's1' ? 'active' : ''}`} onClick={() => handleTabClick('s1')}>Email-to-Task Routing</div>
-  <div className={`tab ${activeTab === 's2' ? 'active' : ''}`} onClick={() => handleTabClick('s2')}>24/7 AI Receptionist</div>
-  <div className={`tab ${activeTab === 's3' ? 'active' : ''}`} onClick={() => handleTabClick('s3')}>24/7 Call Logging &amp; CRM</div>
-  <div className={`tab ${activeTab === 's4' ? 'active' : ''}`} onClick={() => handleTabClick('s4')}>Self-Serve Data Chatbot</div>
-  <div className={`tab ${activeTab === 's5' ? 'active' : ''}`} onClick={() => handleTabClick('s5')}>One-Click Content Engine</div>
-  <div className={`tab ${activeTab === 's6' ? 'active' : ''}`} onClick={() => handleTabClick('s6')}>Instant Contract Review</div>
-  <div className={`tab ${activeTab === 's7' ? 'active' : ''}`} onClick={() => handleTabClick('s7')}>Lost Lead Recovery</div>
-  <div className={`tab ${activeTab === 's8' ? 'active' : ''}`} onClick={() => handleTabClick('s8')}>Zero-Shoot E-Commerce</div>
+{/* PROJECT SWITCHER */}
+<div className="sticky top-[58px] z-40 bg-background/95 backdrop-blur-md border-b border-border py-4 px-6 md:px-12 flex justify-center shadow-sm">
+  <div className="w-full max-w-xl flex items-center gap-4">
+    <label className="hidden sm:block text-xs font-semibold uppercase tracking-widest text-muted-foreground whitespace-nowrap">
+      Select Project:
+    </label>
+    <div className="w-full">
+      <Select value={activeTab} onValueChange={handleTabClick}>
+        <SelectTrigger className="w-full bg-secondary/30 border-border text-foreground hover:bg-secondary/50 transition-colors h-11">
+          <SelectValue placeholder="Select a project" />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectItem value="s1">Email-to-Task Routing</SelectItem>
+          <SelectItem value="s2">24/7 AI Receptionist</SelectItem>
+          <SelectItem value="s3">24/7 Call Logging &amp; CRM</SelectItem>
+          <SelectItem value="s4">Self-Serve Data Chatbot</SelectItem>
+          <SelectItem value="s5">One-Click Content Engine</SelectItem>
+          <SelectItem value="s6">Instant Contract Review</SelectItem>
+          <SelectItem value="s7">Lost Lead Recovery</SelectItem>
+          <SelectItem value="s8">Zero-Shoot E-Commerce</SelectItem>
+        </SelectContent>
+      </Select>
+    </div>
+  </div>
 </div>
 
 
