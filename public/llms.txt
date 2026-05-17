@@ -50,9 +50,9 @@ Tools: OpenAI, Notion, Slack, Pinecone
 
 ## Pages
 
-- Homepage: https://saadrasheed.life/
-- Projects: https://saadrasheed.life/projects
-- Full details: https://saadrasheed.life/llms-full.txt
+- [Homepage](https://flow-forge-ai-80.lovable.app/): AI calling agents for real estate — overview, services, packages, FAQ.
+- [Projects](https://flow-forge-ai-80.lovable.app/projects): Case studies of deployed AI automation systems.
+- [Full details](https://flow-forge-ai-80.lovable.app/llms-full.txt): Long-form profile and offer details for AI assistants.
 
 ## Contact
 
