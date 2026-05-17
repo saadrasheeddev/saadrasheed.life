@@ -1,3 +1,4 @@
+import { Helmet } from "react-helmet-async";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ChatWidget from "@/components/ChatWidget";
@@ -22,6 +23,14 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <Helmet>
+        <title>Saad Rasheed — AI Automations | Save 10–20 Hrs/Week</title>
+        <meta name="description" content="Done-for-you AI workflows for founders & lean teams. Save 10–20+ hours weekly with Make.com, n8n, Zapier & OpenAI." />
+        <link rel="canonical" href="https://flow-forge-ai-80.lovable.app/" />
+        <meta property="og:title" content="Saad Rasheed — AI Automations | Save 10–20 Hrs/Week" />
+        <meta property="og:description" content="Done-for-you AI workflows for founders & lean teams. Save 10–20+ hours weekly." />
+        <meta property="og:url" content="https://flow-forge-ai-80.lovable.app/" />
+      </Helmet>
       <Navbar />
       <main>
         <Hero />

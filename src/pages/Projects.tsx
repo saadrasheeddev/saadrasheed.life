@@ -1,3 +1,4 @@
+import { Helmet } from "react-helmet-async";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
@@ -49,6 +50,27 @@ const Projects = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <Helmet>
+        <title>Projects — AI Calling Agents & Automation Case Studies | Saad Rasheed</title>
+        <meta name="description" content="Real AI calling agents and automation projects: booked viewings, lead follow-up engines, onboarding flows. See the results and the stack." />
+        <link rel="canonical" href="https://flow-forge-ai-80.lovable.app/projects" />
+        <meta property="og:title" content="Projects — AI Calling Agents & Automation Case Studies" />
+        <meta property="og:description" content="Case studies of AI calling agents and automations Saad Rasheed has deployed for agencies and founders." />
+        <meta property="og:url" content="https://flow-forge-ai-80.lovable.app/projects" />
+        <script type="application/ld+json">{JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "CollectionPage",
+          "name": "Projects — AI Calling Agents & Automation Case Studies",
+          "url": "https://flow-forge-ai-80.lovable.app/projects",
+          "description": "Portfolio of AI calling agents and revenue automation systems built by Saad Rasheed.",
+          "hasPart": projects.map((p) => ({
+            "@type": "CreativeWork",
+            "name": p.title,
+            "about": p.problem,
+            "description": p.solution,
+          })),
+        })}</script>
+      </Helmet>
       <Navbar />
       <main className="pt-28 md:pt-36">
         <section className="container">
