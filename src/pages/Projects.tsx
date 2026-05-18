@@ -96,15 +96,15 @@ const Projects = () => {
       <Helmet>
         <title>Projects — AI Automations & Calling Agents | Saad Rasheed</title>
         <meta name="description" content="Real AI automation projects: voice agents, lead recovery, contract review, BI chatbots, content engines and more. See the stack and the outcome." />
-        <link rel="canonical" href="https://flow-forge-ai-80.lovable.app/projects" />
+        <link rel="canonical" href="https://saadrasheed.life/projects" />
         <meta property="og:title" content="Projects — AI Automations & Calling Agents" />
         <meta property="og:description" content="Case studies of AI automations Saad Rasheed has shipped for agencies, founders, and lean teams." />
-        <meta property="og:url" content="https://flow-forge-ai-80.lovable.app/projects" />
+        <meta property="og:url" content="https://saadrasheed.life/projects" />
         <script type="application/ld+json">{JSON.stringify({
           "@context": "https://schema.org",
           "@type": "CollectionPage",
           "name": "Projects — AI Automations & Calling Agents",
-          "url": "https://flow-forge-ai-80.lovable.app/projects",
+          "url": "https://saadrasheed.life/projects",
           "description": "Portfolio of AI calling agents and automation systems built by Saad Rasheed.",
           "hasPart": projects.map((p) => ({
             "@type": "CreativeWork",

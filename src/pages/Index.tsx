@@ -26,10 +26,10 @@ const Index = () => {
       <Helmet>
         <title>Saad Rasheed — AI Automations | Save 10–20 Hrs/Week</title>
         <meta name="description" content="Done-for-you AI workflows for founders & lean teams. Save 10–20+ hours weekly with Make.com, n8n, Zapier & OpenAI." />
-        <link rel="canonical" href="https://flow-forge-ai-80.lovable.app/" />
+        <link rel="canonical" href="https://saadrasheed.life/" />
         <meta property="og:title" content="Saad Rasheed — AI Automations | Save 10–20 Hrs/Week" />
         <meta property="og:description" content="Done-for-you AI workflows for founders & lean teams. Save 10–20+ hours weekly." />
-        <meta property="og:url" content="https://flow-forge-ai-80.lovable.app/" />
+        <meta property="og:url" content="https://saadrasheed.life/" />
       </Helmet>
       <Navbar />
       <main>

@@ -87,53 +87,67 @@ This is an ongoing engagement. Clients on this plan typically see compounding re
 
 ## Case Studies & Project Results
 
-### Case Study 1: AI Calling Agent for Real Estate Agency
-**Industry:** Real Estate
-**Problem:** Inbound leads were going unanswered after business hours and on weekends. Agents were manually calling back hours or days later, losing warm leads to competitors.
-**Solution:** Built an AI voice agent (Vapi + GPT-4) that calls every new inbound lead within 60 seconds of form submission — at any hour, any day. The agent qualifies the lead's intent (buying, selling, renting), answers common questions, and books a property viewing directly into the agent's calendar.
-**Results:**
-- +32% more booked calls within 14 days of going live
-- 22 hours/week saved in manual follow-up time
-- Zero leads missed after hours
-**Tools Used:** Vapi, GPT-4, GoHighLevel, Calendly
+### 1. Stop Losing Tasks in Messy Email Threads
+**Category:** Operations Automation (Email-to-Task Routing)
+**Problem:** Internal email comments were getting lost, tasks were created too late, and urgent items weren't prioritized.
+**Solution & Flow:** Turn internal email comments into fully categorized, prioritized, and assigned Asana tasks instantly. A team member leaves a comment in a FrontApp shared thread with an emoji prefix. n8n catches the webhook, Claude AI parses the text, looks up the @mentioned user, and instantly creates an Asana task.
+**Tech Stack:** FrontApp, n8n, Asana, Claude AI
 
 ---
 
-### Case Study 2: Lead Follow-Up Engine for B2B Agency
-**Industry:** B2B Services / Agency
-**Problem:** Sales reps were manually chasing 200+ leads per month across email, phone, and LinkedIn. More than half of leads were falling through the cracks with no follow-up after the first touchpoint.
-**Solution:** Built a multi-touch AI follow-up system that automatically calls, emails, and DMs every lead on a structured cadence. The system escalates only hot leads (those who respond positively) to human reps, reducing manual work and ensuring no lead goes cold without contact.
-**Results:**
-- +47% improvement in show-up rate for booked calls
-- $11,000 MRR added within 6 weeks of launch
-- Sales reps now focus only on qualified, interested leads
-**Tools Used:** Make.com, OpenAI, HubSpot, Twilio
+### 2. A Voice Agent That Never Misses a Call
+**Category:** Lead Conversion (24/7 AI Receptionist)
+**Problem:** High-value inbound calls went unanswered after hours, and sales reps wasted hours repeating qualifying questions.
+**Solution & Flow:** Answers inbound calls, qualifies leads with custom questions, and books confirmed meetings onto your calendar — no human input required. The AI agent picks up any time, asks targeted questions, checks live Calendly availability via n8n, and books a confirmed meeting while sending an automatic calendar invite.
+**Tech Stack:** VAPI, n8n, Calendly
 
 ---
 
-### Case Study 3: Automated Client Onboarding for SaaS Company
-**Industry:** SaaS
-**Problem:** Onboarding new accounts required 4 hours of manual work per client — creating Slack channels, setting up Notion workspaces, provisioning Google Drive folders, and sending welcome emails. The founder was doing this personally.
-**Solution:** Built an n8n automation triggered by a successful Stripe payment. The flow automatically provisions a Slack channel, creates a Notion workspace from a template, sets up a Drive folder, and sends a personalized welcome email sequence — all within minutes of payment.
-**Results:**
-- Onboarding time reduced from 4 hours to 6 minutes per client
-- Zero manual involvement required from the founder
-- Scalable to any volume of new signups
-**Tools Used:** n8n, Stripe, Notion, Slack, Google Drive
+### 3. Log Every Caller & Build Your Marketing Database
+**Category:** Customer Database Builder
+**Problem:** Dozens of missed calls daily resulting in zero caller capture, no CRM data, and manual SMS follow-up.
+**Solution & Flow:** A 24/7 AI phone system that answers inbound calls, logs every customer into your CRM, and builds a database ready for future marketing campaigns. n8n writes the data to Vtiger CRM, triggers a follow-up text, and logs a call summary into a dedicated Telegram channel where the team can reply.
+**Tech Stack:** VAPI, n8n, Vtiger CRM, Telegram
 
 ---
 
-### Case Study 4: Internal AI Knowledge Assistant
-**Industry:** Agency / Internal Operations
-**Problem:** Team members were repeatedly asking the same SOP and process questions in Slack, pulling senior team members away from client work to answer basic internal questions.
-**Solution:** Built a custom GPT trained on the company's Notion documentation and connected it to Slack as an internal /ask bot. Team members can ask any question and receive an instant, sourced answer pulled directly from the company's own knowledge base.
-**Results:**
-- 8 hours/week saved in repeated internal Q&A
-- Faster onboarding for new team members
-- Senior team no longer interrupted by routine process questions
-**Tools Used:** OpenAI, Notion, Slack, Pinecone
+### 4. Talk to Your Database in Plain English
+**Category:** Business Intelligence (Self-Serve Data Chatbot)
+**Problem:** Non-technical team members couldn't query data without waiting days for a developer to run SQL reports.
+**Solution & Flow:** Ask questions on Telegram or Slack and get formatted answers, charts, and downloadable Excel reports instantly. No SQL required. Multiple LLM calls convert natural language into a safe SQL query, run it against Supabase, and return a formatted answer along with a downloadable Excel report.
+**Tech Stack:** Supabase, PostgreSQL, LLM, Telegram
 
 ---
+
+### 5. Scale Your Content Without Scaling Your Team
+**Category:** Content Automation (One-Click Content Engine)
+**Problem:** Content creators wasted hours manually formatting video scripts, voiceovers, and YouTube descriptions.
+**Solution & Flow:** Enter a topic in Google Sheets and instantly generate a full video script, aligned voiceover, and YouTube description in your Drive. Apps Script triggers an LLM to generate the documents in parallel, saving all formatted documents directly to Google Drive.
+**Tech Stack:** Google Sheets, Apps Script, LLM, Google Drive
+
+---
+
+### 6. Detect Contract Risks in Seconds, Not Days
+**Category:** Legal Risk Mitigation (Instant Contract Review)
+**Problem:** Businesses signed NDAs blindly because professional legal review was too slow and expensive.
+**Solution & Flow:** Upload any NDA to surface missing clauses, ambiguous language, and risky terms — complete with suggested rewrites inserted as Word comments. Apps Script extracts the text from Google Forms, an LLM identifies gaps, and a revised Word document is returned with tracked comments.
+**Tech Stack:** Google Forms, Apps Script, LLM, Word API
+
+---
+
+### 7. Recover Visitors Who Leave Without Booking
+**Category:** Revenue Recovery (Lost Lead Recovery)
+**Problem:** Interested visitors browsed the portfolio but bounced before booking a Calendly slot, leading to lost revenue.
+**Solution & Flow:** Capture visitor emails before they bounce, detect incomplete bookings, and trigger a personalized follow-up sequence automatically. A pop-up captures email, Zapier checks Calendly, and System.io automatically sends a sequence to recover them.
+**Tech Stack:** Zapier, System.io, Calendly
+
+---
+
+### 8. Studio-Quality Photos Without the Photoshoot
+**Category:** E-Commerce AI (AI Virtual Try-On)
+**Problem:** Expensive, slow studio photoshoots delayed product launches and ate into margins.
+**Solution & Flow:** Upload clothing flats, pick an AI model, and generate realistic styled product photos instantly — ready for your store. The Nano Banana AI engine processes the garment-model combination and instantly returns a realistic styled photo.
+**Tech Stack:** Supabase, Nano Banana AI, Web Interface
 
 ## Ideal Client Profile
 

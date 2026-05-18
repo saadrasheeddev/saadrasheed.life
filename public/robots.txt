@@ -13,5 +13,5 @@ Allow: /
 User-agent: anthropic-ai
 Allow: /
 
-Sitemap: https://flow-forge-ai-80.lovable.app/sitemap.xml
-LLMs: https://flow-forge-ai-80.lovable.app/llms.txt
+Sitemap: https://saadrasheed.life/sitemap.xml
+LLMs: https://saadrasheed.life/llms.txt
