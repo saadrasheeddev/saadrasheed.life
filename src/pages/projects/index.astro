@@ -8,12 +8,27 @@ import { ArrowRight } from 'lucide-react';
 
 const allProjects = await getCollection('projects');
 const sortedProjects = allProjects.sort((a, b) => a.data.order - b.data.order);
+
+const projectsSchema = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": "Projects — AI Automations & Calling Agents",
+  "url": "https://saadrasheed.life/projects",
+  "description": "Portfolio of AI calling agents and automation systems built by Saad Rasheed.",
+  "hasPart": sortedProjects.map((p) => ({
+    "@type": "CreativeWork",
+    "name": p.data.title,
+    "about": p.data.category,
+    "description": p.data.description,
+  })),
+};
 ---
 
 <Layout 
   title="Projects — AI Automations & Calling Agents | Saad Rasheed"
   description="Real AI automation projects: voice agents, lead recovery, contract review, BI chatbots, content engines and more. See the stack and the outcome."
   canonical="https://saadrasheed.life/projects"
+  schema={projectsSchema}
 >
   <Navbar client:load currentPath={Astro.url.pathname} />
   

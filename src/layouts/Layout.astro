@@ -5,12 +5,14 @@ interface Props {
   title: string;
   description?: string;
   canonical?: string;
+  schema?: Record<string, any>;
 }
 
 const { 
   title, 
   description = "Done-for-you AI workflows for founders & lean teams. Save 10–20+ hours weekly with Make.com, n8n, Zapier & OpenAI.",
-  canonical
+  canonical,
+  schema
 } = Astro.props;
 ---
 
@@ -27,6 +29,7 @@ const {
     <link rel="llms-txt" href="/llms.txt" />
     <link rel="llms-txt" href="/llms-full.txt" />
     {canonical && <link rel="canonical" href={canonical} />}
+    {schema && <script type="application/ld+json" set:html={JSON.stringify(schema)} />}
 
     <meta property="og:type" content="website" />
     <meta name="twitter:card" content="summary_large_image" />
