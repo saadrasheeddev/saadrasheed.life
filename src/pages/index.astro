@@ -1,0 +1,41 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
+import ChatWidget from '../components/ChatWidget';
+import Hero from '../components/sections/Hero';
+import IntroVideo from '../components/sections/IntroVideo';
+import RealEstateBanner from '../components/sections/RealEstateBanner';
+import Stats from '../components/sections/Stats';
+import Problems from '../components/sections/Problems';
+import WhatYouGet from '../components/sections/WhatYouGet';
+import About from '../components/sections/About';
+import Packages from '../components/sections/Packages';
+import HowItWorks from '../components/sections/HowItWorks';
+import FAQ from '../components/sections/FAQ';
+import LeadMagnet from '../components/sections/LeadMagnet';
+import FinalCTA from '../components/sections/FinalCTA';
+---
+
+<Layout 
+  title="Saad Rasheed — AI Automations | Save 10–20 Hrs/Week"
+  canonical="https://saadrasheed.life/"
+>
+  <Navbar client:load currentPath={Astro.url.pathname} />
+  <main>
+    <Hero client:load />
+    <RealEstateBanner client:visible />
+    <IntroVideo client:visible />
+    <Problems client:visible />
+    <WhatYouGet client:visible />
+    <HowItWorks client:visible />
+    <Stats client:visible />
+    <About client:visible />
+    <Packages client:visible />
+    <FAQ client:visible />
+    <LeadMagnet client:visible />
+    <FinalCTA client:visible />
+  </main>
+  <Footer client:visible />
+  <ChatWidget client:load />
+</Layout>

@@ -72,7 +72,7 @@ const Hero = () => {
             <div className="absolute -inset-6 gradient-primary opacity-30 blur-3xl rounded-full" />
             <div className="relative rounded-3xl overflow-hidden border border-border/80 bg-card">
               <img
-                src={saadHeadshot}
+                src={saadHeadshot.src || saadHeadshot}
                 alt="Saad Rasheed, AI Calling Agents Specialist for Real Estate"
                 width={1024}
                 height={1024}

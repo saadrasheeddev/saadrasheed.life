@@ -7,7 +7,7 @@ const RealEstateBanner = () => {
       className="relative w-full h-48 sm:h-64 md:h-80 lg:h-96 overflow-hidden -mt-24 sm:-mt-32 md:-mt-40 -mb-16 sm:-mb-24 md:-mb-32 z-0 pointer-events-none"
     >
       <img
-        src={realestateBg}
+        src={realestateBg.src || realestateBg}
         alt=""
         className="absolute inset-0 w-full h-full object-cover opacity-40"
       />

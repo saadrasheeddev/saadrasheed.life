@@ -1,0 +1,57 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+  canonical?: string;
+}
+
+const { 
+  title, 
+  description = "Done-for-you AI workflows for founders & lean teams. Save 10–20+ hours weekly with Make.com, n8n, Zapier & OpenAI.",
+  canonical
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description}>
+    <meta name="author" content="Saad Rasheed" />
+    <meta name="google-site-verification" content="W_u2fBNjH_rWtC6QNjs2JhiZ8fu4zEbhUC694Z6-MzY" />
+    <link rel="llms-txt" href="/llms.txt" />
+    <link rel="llms-txt" href="/llms-full.txt" />
+    {canonical && <link rel="canonical" href={canonical} />}
+
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta property="og:title" content={title}>
+    <meta name="twitter:title" content={title}>
+    <meta property="og:description" content={description}>
+    <meta name="twitter:description" content={description}>
+    <meta property="og:image" content="https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/b0c455f3-13dd-4d1e-900d-cacc501b70be/id-preview-6f0d5693--47a9666a-1b31-4562-a047-bf225d1ceba7.lovable.app-1776436569637.png">
+    <meta name="twitter:image" content="https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/b0c455f3-13dd-4d1e-900d-cacc501b70be/id-preview-6f0d5693--47a9666a-1b31-4562-a047-bf225d1ceba7.lovable.app-1776436569637.png">
+  </head>
+  <body class="bg-background">
+    <slot />
+    <script>
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("is-visible");
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.12, rootMargin: "0px 0px -60px 0px" }
+      );
+      document.querySelectorAll(".fade-in-up").forEach((el) => observer.observe(el));
+    </script>
+  </body>
+</html>

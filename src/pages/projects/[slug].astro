@@ -1,0 +1,44 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import Navbar from '../../components/Navbar';
+import Footer from '../../components/Footer';
+import ProjectDetailsContent from '../../components/ProjectDetailsContent';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects');
+  return projects.map((project) => ({
+    params: { slug: project.id },
+    props: { project },
+  }));
+}
+
+const { project } = Astro.props;
+
+const slugToTab: Record<string, string> = {
+  'email-to-task-routing': 's1',
+  'ai-receptionist': 's2',
+  'customer-database-builder': 's3',
+  'self-serve-data-chatbot': 's4',
+  'one-click-content-engine': 's5',
+  'instant-contract-review': 's6',
+  'lost-lead-recovery': 's7',
+  'zero-shoot-e-commerce': 's8',
+};
+
+const activeTab = slugToTab[project.id] || 's1';
+---
+
+<Layout 
+  title={`${project.data.title} | Saad Rasheed`}
+  description={project.data.description}
+  canonical={`https://saadrasheed.life/projects/${project.id}`}
+>
+  <Navbar client:load currentPath={Astro.url.pathname} />
+  
+  <div class="pt-20">
+    <ProjectDetailsContent client:load initialActiveTab={activeTab} />
+  </div>
+
+  <Footer client:visible />
+</Layout>
