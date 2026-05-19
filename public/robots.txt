@@ -14,4 +14,3 @@ User-agent: anthropic-ai
 Allow: /
 
 Sitemap: https://saadrasheed.life/sitemap.xml
-LLMs: https://saadrasheed.life/llms.txt
