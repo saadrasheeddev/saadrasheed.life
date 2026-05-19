@@ -1,16 +1,14 @@
 import { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import logoS from "@/assets/logo-s.png";
 
-interface NavbarProps {
-  currentPath?: string;
-}
-
-const Navbar = ({ currentPath = "/" }: NavbarProps) => {
+const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
@@ -35,22 +33,22 @@ const Navbar = ({ currentPath = "/" }: NavbarProps) => {
       )}
     >
       <div className="container flex h-16 md:h-20 items-center justify-between">
-        <a href="/" className="flex items-center gap-2 group">
+        <Link to="/" className="flex items-center gap-2 group">
           <div className="h-9 w-9 rounded-lg gradient-primary flex items-center justify-center glow-primary p-1.5">
-            <img src={logoS.src || logoS} alt="Saad Rasheed logo" width={36} height={36} className="h-full w-full object-contain brightness-0 invert" />
+            <img src={logoS} alt="Saad Rasheed logo" width={36} height={36} className="h-full w-full object-contain brightness-0 invert" />
           </div>
           <span className="font-bold text-base md:text-lg tracking-tight">
             Saad Rasheed
           </span>
-        </a>
+        </Link>
 
         <nav className="hidden md:flex items-center gap-8">
-          <a href="/" className={linkClass(currentPath === "/")}>
+          <Link to="/" className={linkClass(location.pathname === "/")}>
             Home
-          </a>
-          <a href="/projects" className={linkClass(currentPath === "/projects" || currentPath.startsWith("/projects/"))}>
+          </Link>
+          <Link to="/projects" className={linkClass(location.pathname === "/projects")}>
             Projects
-          </a>
+          </Link>
         </nav>
 
         <div className="hidden md:block">
@@ -73,12 +71,12 @@ const Navbar = ({ currentPath = "/" }: NavbarProps) => {
       {open && (
         <div className="md:hidden border-t border-border bg-background/95 backdrop-blur-xl">
           <div className="container py-6 flex flex-col gap-5">
-            <a href="/" onClick={() => setOpen(false)} className={linkClass(currentPath === "/")}>
+            <Link to="/" onClick={() => setOpen(false)} className={linkClass(location.pathname === "/")}>
               Home
-            </a>
-            <a href="/projects" onClick={() => setOpen(false)} className={linkClass(currentPath === "/projects" || currentPath.startsWith("/projects/"))}>
+            </Link>
+            <Link to="/projects" onClick={() => setOpen(false)} className={linkClass(location.pathname === "/projects")}>
               Projects
-            </a>
+            </Link>
             <Button variant="hero" className="w-full" asChild>
               <a href="https://cal.com/saadrasheed/free-strategy-call" target="_blank" rel="noopener noreferrer">
                 Book a Free Strategy Call

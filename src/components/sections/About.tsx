@@ -31,7 +31,7 @@ const About = () => {
             <div className="absolute -inset-4 gradient-primary opacity-25 blur-3xl rounded-full" />
             <div className="relative rounded-3xl overflow-hidden border border-border bg-card">
               <img
-                src={saadHeadshot.src || saadHeadshot}
+                src={saadHeadshot}
                 alt="Saad Rasheed"
                 loading="lazy"
                 width={1024}
