@@ -39,6 +39,20 @@ const {
     <meta name="twitter:description" content={description}>
     <meta property="og:image" content="https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/b0c455f3-13dd-4d1e-900d-cacc501b70be/id-preview-6f0d5693--47a9666a-1b31-4562-a047-bf225d1ceba7.lovable.app-1776436569637.png">
     <meta name="twitter:image" content="https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/b0c455f3-13dd-4d1e-900d-cacc501b70be/id-preview-6f0d5693--47a9666a-1b31-4562-a047-bf225d1ceba7.lovable.app-1776436569637.png">
+    <!-- Chatwoot SDK – loaded eagerly but initialised by ChatWidget after gate/verify -->
+    <script is:inline>
+      (function(d,t) {
+        var BASE_URL="https://dealdesk.saadrasheed.life";
+        var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+        g.src=BASE_URL+"/packs/js/sdk.js";
+        g.async=true;
+        s.parentNode.insertBefore(g,s);
+        // Expose load promise so ChatWidget can call chatwootSDK.run() once ready
+        window.__chatwootBaseUrl = BASE_URL;
+        window.__chatwootToken   = 'rCQSzE2KwTYFr4cE2uPKUiok';
+        window.__chatwootReady   = new Promise(function(resolve){ g.onload = resolve; });
+      })(document,"script");
+    </script>
   </head>
   <body class="bg-background">
     <slot />
