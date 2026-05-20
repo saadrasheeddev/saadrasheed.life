@@ -68,6 +68,23 @@ const launchChatwoot = (name: string, email: string, identifierHash?: string) =>
       const attrs: { name: string; email: string; identifier_hash?: string } = { name, email };
       if (identifierHash) attrs.identifier_hash = identifierHash;
       console.log("[Chatwoot] setUser →", email, attrs);
+
+      // Clear any old anonymous cookies from browser cache to ensure identification takes effect
+      const MIGRATION_KEY = "sr_chatwoot_reset_v3";
+      const needsMigration = !localStorage.getItem(MIGRATION_KEY);
+      
+      if (needsMigration || (window as any).__chatwootNeedReset) {
+        try {
+          window.$chatwoot?.reset();
+          localStorage.setItem(MIGRATION_KEY, "true");
+          if (typeof window !== "undefined") {
+            delete (window as any).__chatwootNeedReset;
+          }
+        } catch (e) {
+          console.warn("[Chatwoot] reset failed:", e);
+        }
+      }
+
       // Primary identity
       window.$chatwoot?.setUser(email, attrs);
       // Additional custom attributes (adjust keys/values as needed)
@@ -275,10 +292,10 @@ const ChatWidget = () => {
       const payload = Array.isArray(raw) ? raw[0]?.json ?? raw[0] : raw;
 
       if (payload?.success) {
-        // Reset any existing anonymous session cookies/localStorage in Chatwoot
-        try {
-          window.$chatwoot?.reset();
-        } catch {}
+        // Mark that we need a reset because we are transitioning from anonymous to verified
+        if (typeof window !== "undefined") {
+          (window as any).__chatwootNeedReset = true;
+        }
 
         const normalizedEmail = gateEmail.trim().toLowerCase();
         const u = { name: gateName.trim(), email: normalizedEmail };
