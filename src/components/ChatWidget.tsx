@@ -144,10 +144,15 @@ const ChatWidget = () => {
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
       if (raw) {
-        const u = JSON.parse(raw) as { name: string; email: string };
-        setGateName(u.name);
-        setGateEmail(u.email);
-        setStage("chat");
+        const u = JSON.parse(raw) as { name: string; email: string; identifier_hash?: string };
+        // If identity validation is active but they don't have a hash, force a re-verify
+        if (!u.identifier_hash) {
+          localStorage.removeItem(STORAGE_KEY);
+        } else {
+          setGateName(u.name.trim());
+          setGateEmail(u.email.trim().toLowerCase());
+          setStage("chat");
+        }
       }
       const greetingShown = localStorage.getItem(GREETING_KEY);
       if (!greetingShown && !raw) {
@@ -210,11 +215,13 @@ const ChatWidget = () => {
 
   const handleGate = async (e: React.FormEvent) => {
     e.preventDefault();
-    const result = gateSchema.safeParse({ name: gateName, email: gateEmail });
+    const normalizedEmail = gateEmail.trim().toLowerCase();
+    const result = gateSchema.safeParse({ name: gateName, email: normalizedEmail });
     if (!result.success) {
       toast.error(result.error.issues[0].message);
       return;
     }
+    setGateEmail(normalizedEmail);
 
     setGateLoading(true);
     setShowGreeting(false);
@@ -268,7 +275,14 @@ const ChatWidget = () => {
       const payload = Array.isArray(raw) ? raw[0]?.json ?? raw[0] : raw;
 
       if (payload?.success) {
-        const u = { name: gateName.trim(), email: gateEmail.trim() };
+        // Reset any existing anonymous session cookies/localStorage in Chatwoot
+        try {
+          window.$chatwoot?.reset();
+        } catch {}
+
+        const normalizedEmail = gateEmail.trim().toLowerCase();
+        const u = { name: gateName.trim(), email: normalizedEmail };
+        
         // n8n should return identifier_hash = HMAC-SHA256(chatwootSecret, email)
         // See: Chatwoot → Inbox settings → Identity Verification Token
         const identifierHash: string | undefined = payload.identifier_hash ?? payload.identifierHash ?? undefined;
