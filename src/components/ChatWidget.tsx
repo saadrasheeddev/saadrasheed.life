@@ -66,8 +66,9 @@ const launchChatwoot = (name: string, email: string, identifierHash?: string) =>
   const applyIdentity = () => {
     try {
       const attrs: { name: string; email: string; identifier_hash?: string } = { name, email };
-      if (identifierHash) attrs.identifier_hash = identifierHash;
-      console.log("[Chatwoot] setUser →", email, attrs);
+      // Temporarily commented out to test if Chatwoot accepts user attributes without the hash
+      // if (identifierHash) attrs.identifier_hash = identifierHash;
+      console.log("[Chatwoot] setUser (no hash test) →", email, attrs);
 
       // Primary identity
       window.$chatwoot?.setUser(email, attrs);
