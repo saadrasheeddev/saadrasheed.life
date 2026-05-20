@@ -69,9 +69,25 @@ const launchChatwoot = (name: string, email: string, identifierHash?: string) =>
       if (identifierHash) attrs.identifier_hash = identifierHash;
       console.log("[Chatwoot] setUser →", email, attrs);
 
-      // Primary identity
+      // Primary identity (official SDK method)
       window.$chatwoot?.setUser(email, attrs);
-      // Additional custom attributes (adjust keys/values as needed)
+
+      // --- GUARANTEED FALLBACK ---
+      // Bypass Chatwoot SDK internal caching bugs by directly messaging the iframe
+      const iframe = document.getElementById("chatwoot_live_chat_widget") as HTMLIFrameElement | null;
+      if (iframe && iframe.contentWindow) {
+        iframe.contentWindow.postMessage(
+          `chatwoot-widget:${JSON.stringify({
+            event: "set-user",
+            identifier: email,
+            user: attrs
+          })}`,
+          "*"
+        );
+        console.log("[Chatwoot] Forced set-user via direct postMessage");
+      }
+
+      // Additional custom attributes
       window.$chatwoot?.setCustomAttributes({
         source: "chat-widget",
       });
