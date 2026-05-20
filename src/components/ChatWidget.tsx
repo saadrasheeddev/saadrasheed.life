@@ -65,29 +65,13 @@ const launchChatwoot = (name: string, email: string, identifierHash?: string) =>
 
   const applyIdentity = () => {
     try {
-      const attrs: { name: string; email: string; identifier_hash?: string } = { name, email };
+      // Pass only email (and hash). Naming and contact creation is handled on the backend via n8n.
+      const attrs: { email: string; identifier_hash?: string } = { email };
       if (identifierHash) attrs.identifier_hash = identifierHash;
+      
       console.log("[Chatwoot] setUser →", email, attrs);
-
-      // Primary identity (official SDK method)
       window.$chatwoot?.setUser(email, attrs);
 
-      // --- GUARANTEED FALLBACK ---
-      // Bypass Chatwoot SDK internal caching bugs by directly messaging the iframe
-      const iframe = document.getElementById("chatwoot_live_chat_widget") as HTMLIFrameElement | null;
-      if (iframe && iframe.contentWindow) {
-        iframe.contentWindow.postMessage(
-          `chatwoot-widget:${JSON.stringify({
-            event: "set-user",
-            identifier: email,
-            user: attrs
-          })}`,
-          "*"
-        );
-        console.log("[Chatwoot] Forced set-user via direct postMessage");
-      }
-
-      // Additional custom attributes
       window.$chatwoot?.setCustomAttributes({
         source: "chat-widget",
       });
