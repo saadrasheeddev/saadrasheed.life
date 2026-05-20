@@ -69,22 +69,6 @@ const launchChatwoot = (name: string, email: string, identifierHash?: string) =>
       if (identifierHash) attrs.identifier_hash = identifierHash;
       console.log("[Chatwoot] setUser →", email, attrs);
 
-      // Clear any old anonymous cookies from browser cache to ensure identification takes effect
-      const MIGRATION_KEY = "sr_chatwoot_reset_v3";
-      const needsMigration = !localStorage.getItem(MIGRATION_KEY);
-      
-      if (needsMigration || (window as any).__chatwootNeedReset) {
-        try {
-          window.$chatwoot?.reset();
-          localStorage.setItem(MIGRATION_KEY, "true");
-          if (typeof window !== "undefined") {
-            delete (window as any).__chatwootNeedReset;
-          }
-        } catch (e) {
-          console.warn("[Chatwoot] reset failed:", e);
-        }
-      }
-
       // Primary identity
       window.$chatwoot?.setUser(email, attrs);
       // Additional custom attributes (adjust keys/values as needed)
@@ -102,6 +86,11 @@ const launchChatwoot = (name: string, email: string, identifierHash?: string) =>
   };
 
   const waitForWidget = () => {
+    // Register error listener
+    window.addEventListener("chatwoot:error", (err) => {
+      console.error("[Chatwoot] Widget Error:", err);
+    });
+
     // Fast path: widget already mounted (returning user clicked the button again)
     if (window.$chatwoot) {
       applyIdentity();
@@ -109,8 +98,6 @@ const launchChatwoot = (name: string, email: string, identifierHash?: string) =>
     }
 
     // chatwoot:ready fires asynchronously after chatwootSDK.run() mounts the widget.
-    // Because JS is single-threaded and run() only kicks off async work, this
-    // listener is always registered before the event can fire — no polling needed.
     window.addEventListener("chatwoot:ready", applyIdentity, { once: true });
   };
 
@@ -292,11 +279,6 @@ const ChatWidget = () => {
       const payload = Array.isArray(raw) ? raw[0]?.json ?? raw[0] : raw;
 
       if (payload?.success) {
-        // Mark that we need a reset because we are transitioning from anonymous to verified
-        if (typeof window !== "undefined") {
-          (window as any).__chatwootNeedReset = true;
-        }
-
         const normalizedEmail = gateEmail.trim().toLowerCase();
         const u = { name: gateName.trim(), email: normalizedEmail };
         
