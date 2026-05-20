@@ -40,7 +40,10 @@ declare global {
     chatwootSDK?: { run: (opts: { websiteToken: string; baseUrl: string }) => void };
     $chatwoot?: {
       setUser: (identifier: string, attrs: { name?: string; email?: string; identifier_hash?: string }) => void;
+      setCustomAttributes: (attrs: Record<string, unknown>) => void;
+      deleteCustomAttribute: (key: string) => void;
       toggle: (state?: "open" | "close") => void;
+      reset: () => void;
     };
     __chatwootBaseUrl?: string;
     __chatwootToken?: string;
@@ -64,16 +67,15 @@ const launchChatwoot = (name: string, email: string, identifierHash?: string) =>
     try {
       const attrs: { name: string; email: string; identifier_hash?: string } = { name, email };
       if (identifierHash) attrs.identifier_hash = identifierHash;
+      console.log("[Chatwoot] setUser →", email, attrs);
       // Primary identity
       window.$chatwoot?.setUser(email, attrs);
       // Additional custom attributes (adjust keys/values as needed)
       window.$chatwoot?.setCustomAttributes({
-        accountId: 12345,
-        pricingPlan: "paid",
-        company_name: "Saadrasheed Ltd.",
+        source: "chat-widget",
       });
-    } catch {
-      // Non‑critical – widget still opens without enriched data.
+    } catch (err) {
+      console.warn("[Chatwoot] setUser failed:", err);
     }
     try {
       window.$chatwoot?.toggle("open");
