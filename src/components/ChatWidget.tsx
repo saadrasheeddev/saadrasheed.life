@@ -64,10 +64,16 @@ const launchChatwoot = (name: string, email: string, identifierHash?: string) =>
     try {
       const attrs: { name: string; email: string; identifier_hash?: string } = { name, email };
       if (identifierHash) attrs.identifier_hash = identifierHash;
-      // Use email as stable unique identifier — prevents duplicate contacts.
+      // Primary identity
       window.$chatwoot?.setUser(email, attrs);
+      // Additional custom attributes (adjust keys/values as needed)
+      window.$chatwoot?.setCustomAttributes({
+        accountId: 12345,
+        pricingPlan: "paid",
+        company_name: "Saadrasheed Ltd.",
+      });
     } catch {
-      // Non-critical — widget still opens without identity.
+      // Non‑critical – widget still opens without enriched data.
     }
     try {
       window.$chatwoot?.toggle("open");
@@ -77,29 +83,16 @@ const launchChatwoot = (name: string, email: string, identifierHash?: string) =>
   };
 
   const waitForWidget = () => {
-    // Already mounted (e.g. returning user clicked button again)
+    // Fast path: widget already mounted (returning user clicked the button again)
     if (window.$chatwoot) {
       applyIdentity();
       return;
     }
 
-    let settled = false;
-    const done = () => {
-      if (settled) return;
-      settled = true;
-      clearInterval(poll);
-      applyIdentity();
-    };
-
-    // Primary: official event
-    window.addEventListener("chatwoot:ready", done, { once: true });
-
-    // Fallback: poll every 250 ms for up to 10 s in case the event was missed
-    let attempts = 0;
-    const poll = setInterval(() => {
-      if (window.$chatwoot) { done(); }
-      else if (++attempts > 40) { clearInterval(poll); }
-    }, 250);
+    // chatwoot:ready fires asynchronously after chatwootSDK.run() mounts the widget.
+    // Because JS is single-threaded and run() only kicks off async work, this
+    // listener is always registered before the event can fire — no polling needed.
+    window.addEventListener("chatwoot:ready", applyIdentity, { once: true });
   };
 
   const startSDK = () => {
@@ -278,7 +271,7 @@ const ChatWidget = () => {
         // See: Chatwoot → Inbox settings → Identity Verification Token
         const identifierHash: string | undefined = payload.identifier_hash ?? payload.identifierHash ?? undefined;
         try {
-          localStorage.setItem(STORAGE_KEY, JSON.stringify({ ...u, identifierHash }));
+          localStorage.setItem(STORAGE_KEY, JSON.stringify({ ...u, identifier_hash: identifierHash }));
         } catch {
           // ignore
         }
@@ -350,9 +343,9 @@ const ChatWidget = () => {
       setChatwootLaunched(true);
       const raw = localStorage.getItem(STORAGE_KEY);
       const u = raw
-        ? (JSON.parse(raw) as { name: string; email: string; identifierHash?: string })
-        : { name: gateName, email: gateEmail, identifierHash: undefined };
-      launchChatwoot(u.name, u.email, u.identifierHash);
+        ? (JSON.parse(raw) as { name: string; email: string; identifier_hash?: string })
+        : { name: gateName, email: gateEmail, identifier_hash: undefined };
+      launchChatwoot(u.name, u.email, u.identifier_hash);
     }
   };
 
