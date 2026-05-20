@@ -1,8 +1,5 @@
 ---
 import '../styles/global.css';
-<script>
-  window.chatwootSettings = { hideMessageBubble: true };
-</script>
 
 interface Props {
   title: string;
@@ -42,6 +39,10 @@ const {
     <meta name="twitter:description" content={description}>
     <meta property="og:image" content="https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/b0c455f3-13dd-4d1e-900d-cacc501b70be/id-preview-6f0d5693--47a9666a-1b31-4562-a047-bf225d1ceba7.lovable.app-1776436569637.png">
     <meta name="twitter:image" content="https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/b0c455f3-13dd-4d1e-900d-cacc501b70be/id-preview-6f0d5693--47a9666a-1b31-4562-a047-bf225d1ceba7.lovable.app-1776436569637.png">
+    <!-- Chatwoot settings – must be set before the SDK loads -->
+    <script is:inline>
+      window.chatwootSettings = { hideMessageBubble: true };
+    </script>
     <!-- Chatwoot SDK – loaded eagerly but initialised by ChatWidget after gate/verify -->
     <script is:inline>
       (function(d,t) {
