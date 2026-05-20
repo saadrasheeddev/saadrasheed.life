@@ -66,9 +66,8 @@ const launchChatwoot = (name: string, email: string, identifierHash?: string) =>
   const applyIdentity = () => {
     try {
       const attrs: { name: string; email: string; identifier_hash?: string } = { name, email };
-      // Temporarily commented out to test if Chatwoot accepts user attributes without the hash
-      // if (identifierHash) attrs.identifier_hash = identifierHash;
-      console.log("[Chatwoot] setUser (no hash test) →", email, attrs);
+      if (identifierHash) attrs.identifier_hash = identifierHash;
+      console.log("[Chatwoot] setUser →", email, attrs);
 
       // Primary identity
       window.$chatwoot?.setUser(email, attrs);
@@ -99,7 +98,11 @@ const launchChatwoot = (name: string, email: string, identifierHash?: string) =>
     }
 
     // chatwoot:ready fires asynchronously after chatwootSDK.run() mounts the widget.
-    window.addEventListener("chatwoot:ready", applyIdentity, { once: true });
+    window.addEventListener("chatwoot:ready", () => {
+      // Add a 1-second delay to ensure the Vue app inside the iframe is fully booted
+      // and ready to process postMessage commands before we send the user identity.
+      setTimeout(applyIdentity, 1000);
+    }, { once: true });
   };
 
   const startSDK = () => {
