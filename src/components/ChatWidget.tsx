@@ -1,24 +1,21 @@
-import { useState, useRef, useEffect } from "react";
-import { MessageCircle, X, Send, Sparkles, ArrowLeft } from "lucide-react";
+import { useState, useEffect } from "react";
+import { MessageCircle, X, ArrowLeft } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { z } from "zod";
 import { toast } from "sonner";
 
-type Msg = { from: "bot" | "user"; text: string };
 type Stage = "gate" | "verify" | "chat";
 
 // Shared site token — same one used in the lead magnet form.
 const SITE_TOKEN = "sr_site_8f3b29d1a74e4c5fbf91e6c2ad7b1e93";
 
 const LEAD_WEBHOOK_URL = "https://n8n.saadrasheed.life/webhook/lead-magnet";
-const CHAT_WEBHOOK_URL = "https://n8n.saadrasheed.life/webhook/chat-widget";
 const CODE_WEBHOOK_URL = "https://n8n.saadrasheed.life/webhook/code";
 
 const STORAGE_KEY = "sr_chat_user_v1";
 const GREETING_KEY = "sr_chat_greeting_shown";
-const REPLY_TIMEOUT_MS = 60_000;
 
 // Resend cooldown progression in seconds: 1m, 5m, 10m, 15m, 30m, then 30m repeating.
 const RESEND_COOLDOWNS = [60, 300, 600, 900, 1800];
@@ -28,25 +25,64 @@ const gateSchema = z.object({
   email: z.string().trim().email("Enter a valid email").max(200),
 });
 
-const initialMsgs: Msg[] = [
-  {
-    from: "bot",
-    text: "Hey! I'm Saad's AI assistant 👋 Ask me anything about AI calling agents, pricing, or how the system works.",
-  },
-];
-
 const fmtCountdown = (s: number) => {
   const m = Math.floor(s / 60);
   const sec = s % 60;
   return m > 0 ? `${m}:${String(sec).padStart(2, "0")}` : `${sec}s`;
 };
 
+// ---------------------------------------------------------------------------
+// Chatwoot helpers
+// ---------------------------------------------------------------------------
+
+declare global {
+  interface Window {
+    chatwootSDK?: { run: (opts: { websiteToken: string; baseUrl: string }) => void };
+    chatwootBus?: EventTarget & { $emit?: (event: string, data?: unknown) => void };
+    __chatwootBaseUrl?: string;
+    __chatwootToken?: string;
+    __chatwootReady?: Promise<void>;
+  }
+}
+
+const launchChatwoot = async (name: string, email: string) => {
+  // Wait for the SDK script to finish loading (set up in Layout.astro)
+  if (window.__chatwootReady) await window.__chatwootReady;
+
+  const baseUrl = window.__chatwootBaseUrl ?? "https://dealdesk.saadrasheed.life";
+  const token = window.__chatwootToken ?? "rCQSzE2KwTYFr4cE2uPKUiok";
+
+  if (!window.chatwootSDK) {
+    console.warn("Chatwoot SDK not available");
+    return;
+  }
+
+  // Only call run() once; subsequent calls are no-ops in the SDK.
+  window.chatwootSDK.run({ websiteToken: token, baseUrl });
+
+  // Give the widget a moment to mount, then set the contact identity and open it.
+  setTimeout(() => {
+    try {
+      // Set contact details so the conversation is tied to the verified user.
+      window.chatwootBus?.$emit?.("set-user", { identifier: email, name, email });
+    } catch {
+      // Non-critical — Chatwoot still opens without identity.
+    }
+    // Open the widget bubble programmatically.
+    try {
+      window.chatwootBus?.$emit?.("toggle-widget", { toggleValue: true });
+    } catch {
+      // ignore
+    }
+  }, 600);
+};
+
+// ---------------------------------------------------------------------------
+// Component
+// ---------------------------------------------------------------------------
+
 const ChatWidget = () => {
   const [open, setOpen] = useState(false);
-  const [msgs, setMsgs] = useState<Msg[]>(initialMsgs);
-  const [input, setInput] = useState("");
-  const [waiting, setWaiting] = useState(false);
-  const [user, setUser] = useState<{ name: string; email: string } | null>(null);
 
   // gate
   const [stage, setStage] = useState<Stage>("gate");
@@ -64,15 +100,17 @@ const ChatWidget = () => {
   const [showGreeting, setShowGreeting] = useState(false);
   const [greetingDismissed, setGreetingDismissed] = useState(false);
 
-  const scrollRef = useRef<HTMLDivElement>(null);
-  const textareaRef = useRef<HTMLTextAreaElement>(null);
+  // Once Chatwoot is launched we hide our own launcher.
+  const [chatwootLaunched, setChatwootLaunched] = useState(false);
 
-  // Restore returning users (already verified)
+  // Restore returning users (already verified) — skip straight to Chatwoot.
   useEffect(() => {
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
       if (raw) {
-        setUser(JSON.parse(raw));
+        const u = JSON.parse(raw) as { name: string; email: string };
+        setGateName(u.name);
+        setGateEmail(u.email);
         setStage("chat");
       }
       const greetingShown = localStorage.getItem(GREETING_KEY);
@@ -99,13 +137,6 @@ const ChatWidget = () => {
       return () => clearTimeout(timer);
     }
   }, [showGreeting, open]);
-
-  useEffect(() => {
-    scrollRef.current?.scrollTo({
-      top: scrollRef.current.scrollHeight,
-      behavior: "smooth",
-    });
-  }, [msgs, open, waiting]);
 
   // Cooldown ticker
   useEffect(() => {
@@ -202,7 +233,6 @@ const ChatWidget = () => {
 
       if (payload?.success) {
         const u = { name: gateName.trim(), email: gateEmail.trim() };
-        setUser(u);
         try {
           localStorage.setItem(STORAGE_KEY, JSON.stringify(u));
         } catch {
@@ -225,13 +255,11 @@ const ChatWidget = () => {
             page: typeof window !== "undefined" ? window.location.href : "",
           }),
         }).catch(() => {});
+
         setStage("chat");
-        setMsgs([
-          {
-            from: "bot",
-            text: `Hey ${u.name.split(" ")[0]}! 👋 You're in. What would you like to know about AI calling agents?`,
-          },
-        ]);
+        setOpen(false); // close our panel; Chatwoot will open its own
+        setChatwootLaunched(true);
+        await launchChatwoot(u.name, u.email);
       } else {
         const reason: string = payload?.reason || "Invalid code";
         const friendly =
@@ -272,59 +300,18 @@ const ChatWidget = () => {
     setResendCount(0);
   };
 
-  const sendToChatWebhook = async (message: string, email: string, name: string): Promise<string | null> => {
-    const controller = new AbortController();
-    const timer = setTimeout(() => controller.abort(), REPLY_TIMEOUT_MS);
-    try {
-      const res = await fetch(CHAT_WEBHOOK_URL, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "x-site-token": SITE_TOKEN,
-        },
-        body: JSON.stringify({
-          name,
-          email,
-          message,
-          siteToken: SITE_TOKEN,
-        }),
-        signal: controller.signal,
-      });
-      clearTimeout(timer);
-      if (!res.ok) return null;
-      const data = await res.json().catch(() => null);
-      const reply: unknown = data?.reply ?? data?.message;
-      return typeof reply === "string" && reply.trim() ? reply : null;
-    } catch {
-      clearTimeout(timer);
-      return null;
+  // When a returning verified user clicks our button, launch Chatwoot directly.
+  const handleOpenReturning = async () => {
+    if (!chatwootLaunched) {
+      setChatwootLaunched(true);
+      const raw = localStorage.getItem(STORAGE_KEY);
+      const u = raw ? (JSON.parse(raw) as { name: string; email: string }) : { name: gateName, email: gateEmail };
+      await launchChatwoot(u.name, u.email);
     }
   };
 
-  const handleSend = async (e: React.FormEvent) => {
-    e.preventDefault();
-    const text = input.trim();
-    if (!text || !user || waiting) return;
-
-    setMsgs((m) => [...m, { from: "user", text }]);
-    setInput("");
-    if (textareaRef.current) {
-      textareaRef.current.style.height = "auto";
-    }
-    setWaiting(true);
-
-    const reply = await sendToChatWebhook(text, user.email, user.name);
-    setWaiting(false);
-    setMsgs((m) => [
-      ...m,
-      {
-        from: "bot",
-        text:
-          reply ??
-          "Hmm, I'm not able to reach the assistant right now. Please try again in a moment, or book a free 30-min strategy call and I'll personally reply.",
-      },
-    ]);
-  };
+  // If Chatwoot is active, hide our launcher entirely — Chatwoot has its own bubble.
+  if (chatwootLaunched) return null;
 
   return (
     <>
@@ -351,15 +338,20 @@ const ChatWidget = () => {
 
       {/* Floating button */}
       <button
-        onClick={() => {
-          setOpen((v) => !v);
-          if (!open) {
-            setShowGreeting(false);
-            setGreetingDismissed(true);
-            try {
-              localStorage.setItem(GREETING_KEY, "true");
-            } catch {
-              // ignore
+        onClick={async () => {
+          if (stage === "chat") {
+            // Already verified — launch Chatwoot directly
+            await handleOpenReturning();
+          } else {
+            setOpen((v) => !v);
+            if (!open) {
+              setShowGreeting(false);
+              setGreetingDismissed(true);
+              try {
+                localStorage.setItem(GREETING_KEY, "true");
+              } catch {
+                // ignore
+              }
             }
           }
         }}
@@ -382,7 +374,7 @@ const ChatWidget = () => {
         {/* Header */}
         <div className="flex items-center gap-3 p-4 border-b border-border bg-gradient-to-r from-card to-[hsl(270_30%_10%)]">
           <div className="h-9 w-9 rounded-lg gradient-primary flex items-center justify-center shrink-0">
-            <Sparkles className="h-4 w-4 text-white" />
+            <MessageCircle className="h-4 w-4 text-white" />
           </div>
           <div className="min-w-0">
             <div className="font-semibold text-sm leading-tight">Chat with Saad's AI Assistant</div>
@@ -478,66 +470,6 @@ const ChatWidget = () => {
               </button>
             </div>
           </form>
-        )}
-
-        {stage === "chat" && user && (
-          <>
-            <div ref={scrollRef} className="flex-1 overflow-y-auto p-4 space-y-3 flex flex-col">
-              {msgs.map((m, i) => (
-                <div
-                  key={i}
-                  className={cn(
-                    "max-w-[85%] w-fit rounded-2xl px-3.5 py-2.5 text-sm leading-relaxed break-words",
-                    m.from === "bot"
-                      ? "bg-secondary text-foreground rounded-tl-sm self-start"
-                      : "gradient-primary text-white rounded-tr-sm self-end",
-                  )}
-                >
-                  {m.text}
-                </div>
-              ))}
-              {waiting && (
-                <div className="bg-secondary text-foreground rounded-2xl rounded-tl-sm self-start px-3.5 py-3 w-fit">
-                  <div className="flex items-center gap-1">
-                    <span className="h-1.5 w-1.5 rounded-full bg-muted-foreground/70 animate-bounce [animation-delay:-0.3s]" />
-                    <span className="h-1.5 w-1.5 rounded-full bg-muted-foreground/70 animate-bounce [animation-delay:-0.15s]" />
-                    <span className="h-1.5 w-1.5 rounded-full bg-muted-foreground/70 animate-bounce" />
-                  </div>
-                </div>
-              )}
-            </div>
-
-            <form onSubmit={handleSend} className="p-3 border-t border-border bg-background/50 flex items-end gap-2">
-              <textarea
-                ref={textareaRef}
-                value={input}
-                onChange={(e) => {
-                  setInput(e.target.value);
-                  const el = e.currentTarget;
-                  el.style.height = "auto";
-                  el.style.height = Math.min(el.scrollHeight, 120) + "px";
-                }}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" && !e.shiftKey) {
-                    e.preventDefault();
-                    handleSend(e as unknown as React.FormEvent);
-                  }
-                }}
-                placeholder={waiting ? "Waiting for reply…" : "Type your question…"}
-                rows={1}
-                disabled={waiting}
-                className="flex-1 min-h-10 max-h-[120px] resize-none rounded-lg bg-secondary border border-border px-3 py-2 text-sm focus:outline-none focus:border-primary-glow leading-relaxed disabled:opacity-60"
-              />
-              <button
-                type="submit"
-                aria-label="Send message"
-                disabled={waiting}
-                className="h-10 w-10 rounded-lg gradient-primary text-white flex items-center justify-center shrink-0 hover:opacity-90 disabled:opacity-50"
-              >
-                <Send className="h-4 w-4" />
-              </button>
-            </form>
-          </>
         )}
       </div>
     </>
