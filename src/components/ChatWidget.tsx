@@ -38,43 +38,57 @@ const fmtCountdown = (s: number) => {
 declare global {
   interface Window {
     chatwootSDK?: { run: (opts: { websiteToken: string; baseUrl: string }) => void };
-    chatwootBus?: EventTarget & { $emit?: (event: string, data?: unknown) => void };
+    $chatwoot?: {
+      setUser: (identifier: string, attrs: { name?: string; email?: string }) => void;
+      toggle: (state?: "open" | "close") => void;
+    };
     __chatwootBaseUrl?: string;
     __chatwootToken?: string;
     __chatwootReady?: Promise<void>;
+    __chatwootRunCalled?: boolean;
   }
 }
 
-const launchChatwoot = async (name: string, email: string) => {
-  // Wait for the SDK script to finish loading (set up in Layout.astro)
-  if (window.__chatwootReady) await window.__chatwootReady;
-
+const launchChatwoot = (name: string, email: string) => {
   const baseUrl = window.__chatwootBaseUrl ?? "https://dealdesk.saadrasheed.life";
   const token = window.__chatwootToken ?? "rCQSzE2KwTYFr4cE2uPKUiok";
 
-  if (!window.chatwootSDK) {
-    console.warn("Chatwoot SDK not available");
-    return;
+  const initWidget = () => {
+    // Only call run() once across the page lifetime.
+    if (!window.__chatwootRunCalled) {
+      window.__chatwootRunCalled = true;
+      window.chatwootSDK?.run({ websiteToken: token, baseUrl });
+    }
+
+    // chatwoot:ready fires when the widget is fully mounted and $chatwoot is available.
+    const onReady = () => {
+      try {
+        // Use email as the stable unique identifier — prevents duplicate contacts.
+        window.$chatwoot?.setUser(email, { name, email });
+      } catch {
+        // Non-critical — widget still opens without identity.
+      }
+      try {
+        window.$chatwoot?.toggle("open");
+      } catch {
+        // ignore
+      }
+    };
+
+    if (window.$chatwoot) {
+      // Widget already ready (returning user path).
+      onReady();
+    } else {
+      window.addEventListener("chatwoot:ready", onReady, { once: true });
+    }
+  };
+
+  if (window.__chatwootReady) {
+    // SDK script may still be loading — wait for it, then init.
+    window.__chatwootReady.then(initWidget);
+  } else {
+    initWidget();
   }
-
-  // Only call run() once; subsequent calls are no-ops in the SDK.
-  window.chatwootSDK.run({ websiteToken: token, baseUrl });
-
-  // Give the widget a moment to mount, then set the contact identity and open it.
-  setTimeout(() => {
-    try {
-      // Set contact details so the conversation is tied to the verified user.
-      window.chatwootBus?.$emit?.("set-user", { identifier: email, name, email });
-    } catch {
-      // Non-critical — Chatwoot still opens without identity.
-    }
-    // Open the widget bubble programmatically.
-    try {
-      window.chatwootBus?.$emit?.("toggle-widget", { toggleValue: true });
-    } catch {
-      // ignore
-    }
-  }, 600);
 };
 
 // ---------------------------------------------------------------------------
@@ -259,7 +273,7 @@ const ChatWidget = () => {
         setStage("chat");
         setOpen(false); // close our panel; Chatwoot will open its own
         setChatwootLaunched(true);
-        await launchChatwoot(u.name, u.email);
+        launchChatwoot(u.name, u.email);
       } else {
         const reason: string = payload?.reason || "Invalid code";
         const friendly =
@@ -301,12 +315,12 @@ const ChatWidget = () => {
   };
 
   // When a returning verified user clicks our button, launch Chatwoot directly.
-  const handleOpenReturning = async () => {
+  const handleOpenReturning = () => {
     if (!chatwootLaunched) {
       setChatwootLaunched(true);
       const raw = localStorage.getItem(STORAGE_KEY);
       const u = raw ? (JSON.parse(raw) as { name: string; email: string }) : { name: gateName, email: gateEmail };
-      await launchChatwoot(u.name, u.email);
+      launchChatwoot(u.name, u.email);
     }
   };
 
