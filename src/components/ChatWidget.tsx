@@ -15,6 +15,7 @@ const SITE_TOKEN = "sr_site_8f3b29d1a74e4c5fbf91e6c2ad7b1e93";
 const LEAD_WEBHOOK_URL = "https://n8n.saadrasheed.life/webhook/lead-magnet";
 const CHAT_WEBHOOK_URL = "https://n8n.saadrasheed.life/webhook/chat-widget";
 const CODE_WEBHOOK_URL = "https://n8n.saadrasheed.life/webhook/code";
+const HISTORY_WEBHOOK_URL = "https://n8n.saadrasheed.life/webhook/get-chat-history";
 
 const STORAGE_KEY = "sr_chat_user_v1";
 const GREETING_KEY = "sr_chat_greeting_shown";
@@ -72,8 +73,10 @@ const ChatWidget = () => {
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
       if (raw) {
-        setUser(JSON.parse(raw));
+        const parsed = JSON.parse(raw);
+        setUser(parsed);
         setStage("chat");
+        fetchHistory(parsed.email);
       }
       const greetingShown = localStorage.getItem(GREETING_KEY);
       if (!greetingShown && !raw) {
@@ -116,6 +119,40 @@ const ChatWidget = () => {
 
   const cooldownRemaining =
     cooldownEndsAt && cooldownEndsAt > now ? Math.ceil((cooldownEndsAt - now) / 1000) : 0;
+
+  const fetchHistory = async (email: string) => {
+    try {
+      const res = await fetch(HISTORY_WEBHOOK_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-site-token": SITE_TOKEN,
+        },
+        body: JSON.stringify({ email, siteToken: SITE_TOKEN }),
+      });
+      if (!res.ok) return;
+      const data = await res.json().catch(() => null);
+      if (!data || !Array.isArray(data) || data.length === 0) return;
+      
+      const payload = data[0];
+      if (!payload.messages || !Array.isArray(payload.messages)) return;
+      
+      const historyMsgs: Msg[] = [];
+      for (const m of payload.messages) {
+        if (m.sender === "System") continue;
+        historyMsgs.push({
+          from: m.sender == 1 ? "bot" : "user",
+          text: m.message,
+        });
+      }
+      
+      if (historyMsgs.length > 0) {
+        setMsgs(historyMsgs);
+      }
+    } catch (err) {
+      console.error("Failed to fetch history:", err);
+    }
+  };
 
   const sendCode = async (name: string, email: string): Promise<boolean> => {
     try {
@@ -232,6 +269,7 @@ const ChatWidget = () => {
             text: `Hey ${u.name.split(" ")[0]}! 👋 You're in. What would you like to know about AI calling agents?`,
           },
         ]);
+        fetchHistory(u.email);
       } else {
         const reason: string = payload?.reason || "Invalid code";
         const friendly =
