@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { MessageCircle, X, Send, Sparkles, ArrowLeft } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Input } from "@/components/ui/input";
@@ -9,6 +9,14 @@ import { toast } from "sonner";
 type Msg = { from: "bot" | "user"; text: string };
 type Stage = "gate" | "verify" | "chat";
 
+// Chatwoot session data saved after history fetch
+type ChatwootSession = {
+  contact_id: number;
+  conversation_id: number;
+  pubsub_token: string;
+  labels: string[];
+};
+
 // Shared site token — same one used in the lead magnet form.
 const SITE_TOKEN = "sr_site_8f3b29d1a74e4c5fbf91e6c2ad7b1e93";
 
@@ -17,7 +25,14 @@ const CHAT_WEBHOOK_URL = "https://n8n.saadrasheed.life/webhook/chat-widget";
 const CODE_WEBHOOK_URL = "https://n8n.saadrasheed.life/webhook/code";
 const HISTORY_WEBHOOK_URL = "https://n8n.saadrasheed.life/webhook/get-chat-history";
 
+// Chatwoot
+const CHATWOOT_BASE_URL = "https://dealdesk.saadrasheed.life";
+const CHATWOOT_API_TOKEN = "MRpLyREWBxki3KsGznmsyiCc";
+const CHATWOOT_ACCOUNT_ID = 1;
+const CHATWOOT_WS_URL = "wss://dealdesk.saadrasheed.life/cable";
+
 const STORAGE_KEY = "sr_chat_user_v1";
+const CHATWOOT_SESSION_KEY = "sr_chatwoot_session_v1";
 const GREETING_KEY = "sr_chat_greeting_shown";
 const REPLY_TIMEOUT_MS = 60_000;
 
@@ -48,6 +63,7 @@ const ChatWidget = () => {
   const [input, setInput] = useState("");
   const [waiting, setWaiting] = useState(false);
   const [user, setUser] = useState<{ name: string; email: string } | null>(null);
+  const [chatwootSession, setChatwootSession] = useState<ChatwootSession | null>(null);
 
   // gate
   const [stage, setStage] = useState<Stage>("gate");
@@ -67,6 +83,8 @@ const ChatWidget = () => {
 
   const scrollRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const wsRef = useRef<WebSocket | null>(null);
+  const wsSessionRef = useRef<ChatwootSession | null>(null);
 
   // Restore returning users (already verified)
   useEffect(() => {
@@ -77,6 +95,13 @@ const ChatWidget = () => {
         setUser(parsed);
         setStage("chat");
         fetchHistory(parsed.email);
+      }
+      // Restore chatwoot session if present
+      const rawSession = localStorage.getItem(CHATWOOT_SESSION_KEY);
+      if (rawSession) {
+        const session: ChatwootSession = JSON.parse(rawSession);
+        setChatwootSession(session);
+        wsSessionRef.current = session;
       }
       const greetingShown = localStorage.getItem(GREETING_KEY);
       if (!greetingShown && !raw) {
@@ -120,6 +145,80 @@ const ChatWidget = () => {
   const cooldownRemaining =
     cooldownEndsAt && cooldownEndsAt > now ? Math.ceil((cooldownEndsAt - now) / 1000) : 0;
 
+  // ── ActionCable WebSocket for human-handoff ──────────────────────────────
+  const connectActionCable = useCallback((session: ChatwootSession) => {
+    // Already connected for this session
+    if (wsRef.current && wsRef.current.readyState <= WebSocket.OPEN) return;
+
+    const ws = new WebSocket(CHATWOOT_WS_URL);
+    wsRef.current = ws;
+    wsSessionRef.current = session;
+
+    ws.onopen = () => {
+      // 1. Send the ActionCable handshake
+      ws.send(JSON.stringify({ command: "subscribe", identifier: JSON.stringify({ channel: "RoomChannel", pubsub_token: session.pubsub_token }) }));
+    };
+
+    ws.onmessage = (event) => {
+      try {
+        const frame = JSON.parse(event.data as string);
+
+        // ActionCable ping / welcome — ignore
+        if (frame.type === "ping" || frame.type === "welcome" || frame.type === "confirm_subscription") return;
+
+        const msg = frame.message;
+        if (!msg) return;
+
+        // We only care about message_created events in our conversation
+        if (msg.event !== "message_created") return;
+        if (msg.data?.conversation_id !== session.conversation_id) return;
+
+        // message_type: 1 = outgoing (agent reply), 0 = incoming (visitor)
+        // We only want agent replies (type 1) that are not private notes
+        const msgData = msg.data;
+        if (msgData.message_type !== 1) return;
+        if (msgData.private) return;
+
+        const text: string = msgData.content ?? "";
+        if (!text.trim()) return;
+
+        setMsgs((prev) => [...prev, { from: "bot", text }]);
+      } catch {
+        // ignore malformed frames
+      }
+    };
+
+    ws.onerror = () => {
+      // Silent — don't surface WS errors to the user
+    };
+
+    ws.onclose = () => {
+      wsRef.current = null;
+    };
+  }, []);
+
+  const disconnectActionCable = useCallback(() => {
+    if (wsRef.current) {
+      wsRef.current.close();
+      wsRef.current = null;
+    }
+  }, []);
+
+  // Connect when we have a human-handoff session and the chat stage is active
+  useEffect(() => {
+    if (stage === "chat" && chatwootSession?.labels.includes("human-handoff")) {
+      connectActionCable(chatwootSession);
+    }
+    return () => {
+      // Only disconnect on unmount, not on every re-render
+    };
+  }, [stage, chatwootSession, connectActionCable]);
+
+  // Disconnect on unmount
+  useEffect(() => {
+    return () => disconnectActionCable();
+  }, [disconnectActionCable]);
+
   const fetchHistory = async (email: string) => {
     try {
       const res = await fetch(HISTORY_WEBHOOK_URL, {
@@ -133,19 +232,42 @@ const ChatWidget = () => {
       if (!res.ok) return;
       const data = await res.json().catch(() => null);
       if (!data || !Array.isArray(data) || data.length === 0) return;
-      
+
       const payload = data[0];
+
+      // ── Save Chatwoot session data ──────────────────────────────────────
+      if (payload.contact_id && payload.conversation_id && payload.pubsub_token) {
+        const session: ChatwootSession = {
+          contact_id: payload.contact_id,
+          conversation_id: payload.conversation_id,
+          pubsub_token: payload.pubsub_token,
+          labels: Array.isArray(payload.labels) ? payload.labels : [],
+        };
+        setChatwootSession(session);
+        wsSessionRef.current = session;
+        try {
+          localStorage.setItem(CHATWOOT_SESSION_KEY, JSON.stringify(session));
+        } catch {
+          // ignore
+        }
+        // Connect ActionCable immediately if human-handoff is active
+        if (session.labels.includes("human-handoff")) {
+          connectActionCable(session);
+        }
+      }
+
+      // ── Populate chat history ───────────────────────────────────────────
       if (!payload.messages || !Array.isArray(payload.messages)) return;
-      
+
       const historyMsgs: Msg[] = [];
       for (const m of payload.messages) {
         if (m.sender === "System") continue;
         historyMsgs.push({
-          from: m.sender == 1 ? "bot" : "user",
+          from: m.sender === 1 ? "bot" : "user",
           text: m.message,
         });
       }
-      
+
       if (historyMsgs.length > 0) {
         setMsgs(historyMsgs);
       }
@@ -339,6 +461,30 @@ const ChatWidget = () => {
     }
   };
 
+  // Send a message directly to Chatwoot (human-handoff mode)
+  const sendToChatwoot = async (message: string, conversationId: number): Promise<boolean> => {
+    try {
+      const res = await fetch(
+        `${CHATWOOT_BASE_URL}/api/v1/accounts/${CHATWOOT_ACCOUNT_ID}/conversations/${conversationId}/messages`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "api_access_token": CHATWOOT_API_TOKEN,
+          },
+          body: JSON.stringify({
+            content: message,
+            message_type: "incoming",
+            private: false,
+          }),
+        }
+      );
+      return res.ok;
+    } catch {
+      return false;
+    }
+  };
+
   const handleSend = async (e: React.FormEvent) => {
     e.preventDefault();
     const text = input.trim();
@@ -349,19 +495,38 @@ const ChatWidget = () => {
     if (textareaRef.current) {
       textareaRef.current.style.height = "auto";
     }
-    setWaiting(true);
 
-    const reply = await sendToChatWebhook(text, user.email, user.name);
-    setWaiting(false);
-    setMsgs((m) => [
-      ...m,
-      {
-        from: "bot",
-        text:
-          reply ??
-          "Hmm, I'm not able to reach the assistant right now. Please try again in a moment, or book a free 30-min strategy call and I'll personally reply.",
-      },
-    ]);
+    const session = wsSessionRef.current;
+    const isHumanHandoff = session?.labels.includes("human-handoff") ?? false;
+
+    if (isHumanHandoff && session) {
+      // Route directly to Chatwoot — reply comes back via ActionCable
+      const ok = await sendToChatwoot(text, session.conversation_id);
+      if (!ok) {
+        setMsgs((m) => [
+          ...m,
+          {
+            from: "bot",
+            text: "Couldn't reach the support desk right now. Please try again in a moment.",
+          },
+        ]);
+      }
+      // No waiting spinner — agent reply arrives async via WebSocket
+    } else {
+      // Route to n8n AI
+      setWaiting(true);
+      const reply = await sendToChatWebhook(text, user.email, user.name);
+      setWaiting(false);
+      setMsgs((m) => [
+        ...m,
+        {
+          from: "bot",
+          text:
+            reply ??
+            "Hmm, I'm not able to reach the assistant right now. Please try again in a moment, or book a free 30-min strategy call and I'll personally reply.",
+        },
+      ]);
+    }
   };
 
   return (
