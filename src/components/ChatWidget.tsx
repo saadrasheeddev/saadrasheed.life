@@ -530,8 +530,8 @@ const ChatWidget = () => {
     console.log("[ChatWidget] handleSend — isHumanHandoff:", isHumanHandoff, "session:", session);
 
     if (isHumanHandoff && session) {
-      // Route directly to Chatwoot — reply comes back via ActionCable
-      const ok = await sendToChatwoot(text, session.conversation_id);
+      // Route directly to Chatwoot via n8n proxy — reply comes back via ActionCable
+      const ok = await sendToChatwoot(text, session);
       if (!ok) {
         setMsgs((m) => [
           ...m,
