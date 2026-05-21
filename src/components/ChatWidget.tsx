@@ -234,12 +234,18 @@ const ChatWidget = () => {
       const data = await res.json().catch((e) => { console.error("[ChatWidget] fetchHistory JSON parse error:", e); return null; });
       console.log("[ChatWidget] fetchHistory raw data:", JSON.stringify(data));
 
-      if (!data || !Array.isArray(data) || data.length === 0) {
-        console.warn("[ChatWidget] fetchHistory: empty or non-array response");
+      // Handle both array and plain object responses
+      if (!data) {
+        console.warn("[ChatWidget] fetchHistory: null response");
+        return;
+      }
+      const normalized = Array.isArray(data) ? data : [data];
+      if (normalized.length === 0) {
+        console.warn("[ChatWidget] fetchHistory: empty response");
         return;
       }
 
-      const payload = data[0];
+      const payload = normalized[0];
       console.log("[ChatWidget] fetchHistory payload keys:", Object.keys(payload));
       console.log("[ChatWidget] contact_id:", payload.contact_id, "conversation_id:", payload.conversation_id, "pubsub_token:", payload.pubsub_token, "labels:", payload.labels);
 
