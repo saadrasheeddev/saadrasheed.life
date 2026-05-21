@@ -158,12 +158,14 @@ const ChatWidget = () => {
     ws.onmessage = (event) => {
       try {
         const frame = JSON.parse(event.data as string);
+        console.log("[WS] raw frame:", JSON.stringify(frame)); // ADD THIS
 
         // ActionCable ping / welcome — ignore
         if (frame.type === "ping" || frame.type === "welcome" || frame.type === "confirm_subscription") return;
 
         const msg = frame.message;
         if (!msg) return;
+        console.log("[WS] msg.event:", msg.event, "msg.data?.conversation_id:", msg.data?.conversation_id, "session.conversation_id:", session.conversation_id); // ADD THIS
 
         // We only care about message_created events in our conversation
         if (msg.event !== "message_created") return;
