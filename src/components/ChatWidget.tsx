@@ -217,6 +217,7 @@ const ChatWidget = () => {
 
   const fetchHistory = async (email: string) => {
     try {
+      console.log("[ChatWidget] fetchHistory called for:", email);
       const res = await fetch(HISTORY_WEBHOOK_URL, {
         method: "POST",
         headers: {
@@ -225,11 +226,22 @@ const ChatWidget = () => {
         },
         body: JSON.stringify({ email, siteToken: SITE_TOKEN }),
       });
-      if (!res.ok) return;
-      const data = await res.json().catch(() => null);
-      if (!data || !Array.isArray(data) || data.length === 0) return;
+      console.log("[ChatWidget] fetchHistory status:", res.status);
+      if (!res.ok) {
+        console.warn("[ChatWidget] fetchHistory non-ok response:", res.status);
+        return;
+      }
+      const data = await res.json().catch((e) => { console.error("[ChatWidget] fetchHistory JSON parse error:", e); return null; });
+      console.log("[ChatWidget] fetchHistory raw data:", JSON.stringify(data));
+
+      if (!data || !Array.isArray(data) || data.length === 0) {
+        console.warn("[ChatWidget] fetchHistory: empty or non-array response");
+        return;
+      }
 
       const payload = data[0];
+      console.log("[ChatWidget] fetchHistory payload keys:", Object.keys(payload));
+      console.log("[ChatWidget] contact_id:", payload.contact_id, "conversation_id:", payload.conversation_id, "pubsub_token:", payload.pubsub_token, "labels:", payload.labels);
 
       // ── Save Chatwoot session data ──────────────────────────────────────
       if (payload.contact_id && payload.conversation_id && payload.pubsub_token) {
@@ -239,21 +251,33 @@ const ChatWidget = () => {
           pubsub_token: payload.pubsub_token,
           labels: Array.isArray(payload.labels) ? payload.labels : [],
         };
+        console.log("[ChatWidget] Saving chatwoot session:", session);
         setChatwootSession(session);
         wsSessionRef.current = session;
         try {
           localStorage.setItem(CHATWOOT_SESSION_KEY, JSON.stringify(session));
-        } catch {
-          // ignore
+          console.log("[ChatWidget] Session saved to localStorage under key:", CHATWOOT_SESSION_KEY);
+        } catch (e) {
+          console.error("[ChatWidget] localStorage write failed:", e);
         }
         // Connect ActionCable immediately if human-handoff is active
         if (session.labels.includes("human-handoff")) {
+          console.log("[ChatWidget] human-handoff detected — connecting ActionCable");
           connectActionCable(session);
         }
+      } else {
+        console.warn("[ChatWidget] Missing session fields — skipping session save. Got:", {
+          contact_id: payload.contact_id,
+          conversation_id: payload.conversation_id,
+          pubsub_token: payload.pubsub_token,
+        });
       }
 
       // ── Populate chat history ───────────────────────────────────────────
-      if (!payload.messages || !Array.isArray(payload.messages)) return;
+      if (!payload.messages || !Array.isArray(payload.messages)) {
+        console.warn("[ChatWidget] No messages array in payload");
+        return;
+      }
 
       const historyMsgs: Msg[] = [];
       for (const m of payload.messages) {
@@ -268,7 +292,7 @@ const ChatWidget = () => {
         setMsgs(historyMsgs);
       }
     } catch (err) {
-      console.error("Failed to fetch history:", err);
+      console.error("[ChatWidget] fetchHistory threw:", err);
     }
   };
 
@@ -459,24 +483,26 @@ const ChatWidget = () => {
 
   // Send a message directly to Chatwoot (human-handoff mode)
   const sendToChatwoot = async (message: string, conversationId: number): Promise<boolean> => {
+    console.log("[ChatWidget] sendToChatwoot called — conversationId:", conversationId, "message:", message);
     try {
-      const res = await fetch(
-        `${CHATWOOT_BASE_URL}/api/v1/accounts/${CHATWOOT_ACCOUNT_ID}/conversations/${conversationId}/messages`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "api_access_token": CHATWOOT_API_TOKEN,
-          },
-          body: JSON.stringify({
-            content: message,
-            message_type: "incoming",
-            private: false,
-          }),
-        }
-      );
+      const url = `${CHATWOOT_BASE_URL}/api/v1/accounts/${CHATWOOT_ACCOUNT_ID}/conversations/${conversationId}/messages`;
+      console.log("[ChatWidget] POSTing to:", url);
+      const res = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "api_access_token": CHATWOOT_API_TOKEN,
+        },
+        body: JSON.stringify({
+          content: message,
+          message_type: "incoming",
+          private: false,
+        }),
+      });
+      console.log("[ChatWidget] sendToChatwoot response status:", res.status);
       return res.ok;
-    } catch {
+    } catch (e) {
+      console.error("[ChatWidget] sendToChatwoot error:", e);
       return false;
     }
   };
@@ -494,6 +520,7 @@ const ChatWidget = () => {
 
     const session = wsSessionRef.current;
     const isHumanHandoff = session?.labels.includes("human-handoff") ?? false;
+    console.log("[ChatWidget] handleSend — isHumanHandoff:", isHumanHandoff, "session:", session);
 
     if (isHumanHandoff && session) {
       // Route directly to Chatwoot — reply comes back via ActionCable
