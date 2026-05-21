@@ -24,11 +24,10 @@ const LEAD_WEBHOOK_URL = "https://n8n.saadrasheed.life/webhook/lead-magnet";
 const CHAT_WEBHOOK_URL = "https://n8n.saadrasheed.life/webhook/chat-widget";
 const CODE_WEBHOOK_URL = "https://n8n.saadrasheed.life/webhook/code";
 const HISTORY_WEBHOOK_URL = "https://n8n.saadrasheed.life/webhook/get-chat-history";
+// Proxies the message to Chatwoot server-side to avoid CORS
+const CHATWOOT_SEND_WEBHOOK_URL = "https://n8n.saadrasheed.life/webhook/chatwoot-send";
 
-// Chatwoot
-const CHATWOOT_BASE_URL = "https://dealdesk.saadrasheed.life";
-const CHATWOOT_API_TOKEN = "MRpLyREWBxki3KsGznmsyiCc";
-const CHATWOOT_ACCOUNT_ID = 1;
+// Chatwoot ActionCable WebSocket (receive only — no direct API calls from browser)
 const CHATWOOT_WS_URL = "wss://dealdesk.saadrasheed.life/cable";
 
 const STORAGE_KEY = "sr_chat_user_v1";
@@ -487,22 +486,20 @@ const ChatWidget = () => {
     }
   };
 
-  // Send a message directly to Chatwoot (human-handoff mode)
+  // Send a message via n8n proxy → Chatwoot (avoids CORS — browser can't call Chatwoot directly)
   const sendToChatwoot = async (message: string, conversationId: number): Promise<boolean> => {
     console.log("[ChatWidget] sendToChatwoot called — conversationId:", conversationId, "message:", message);
     try {
-      const url = `${CHATWOOT_BASE_URL}/api/v1/accounts/${CHATWOOT_ACCOUNT_ID}/conversations/${conversationId}/messages`;
-      console.log("[ChatWidget] POSTing to:", url);
-      const res = await fetch(url, {
+      const res = await fetch(CHATWOOT_SEND_WEBHOOK_URL, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "api_access_token": CHATWOOT_API_TOKEN,
+          "x-site-token": SITE_TOKEN,
         },
         body: JSON.stringify({
-          content: message,
-          message_type: "incoming",
-          private: false,
+          message,
+          conversation_id: conversationId,
+          siteToken: SITE_TOKEN,
         }),
       });
       console.log("[ChatWidget] sendToChatwoot response status:", res.status);
