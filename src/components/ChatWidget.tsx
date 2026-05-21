@@ -86,7 +86,8 @@ const ChatWidget = () => {
   const wsRef = useRef<WebSocket | null>(null);
   const wsSessionRef = useRef<ChatwootSession | null>(null);
 
-  // Restore returning users (already verified)
+  // Restore returning users (already verified) — always re-fetch history on every page load
+  // so labels, pubsub_token, and conversation state are always fresh.
   useEffect(() => {
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
@@ -94,14 +95,9 @@ const ChatWidget = () => {
         const parsed = JSON.parse(raw);
         setUser(parsed);
         setStage("chat");
+        // Always call history webhook on refresh — this is the source of truth
+        // for chatwoot session (labels, pubsub_token, conversation_id).
         fetchHistory(parsed.email);
-      }
-      // Restore chatwoot session if present
-      const rawSession = localStorage.getItem(CHATWOOT_SESSION_KEY);
-      if (rawSession) {
-        const session: ChatwootSession = JSON.parse(rawSession);
-        setChatwootSession(session);
-        wsSessionRef.current = session;
       }
       const greetingShown = localStorage.getItem(GREETING_KEY);
       if (!greetingShown && !raw) {
