@@ -15,6 +15,7 @@ type ChatwootSession = {
   conversation_id: number;
   pubsub_token: string;
   labels: string[];
+  contact_source_id: string;
 };
 
 // Shared site token — same one used in the lead magnet form.
@@ -255,6 +256,7 @@ const ChatWidget = () => {
           conversation_id: payload.conversation_id,
           pubsub_token: payload.pubsub_token,
           labels: Array.isArray(payload.labels) ? payload.labels : [],
+          contact_source_id: payload.contact_source_id ?? "",
         };
         console.log("[ChatWidget] Saving chatwoot session:", session);
         setChatwootSession(session);
@@ -487,8 +489,8 @@ const ChatWidget = () => {
   };
 
   // Send a message via n8n proxy → Chatwoot (avoids CORS — browser can't call Chatwoot directly)
-  const sendToChatwoot = async (message: string, conversationId: number): Promise<boolean> => {
-    console.log("[ChatWidget] sendToChatwoot called — conversationId:", conversationId, "message:", message);
+  const sendToChatwoot = async (message: string, session: ChatwootSession): Promise<boolean> => {
+    console.log("[ChatWidget] sendToChatwoot called — conversationId:", session.conversation_id, "message:", message);
     try {
       const res = await fetch(CHATWOOT_SEND_WEBHOOK_URL, {
         method: "POST",
@@ -498,7 +500,9 @@ const ChatWidget = () => {
         },
         body: JSON.stringify({
           message,
-          conversation_id: conversationId,
+          conversation_id: session.conversation_id,
+          contact_id: session.contact_id,
+          contact_source_id: session.contact_source_id,
           siteToken: SITE_TOKEN,
         }),
       });
