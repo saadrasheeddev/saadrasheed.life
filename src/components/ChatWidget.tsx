@@ -476,6 +476,7 @@ const ChatWidget = () => {
           email,
           message,
           contact_source_id: wsSessionRef.current?.contact_source_id ?? "",
+          contact_id: wsSessionRef.current?.contact_id ?? null,
           siteToken: SITE_TOKEN,
         }),
         signal: controller.signal,
