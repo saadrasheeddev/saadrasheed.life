@@ -167,8 +167,8 @@ const ChatWidget = () => {
         if (!msg) return;
         console.log("[WS] msg.event:", msg.event, "msg.data?.conversation_id:", msg.data?.conversation_id, "session.conversation_id:", session.conversation_id); // ADD THIS
 
-        // We only care about message_created events in our conversation
-        if (msg.event !== "message_created") return;
+        // We only care about message.created events in our conversation
+        if (msg.event !== "message.created") return;
         if (msg.data?.conversation_id !== session.conversation_id) return;
 
         // message_type: 1 = outgoing (agent reply), 0 = incoming (visitor)
