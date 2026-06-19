@@ -55,8 +55,12 @@ const Navbar = ({ currentPath = "/" }: NavbarProps) => {
 
         <div className="hidden md:block">
           <Button variant="hero" size="default" asChild>
-            <a href="https://cal.com/saadrasheed/free-strategy-call" target="_blank" rel="noopener noreferrer">
-              Book a Free Strategy Call
+            <a href="/demo">
+              <span className="relative flex h-2.5 w-2.5 mr-1.5">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-destructive opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-destructive"></span>
+              </span>
+              Live Demo
             </a>
           </Button>
         </div>
@@ -80,8 +84,12 @@ const Navbar = ({ currentPath = "/" }: NavbarProps) => {
               Projects
             </a>
             <Button variant="hero" className="w-full" asChild>
-              <a href="https://cal.com/saadrasheed/free-strategy-call" target="_blank" rel="noopener noreferrer">
-                Book a Free Strategy Call
+              <a href="/demo">
+                <span className="relative flex h-2.5 w-2.5 mr-1.5">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-destructive opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-destructive"></span>
+                </span>
+                Live Demo
               </a>
             </Button>
           </div>

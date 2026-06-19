@@ -1,6 +1,13 @@
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Phone, PhoneCall, Shield, Zap } from "lucide-react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 export default function DemoForm() {
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
@@ -132,42 +139,44 @@ export default function DemoForm() {
             <label htmlFor="property_interest" className="text-sm font-medium text-muted-foreground">
               What are you looking for?
             </label>
-            <select
-              id="property_interest"
-              name="property_interest"
+            <Select 
+              value={formData.property_interest} 
+              onValueChange={(value) => setFormData(prev => ({ ...prev, property_interest: value }))}
               required
-              value={formData.property_interest}
-              onChange={handleChange}
-              className="flex h-11 w-full rounded-md border border-input bg-background/50 px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 transition-colors [&>option]:bg-card [&>option]:text-foreground"
             >
-              <option value="" disabled>Select an option</option>
-              <option value="Buying a home">Buying a home</option>
-              <option value="Selling my property">Selling my property</option>
-              <option value="Renting / looking for a rental">Renting / looking for a rental</option>
-              <option value="I'm a real estate agent / agency">I'm a real estate agent / agency</option>
-            </select>
+              <SelectTrigger className="flex h-11 w-full bg-background/50">
+                <SelectValue placeholder="Select an option" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="Buying a home">Buying a home</SelectItem>
+                <SelectItem value="Selling my property">Selling my property</SelectItem>
+                <SelectItem value="Renting / looking for a rental">Renting / looking for a rental</SelectItem>
+                <SelectItem value="I'm a real estate agent / agency">I'm a real estate agent / agency</SelectItem>
+              </SelectContent>
+            </Select>
           </div>
 
           <div className="space-y-2 text-left">
             <label htmlFor="budget_range" className="text-sm font-medium text-muted-foreground">
               What's your budget?
             </label>
-            <select
-              id="budget_range"
-              name="budget_range"
+            <Select 
+              value={formData.budget_range} 
+              onValueChange={(value) => setFormData(prev => ({ ...prev, budget_range: value }))}
               required
-              value={formData.budget_range}
-              onChange={handleChange}
-              className="flex h-11 w-full rounded-md border border-input bg-background/50 px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 transition-colors [&>option]:bg-card [&>option]:text-foreground"
             >
-              <option value="" disabled>Select an option</option>
-              <option value="Under $200,000">Under $200,000</option>
-              <option value="$200,000 – $500,000">$200,000 – $500,000</option>
-              <option value="$500,000 – $1,000,000">$500,000 – $1,000,000</option>
-              <option value="$1M – $3M">$1M – $3M</option>
-              <option value="$3M+">$3M+</option>
-              <option value="I'm just testing the demo">I'm just testing the demo</option>
-            </select>
+              <SelectTrigger className="flex h-11 w-full bg-background/50">
+                <SelectValue placeholder="Select an option" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="Under $200,000">Under $200,000</SelectItem>
+                <SelectItem value="$200,000 – $500,000">$200,000 – $500,000</SelectItem>
+                <SelectItem value="$500,000 – $1,000,000">$500,000 – $1,000,000</SelectItem>
+                <SelectItem value="$1M – $3M">$1M – $3M</SelectItem>
+                <SelectItem value="$3M+">$3M+</SelectItem>
+                <SelectItem value="I'm just testing the demo">I'm just testing the demo</SelectItem>
+              </SelectContent>
+            </Select>
           </div>
 
           <div className="pt-2">
@@ -197,10 +206,6 @@ export default function DemoForm() {
           <div className="flex items-center gap-1.5">
             <Shield className="w-4 h-4 text-primary-glow/70" />
             <span>🔒 Your number is never shared or spammed</span>
-          </div>
-          <div className="flex items-center gap-1.5">
-            <Phone className="w-4 h-4 text-primary-glow/70" />
-            <span>🎙️ Powered by VAPI voice AI</span>
           </div>
         </div>
 
