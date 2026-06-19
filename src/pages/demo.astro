@@ -1,0 +1,17 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
+import DemoForm from '../components/sections/DemoForm';
+---
+
+<Layout 
+  title="Live AI Demo — Saad Rasheed"
+  canonical="https://saadrasheed.life/demo"
+>
+  <Navbar client:load currentPath={Astro.url.pathname} />
+  <main>
+    <DemoForm client:load />
+  </main>
+  <Footer client:visible />
+</Layout>

@@ -47,14 +47,15 @@ const Hero = () => {
 
             <div className="flex flex-col sm:flex-row gap-3 pt-2">
               <Button variant="hero" size="xl" className="w-full sm:w-auto whitespace-normal h-auto min-h-14 py-3 px-5 sm:px-9 text-sm sm:text-base text-center leading-tight" asChild>
-                <a href="https://cal.com/saadrasheed/free-strategy-call" target="_blank" rel="noopener noreferrer">
-                  Book a Free Strategy Call
+                <a href="/demo">
+                  Get a Live AI Demo Call
                   <ArrowRight className="ml-1 h-4 w-4 shrink-0" />
                 </a>
               </Button>
-              <Button variant="heroOutline" size="xl" className="w-full sm:w-auto whitespace-normal h-auto min-h-14 py-3 px-5 sm:px-9 text-sm sm:text-base text-center leading-tight" asChild>
-                <a href="#how-it-works">
-                  See How It Works
+              <Button variant="hero" size="xl" className="w-full sm:w-auto whitespace-normal h-auto min-h-14 py-3 px-5 sm:px-9 text-sm sm:text-base text-center leading-tight" asChild>
+                <a href="https://cal.com/saadrasheed/free-strategy-call" target="_blank" rel="noopener noreferrer">
+                  Book a Free Strategy Call
+                  <ArrowRight className="ml-1 h-4 w-4 shrink-0" />
                 </a>
               </Button>
             </div>
