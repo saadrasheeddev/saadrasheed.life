@@ -1,0 +1,12 @@
+{
+  "$schema": "https://agentskills.io/schema/v0.2.0/index.json",
+  "skills": [
+    {
+      "name": "read_blog",
+      "type": "openapi",
+      "description": "Read the latest blog posts and thoughts on AI automation.",
+      "url": "https://saadrasheed.life/skills/read_blog/skill.json",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ]
+}

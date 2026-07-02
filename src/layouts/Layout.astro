@@ -56,5 +56,29 @@ const {
       );
       document.querySelectorAll(".fade-in-up").forEach((el) => observer.observe(el));
     </script>
+    <script>
+      // WebMCP Integration
+      if (typeof navigator !== "undefined" && navigator.modelContext) {
+        navigator.modelContext.provideContext({
+          tools: [
+            {
+              name: "read_blog",
+              description: "Read the latest blog posts on AI automation",
+              inputSchema: {
+                type: "object",
+                properties: {
+                  topic: { type: "string", description: "Optional topic to filter" }
+                }
+              },
+              execute: async (input) => {
+                return {
+                  text: "You can find Saad's latest thoughts on AI automation at https://saadrasheed.life/blog"
+                };
+              }
+            }
+          ]
+        });
+      }
+    </script>
   </body>
 </html>

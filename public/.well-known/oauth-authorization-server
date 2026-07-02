@@ -1,0 +1,13 @@
+{
+  "issuer": "https://saadrasheed.life",
+  "authorization_endpoint": "https://saadrasheed.life/oauth/authorize",
+  "token_endpoint": "https://saadrasheed.life/oauth/token",
+  "jwks_uri": "https://saadrasheed.life/oauth/jwks",
+  "response_types_supported": ["code"],
+  "grant_types_supported": ["authorization_code", "client_credentials"],
+  "agent_auth": {
+    "register_uri": "https://saadrasheed.life/agent-register",
+    "supported_identity_types": ["did", "jwt"],
+    "supported_credential_types": ["vc"]
+  }
+}

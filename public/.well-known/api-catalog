@@ -1,0 +1,25 @@
+{
+  "linkset": [
+    {
+      "anchor": "https://saadrasheed.life",
+      "service-desc": [
+        {
+          "href": "https://saadrasheed.life/openapi.yaml",
+          "type": "application/vnd.oai.openapi"
+        }
+      ],
+      "service-doc": [
+        {
+          "href": "https://saadrasheed.life/docs/api",
+          "type": "text/html"
+        }
+      ],
+      "status": [
+        {
+          "href": "https://saadrasheed.life/health",
+          "type": "application/json"
+        }
+      ]
+    }
+  ]
+}

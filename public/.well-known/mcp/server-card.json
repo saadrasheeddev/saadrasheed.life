@@ -1,0 +1,15 @@
+{
+  "serverInfo": {
+    "name": "Saad Rasheed Life Server",
+    "version": "1.0.0"
+  },
+  "transport": {
+    "type": "sse",
+    "endpoint": "https://saadrasheed.life/mcp/sse"
+  },
+  "capabilities": {
+    "tools": true,
+    "resources": true,
+    "prompts": false
+  }
+}

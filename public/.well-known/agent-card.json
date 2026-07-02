@@ -1,0 +1,23 @@
+{
+  "name": "Saad Rasheed AI Agent",
+  "version": "1.0.0",
+  "description": "Agent representing Saad Rasheed. Capable of communicating with other agents regarding AI workflows, Make.com, and n8n services.",
+  "supportedInterfaces": [
+    {
+      "type": "https://a2a-protocol.org/interfaces/chat/v1",
+      "url": "https://saadrasheed.life/a2a/chat",
+      "transport": "https"
+    }
+  ],
+  "capabilities": [
+    "workflow-design",
+    "consultation-scheduling"
+  ],
+  "skills": [
+    {
+      "id": "consultation",
+      "name": "Consultation Scheduler",
+      "description": "Schedule a consultation with Saad"
+    }
+  ]
+}

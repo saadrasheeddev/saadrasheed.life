@@ -1,0 +1,13 @@
+{
+  "resource": "https://saadrasheed.life/api",
+  "authorization_servers": [
+    "https://saadrasheed.life"
+  ],
+  "scopes_supported": [
+    "read",
+    "write"
+  ],
+  "bearer_methods_supported": [
+    "header"
+  ]
+}
