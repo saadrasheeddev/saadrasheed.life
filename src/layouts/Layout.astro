@@ -56,7 +56,7 @@ const {
       );
       document.querySelectorAll(".fade-in-up").forEach((el) => observer.observe(el));
     </script>
-    <script>
+    <script is:inline>
       // WebMCP Integration
       if (typeof navigator !== "undefined" && navigator.modelContext) {
         navigator.modelContext.provideContext({
