@@ -1,4 +1,4 @@
-# Agent Registration and Authentication
+# Auth.md
 
 This file outlines the authentication and registration requirements for AI agents interacting with saadrasheed.life.
 
