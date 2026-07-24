@@ -8,7 +8,7 @@ const RealEstateBanner = () => {
     >
       <img
         src={realestateBg.src || realestateBg}
-        alt=""
+        alt="AI real estate agents calling property leads"
         className="absolute inset-0 w-full h-full object-cover opacity-40"
       />
       <div className="absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-background to-transparent" />

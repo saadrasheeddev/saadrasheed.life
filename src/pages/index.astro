@@ -15,11 +15,112 @@ import HowItWorks from '../components/sections/HowItWorks';
 import FAQ from '../components/sections/FAQ';
 import LeadMagnet from '../components/sections/LeadMagnet';
 import FinalCTA from '../components/sections/FinalCTA';
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Person",
+      "@id": "https://saadrasheed.life/#person",
+      "name": "Saad Rasheed",
+      "url": "https://saadrasheed.life/",
+      "jobTitle": "AI Calling Agents Specialist for Real Estate",
+      "sameAs": ["https://www.linkedin.com/in/saadrasheeddev/"]
+    },
+    {
+      "@type": "Service",
+      "@id": "https://saadrasheed.life/#service",
+      "serviceType": "AI Calling Agents for Real Estate",
+      "provider": { "@id": "https://saadrasheed.life/#person" },
+      "areaServed": "Worldwide",
+      "description": "Done-for-you AI calling agents for real estate agents and brokerages that call every inbound lead within 60 seconds, qualify buyers and renters, and book property viewings automatically.",
+      "url": "https://saadrasheed.life/",
+      "offers": [
+        {
+          "@type": "Offer",
+          "name": "Real Estate Lead Response Audit",
+          "price": "99",
+          "priceCurrency": "USD",
+          "description": "A full audit of how inbound leads are handled today, with a 30-day action plan to recover lost deals."
+        },
+        {
+          "@type": "Offer",
+          "name": "AI Appointment Booking System for Agents",
+          "price": "499",
+          "priceCurrency": "USD",
+          "description": "An AI calling agent and viewing-booking engine built and deployed end-to-end, with CRM sync and full handover."
+        },
+        {
+          "@type": "Offer",
+          "name": "Full Automation for Real Estate Agencies",
+          "price": "1499",
+          "priceCurrency": "USD",
+          "description": "Multi-agent AI calling, lead routing, and ongoing optimization for brokerages and teams, billed monthly."
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://saadrasheed.life/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Will the AI sound robotic to my buyers and sellers?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. The voice agents I deploy use the latest natural-voice models (Vapi, Retell, Bland) and are trained specifically on real estate scripts. Most prospects don't realize they're speaking with AI — and the ones who do are simply impressed you respond instantly."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can it actually answer property questions?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. The AI is trained on your listings, neighborhoods, pricing, financing options and showing availability. It handles the common 80% — square footage, bedrooms, school district, viewing times — and books a human follow-up for anything complex."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Will it integrate with my CRM?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. I integrate with the CRMs real estate teams actually use — Follow Up Boss, kvCORE, BoomTown, LionDesk, HubSpot, Pipedrive, GoHighLevel, Salesforce, or even Google Sheets. Every qualified lead and viewing flows in automatically."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What lead sources does it work with?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Anywhere a lead can come from: Zillow, Realtor.com, Rightmove, Bayut, Property Finder, your website forms, Facebook & Instagram ads, Google Local Service Ads, and portal email parsers. If it can hit a webhook, the AI can call it."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How fast can this be set up?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The AI Appointment Booking System ships in 7 days. Audits are delivered within 72 hours. Agency rollouts with multiple agents typically launch in 2–3 weeks."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What if I'm a solo agent — is this overkill?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Solo agents see the biggest impact, because you can't physically answer every lead in 60 seconds. The AI is essentially your 24/7 ISA at a fraction of the cost of hiring one."
+          }
+        }
+      ]
+    }
+  ]
+};
 ---
 
 <Layout 
-  title="Saad Rasheed — AI Automations | Save 10–20 Hrs/Week"
+  title="AI Calling Agents for Real Estate | Saad Rasheed"
+  description="Automate your real estate lead qualification with AI calling agents. Engage, qualify, and book viewings with every lead in under 60 seconds."
   canonical="https://saadrasheed.life/"
+  schema={schema}
 >
   <Navbar client:load currentPath={Astro.url.pathname} />
   <main>

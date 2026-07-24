@@ -51,6 +51,9 @@ const Navbar = ({ currentPath = "/" }: NavbarProps) => {
           <a href="/projects" className={linkClass(currentPath === "/projects" || currentPath.startsWith("/projects/"))}>
             Projects
           </a>
+          <a href="https://blog.saadrasheed.life" className={linkClass(false)}>
+            Blog
+          </a>
         </nav>
 
         <div className="hidden md:block">
@@ -82,6 +85,9 @@ const Navbar = ({ currentPath = "/" }: NavbarProps) => {
             </a>
             <a href="/projects" onClick={() => setOpen(false)} className={linkClass(currentPath === "/projects" || currentPath.startsWith("/projects/"))}>
               Projects
+            </a>
+            <a href="https://blog.saadrasheed.life" onClick={() => setOpen(false)} className={linkClass(false)}>
+              Blog
             </a>
             <Button variant="hero" className="w-full" asChild>
               <a href="/demo">
