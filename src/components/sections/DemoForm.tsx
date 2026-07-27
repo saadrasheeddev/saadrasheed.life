@@ -97,7 +97,13 @@ export default function DemoForm() {
         // Start Vapi Call for inbound
         if (vapi) {
           setVapiTranscript([]);
-          vapi.start('903253e3-c5ac-42bf-baf1-c3f96d6e6145');
+          vapi.start('903253e3-c5ac-42bf-baf1-c3f96d6e6145', {
+            variableValues: {
+              name: formData.full_name,
+              property_interest: formData.property_interest,
+              budget_range: formData.budget_range
+            }
+          });
         }
       }
     } catch (err) {
@@ -107,7 +113,13 @@ export default function DemoForm() {
         // Even if webhook fails, try to start the demo for inbound
         if (vapi) {
           setVapiTranscript([]);
-          vapi.start('903253e3-c5ac-42bf-baf1-c3f96d6e6145');
+          vapi.start('903253e3-c5ac-42bf-baf1-c3f96d6e6145', {
+            variableValues: {
+              name: formData.full_name,
+              property_interest: formData.property_interest,
+              budget_range: formData.budget_range
+            }
+          });
         }
       }
     }
