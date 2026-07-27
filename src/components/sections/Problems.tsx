@@ -9,12 +9,12 @@ const problems = [
   {
     icon: AlertTriangle,
     title: "Manual follow-up is killing your day",
-    desc: "Hours lost dialing buyers, chasing renters and re-qualifying tire-kickers — instead of closing deals and showing properties.",
+    desc: "Hours lost dialing buyers, chasing renters and re-qualifying tire-kickers, taking time away from closing deals and showing properties.",
   },
   {
     icon: TrendingDown,
     title: "You're losing deals to faster agents",
-    desc: "Studies show 78% of buyers go with the first agent who responds. If you're not calling in 60 seconds, you're losing commission.",
+    desc: "Buyers overwhelmingly go with the first agent who responds. If you're not calling in 60 seconds, you're losing commission.",
   },
   {
     icon: HelpCircle,

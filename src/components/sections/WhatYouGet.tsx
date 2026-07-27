@@ -4,17 +4,17 @@ const items = [
   {
     icon: PhoneCall,
     title: "AI Calling Agent for Listings",
-    desc: "Calls every new buyer, seller or renter inquiry within 60 seconds — answers common property questions in a natural human voice.",
+    desc: "Calls every new buyer, seller, or renter inquiry within 60 seconds, and answers common property questions in a natural human voice.",
   },
   {
     icon: Inbox,
     title: "Lead Qualification on Autopilot",
-    desc: "Your AI asks budget, timeline, financing and location preference — so your agents only spend time with serious, ready-to-tour prospects.",
+    desc: "Your AI asks budget, timeline, financing and location preference, ensuring your agents only spend time with serious, ready-to-tour prospects.",
   },
   {
     icon: CalendarCheck,
     title: "Automatic Viewing Bookings",
-    desc: "Qualified leads are booked straight into your agent's calendar and synced to your CRM — HubSpot, Follow Up Boss, kvCORE, or Sheets.",
+    desc: "Qualified leads are booked straight into your agent's calendar and synced to your CRM, including HubSpot, Follow Up Boss, kvCORE, or Sheets.",
   },
 ];
 
@@ -30,7 +30,7 @@ const WhatYouGet = () => {
             Three systems. One outcome: <span className="gradient-text">more booked viewings.</span>
           </h2>
           <p className="mt-4 text-muted-foreground text-base sm:text-lg">
-            Built specifically for real estate agents and brokerages — no generic SaaS playbooks.
+            Built specifically for real estate agents and brokerages without relying on generic SaaS playbooks.
           </p>
         </div>
 

@@ -12,7 +12,7 @@ const sortedProjects = allProjects.sort((a, b) => a.data.order - b.data.order);
 const projectsSchema = {
   "@context": "https://schema.org",
   "@type": "CollectionPage",
-  "name": "Projects — AI Automations & Calling Agents",
+  "name": "Projects: AI Automations & Calling Agents",
   "url": "https://saadrasheed.life/projects",
   "description": "Portfolio of AI calling agents and automation systems built by Saad Rasheed.",
   "hasPart": sortedProjects.map((p) => ({
@@ -25,7 +25,7 @@ const projectsSchema = {
 ---
 
 <Layout 
-  title="Projects — AI Automations & Calling Agents | Saad Rasheed"
+  title="Projects: AI Automations & Calling Agents | Saad Rasheed"
   description="Real AI automation projects: voice agents, lead recovery, contract review, BI chatbots, content engines and more. See the stack and the outcome."
   canonical="https://saadrasheed.life/projects"
   schema={projectsSchema}

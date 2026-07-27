@@ -8,15 +8,15 @@ import {
 const faqs = [
   {
     q: "Will the AI sound robotic to my buyers and sellers?",
-    a: "No. The voice agents I deploy use the latest natural-voice models (Vapi, Retell, Bland) and are trained specifically on real estate scripts. Most prospects don't realize they're speaking with AI — and the ones who do are simply impressed you respond instantly.",
+    a: "No. The voice agents I deploy use the latest natural-voice models (Vapi, Retell, Bland) and are trained specifically on real estate scripts. Most prospects don't realize they are speaking with AI, and the ones who do are simply impressed by your instant response.",
   },
   {
     q: "Can it actually answer property questions?",
-    a: "Yes. The AI is trained on your listings, neighborhoods, pricing, financing options and showing availability. It handles the common 80% — square footage, bedrooms, school district, viewing times — and books a human follow-up for anything complex.",
+    a: "Yes. The AI is trained on your listings, neighborhoods, pricing, financing options and showing availability. It handles the common 80% of questions like square footage, bedrooms, school district, and viewing times, then books a human follow-up for anything complex.",
   },
   {
     q: "Will it integrate with my CRM?",
-    a: "Yes. I integrate with the CRMs real estate teams actually use — Follow Up Boss, kvCORE, BoomTown, LionDesk, HubSpot, Pipedrive, GoHighLevel, Salesforce, or even Google Sheets. Every qualified lead and viewing flows in automatically.",
+    a: "Yes. I integrate with the CRMs real estate teams actually use, such as Follow Up Boss, kvCORE, BoomTown, LionDesk, HubSpot, Pipedrive, GoHighLevel, Salesforce, and Google Sheets. Every qualified lead and viewing flows in automatically.",
   },
   {
     q: "What lead sources does it work with?",
@@ -27,7 +27,7 @@ const faqs = [
     a: "The AI Appointment Booking System ships in 7 days. Audits are delivered within 72 hours. Agency rollouts with multiple agents typically launch in 2–3 weeks.",
   },
   {
-    q: "What if I'm a solo agent — is this overkill?",
+    q: "Is this system overkill for a solo agent?",
     a: "Solo agents see the biggest impact, because you can't physically answer every lead in 60 seconds. The AI is essentially your 24/7 ISA at a fraction of the cost of hiring one.",
   },
 ];

@@ -71,7 +71,7 @@ const ProjectDetailsContent = ({ initialActiveTab = 's1' }: Props) => {
   <div className="divider"><span>The Problem</span><div className="line"></div></div>
   <div className="prob-grid">
     <div className="prob-card"><div className="prob-icon">🧊</div><h3>Leads go cold</h3><p>Tasks created too late because no one saw the email comment in time. Follow-ups were missed entirely.</p></div>
-    <div className="prob-card"><div className="prob-icon">📋</div><h3>Manual overhead</h3><p>Team members copy-pasted task details from FrontApp into Asana by hand — slow, error-prone, and draining.</p></div>
+    <div className="prob-card"><div className="prob-icon">📋</div><h3>Manual overhead</h3><p>Team members copy-pasted task details from FrontApp into Asana by hand. Slow, error-prone, and draining.</p></div>
     <div className="prob-card"><div className="prob-icon">🔀</div><h3>No prioritization</h3><p>Urgent items sat in the same queue as routine tasks with no way to automatically flag what needed to go out today.</p></div>
   </div>
 
@@ -94,41 +94,41 @@ const ProjectDetailsContent = ({ initialActiveTab = 's1' }: Props) => {
     <div className="tech-card">
       <span className="tech-badge ac-teal">n8n</span>
       <h3>Automation Backbone</h3>
-      <p>Orchestrates the entire workflow — receives the webhook, calls Claude AI, resolves the user, and creates the Asana task.</p>
+      <p>Orchestrates the entire workflow. Receives the webhook, calls Claude AI, resolves the user, and creates the Asana task.</p>
       <ul className="feat-list"><li>Webhook triggers</li><li>Claude AI parsing</li><li>Logic & routing</li></ul>
     </div>
     <div className="tech-card">
       <span className="tech-badge ac-purple">Asana</span>
       <h3>Task Management Layer</h3>
       <p>Receives structured task data and creates cards in the correct list with proper assignments and due-date flags.</p>
-      <ul className="feat-list"><li>To Do list</li><li>Urgent — due today</li><li>Auto-assignment</li></ul>
+      <ul className="feat-list"><li>To Do list</li><li>Urgent (due today)</li><li>Auto-assignment</li></ul>
     </div>
   </div>
 
   <div className="divider"><span>Live Example</span><div className="line"></div></div>
   <div className="demo-block">
-    <div className="demo-bar"><div className="dot" style={{ background: '#ff5f57' }}></div><div className="dot" style={{ background: '#ffbd2e' }}></div><div className="dot" style={{ background: '#28ca41' }}></div><label>FrontApp — Shared Workspace Discussion</label></div>
+    <div className="demo-bar"><div className="dot" style={{ background: '#ff5f57' }}></div><div className="dot" style={{ background: '#ffbd2e' }}></div><div className="dot" style={{ background: '#28ca41' }}></div><label>FrontApp: Shared Workspace Discussion</label></div>
     <div className="demo-body">
       <div className="cmt-row">
         <div className="cmt-box">
           <div className="cmt-code">■ @bruce follow up with the client regarding the invoice.</div>
-          <div className="cmt-meta"><span className="bdg bdg-green">✓ Task Created</span><span className="bdg bdg-blue">To Do — Tasks</span><span className="bdg bdg-blue">Assigned: Bruce</span></div>
+          <div className="cmt-meta"><span className="bdg bdg-green">✓ Task Created</span><span className="bdg bdg-blue">To Do: Tasks</span><span className="bdg bdg-blue">Assigned: Bruce</span></div>
         </div>
         <div className="arr">→</div>
         <div className="cmt-box" style={{ borderColor: 'var(--teal-b)', background: 'rgba(0,212,168,.04)' }}>
           <div className="cmt-code" style={{ color: 'var(--teal)' }}>"Follow up with the client regarding the invoice"</div>
-          <div className="cmt-meta"><span className="bdg bdg-green">To Do — Tasks</span></div>
+          <div className="cmt-meta"><span className="bdg bdg-green">To Do: Tasks</span></div>
         </div>
       </div>
       <div className="cmt-row">
         <div className="cmt-box">
-          <div className="cmt-code">■■ @bruce This needs to go out today — urgent!</div>
+          <div className="cmt-code">■■ @bruce This needs to go out today. Urgent!</div>
           <div className="cmt-meta"><span className="bdg bdg-red">⚡ Urgent Task</span><span className="bdg bdg-red">Due Today</span><span className="bdg bdg-blue">Assigned: Bruce</span></div>
         </div>
         <div className="arr">→</div>
         <div className="cmt-box" style={{ borderColor: 'var(--ora-b)', background: 'var(--ora-d)' }}>
           <div className="cmt-code" style={{ color: 'var(--ora)' }}>"This needs to go out today"</div>
-          <div className="cmt-meta"><span className="bdg bdg-red">Urgent — Due Today</span></div>
+          <div className="cmt-meta"><span className="bdg bdg-red">Urgent: Due Today</span></div>
         </div>
       </div>
     </div>
@@ -137,11 +137,11 @@ const ProjectDetailsContent = ({ initialActiveTab = 's1' }: Props) => {
   <div className="divider"><span>Key Features</span><div className="line"></div></div>
   <div className="feat-grid">
     <div className="feat-item"><div className="feat-ico" style={{ background: 'var(--teal-d)', border: '1px solid var(--teal-b)' }}>■</div><div><h4>Emoji Syntax</h4><p>Simple ■ and ■■ prefixes let anyone trigger tasks without training or a new tool.</p></div></div>
-    <div className="feat-item"><div className="feat-ico" style={{ background: 'var(--teal-d)', border: '1px solid var(--teal-b)' }}>⚡</div><div><h4>Instant Routing</h4><p>Urgent vs. standard tasks automatically land in the correct Asana list — no manual sorting.</p></div></div>
+    <div className="feat-item"><div className="feat-ico" style={{ background: 'var(--teal-d)', border: '1px solid var(--teal-b)' }}>⚡</div><div><h4>Instant Routing</h4><p>Urgent vs. standard tasks automatically land in the correct Asana list. No manual sorting.</p></div></div>
     <div className="feat-item"><div className="feat-ico" style={{ background: 'var(--teal-d)', border: '1px solid var(--teal-b)' }}>@</div><div><h4>Mention Mapping</h4><p>@ mentions resolve to real Asana users via a lookup table maintained in n8n.</p></div></div>
     <div className="feat-item"><div className="feat-ico" style={{ background: 'var(--teal-d)', border: '1px solid var(--teal-b)' }}>🤖</div><div><h4>AI-Powered Parsing</h4><p>Claude AI extracts clean task descriptions from messy, natural-language comments.</p></div></div>
     <div className="feat-item"><div className="feat-ico" style={{ background: 'var(--teal-d)', border: '1px solid var(--teal-b)' }}>✓</div><div><h4>Auto-Assignment</h4><p>Every task is assigned to the right person with zero manual steps.</p></div></div>
-    <div className="feat-item"><div className="feat-ico" style={{ background: 'var(--teal-d)', border: '1px solid var(--teal-b)' }}>🔒</div><div><h4>Scope Control</h4><p>Only triggers on shared workspace discussions — private threads are excluded for safety.</p></div></div>
+    <div className="feat-item"><div className="feat-ico" style={{ background: 'var(--teal-d)', border: '1px solid var(--teal-b)' }}>🔒</div><div><h4>Scope Control</h4><p>Only triggers on shared workspace discussions. Private threads are excluded for safety.</p></div></div>
   </div>
 
   <div className="cta">
@@ -153,7 +153,7 @@ const ProjectDetailsContent = ({ initialActiveTab = 's1' }: Props) => {
 
 
 {/* ═══════════════════════════════════════════════════════════
-     PROJECT 2 — AI Voice Agent
+     PROJECT 2: AI Voice Agent
 ═══════════════════════════════════════════════════════════ */}
 <section id="s2" className={activeTab === 's2' ? 'visible' : ''}>
 <div className="hero" data-accent="blue">
@@ -170,13 +170,13 @@ const ProjectDetailsContent = ({ initialActiveTab = 's1' }: Props) => {
   <div className="divider"><span>The Problem</span><div className="line"></div></div>
   <div className="prob-grid">
     <div className="prob-card"><div className="prob-icon">🧊</div><h3>Leads go cold</h3><p>No one picks up after hours or on weekends. Inbound interest dies before it reaches the sales team.</p></div>
-    <div className="prob-card"><div className="prob-icon">🔁</div><h3>Repetitive calls</h3><p>Sales reps spent hours repeating the same qualifying questions for every new lead — high cost, low leverage.</p></div>
+    <div className="prob-card"><div className="prob-icon">🔁</div><h3>Repetitive calls</h3><p>Sales reps spent hours repeating the same qualifying questions for every new lead. High cost, low efficiency.</p></div>
     <div className="prob-card"><div className="prob-icon">📅</div><h3>Missed bookings</h3><p>Manual scheduling introduced delays and drop-offs between the first conversation and a confirmed meeting.</p></div>
   </div>
 
   <div className="divider"><span>How It Works</span><div className="line"></div></div>
   <div className="flow">
-    <div className="flow-step"><div className="step-num" style={{ color: 'var(--blue)' }}>01</div><h3>Call Received</h3><p>Customer calls in; the AI agent picks up immediately — any time, any day.</p></div>
+    <div className="flow-step"><div className="step-num" style={{ color: 'var(--blue)' }}>01</div><h3>Call Received</h3><p>Customer calls in; the AI agent picks up immediately. Any time, any day.</p></div>
     <div className="flow-step"><div className="step-num" style={{ color: 'var(--blue)' }}>02</div><h3>Lead Qualified</h3><p>Agent asks targeted questions to understand the customer's need before booking.</p></div>
     <div className="flow-step"><div className="step-num" style={{ color: 'var(--blue)' }}>03</div><h3>Slot Selected</h3><p>n8n checks live Calendly availability and offers real time-slots to the caller.</p></div>
     <div className="flow-step"><div className="step-num" style={{ color: 'var(--blue)' }}>04</div><h3>Meeting Booked</h3><p>Booking confirmed; calendar invite and meeting notes sent automatically.</p></div>
@@ -206,7 +206,7 @@ const ProjectDetailsContent = ({ initialActiveTab = 's1' }: Props) => {
 
   <div className="divider"><span>Live Demo</span><div className="line"></div></div>
   <div className="demo-block">
-    <div className="demo-bar"><div className="dot" style={{ background: '#ff5f57' }}></div><div className="dot" style={{ background: '#ffbd2e' }}></div><div className="dot" style={{ background: '#28ca41' }}></div><label>Live call — AI Receptionist</label></div>
+    <div className="demo-bar"><div className="dot" style={{ background: '#ff5f57' }}></div><div className="dot" style={{ background: '#ffbd2e' }}></div><div className="dot" style={{ background: '#28ca41' }}></div><label>Live call: AI Receptionist</label></div>
     <div className="demo-body">
       <div className="chat-wrap">
         <div className="chat-win">
@@ -258,16 +258,16 @@ const ProjectDetailsContent = ({ initialActiveTab = 's1' }: Props) => {
 
   <div className="divider"><span>Key Features</span><div className="line"></div></div>
   <div className="feat-grid">
-    <div className="feat-item"><div className="feat-ico" style={{ background: 'var(--blue-d)', border: '1px solid var(--blue-b)' }}>🎙️</div><div><h4>Natural Voice</h4><p>Sounds human, responds with warmth and confidence — callers can't tell it's automated.</p></div></div>
+    <div className="feat-item"><div className="feat-ico" style={{ background: 'var(--blue-d)', border: '1px solid var(--blue-b)' }}>🎙️</div><div><h4>Natural Voice</h4><p>Sounds human, responds with warmth and confidence. Callers can't tell it's automated.</p></div></div>
     <div className="feat-item"><div className="feat-ico" style={{ background: 'var(--blue-d)', border: '1px solid var(--blue-b)' }}>🧠</div><div><h4>Smart Qualifying</h4><p>Asks the right questions before booking so every meeting comes with context.</p></div></div>
-    <div className="feat-item"><div className="feat-ico" style={{ background: 'var(--blue-d)', border: '1px solid var(--blue-b)' }}>📋</div><div><h4>Strict Booking Flow</h4><p>Collects name and email before checking availability — no incomplete bookings.</p></div></div>
-    <div className="feat-item"><div className="feat-ico" style={{ background: 'var(--blue-d)', border: '1px solid var(--blue-b)' }}>📅</div><div><h4>Live Availability</h4><p>Checks real calendar slots in real time via n8n — no double bookings, no guessing.</p></div></div>
+    <div className="feat-item"><div className="feat-ico" style={{ background: 'var(--blue-d)', border: '1px solid var(--blue-b)' }}>📋</div><div><h4>Strict Booking Flow</h4><p>Collects name and email before checking availability. No incomplete bookings.</p></div></div>
+    <div className="feat-item"><div className="feat-ico" style={{ background: 'var(--blue-d)', border: '1px solid var(--blue-b)' }}>📅</div><div><h4>Live Availability</h4><p>Checks real calendar slots in real time via n8n. No double bookings, no guessing.</p></div></div>
     <div className="feat-item"><div className="feat-ico" style={{ background: 'var(--blue-d)', border: '1px solid var(--blue-b)' }}>📝</div><div><h4>Auto Meeting Notes</h4><p>Summarizes the call and attaches notes directly to the Calendly booking.</p></div></div>
     <div className="feat-item"><div className="feat-ico" style={{ background: 'var(--blue-d)', border: '1px solid var(--blue-b)' }}>⚡</div><div><h4>Zero Human Input</h4><p>Fully automated from first word to confirmed invite. No one needs to be available.</p></div></div>
   </div>
 
   <div className="cta">
-    <div><h2>Your business deserves an AI that <strong>never sleeps.</strong></h2><p>Built for a leading agency. Custom voice, any industry, any language — live in weeks.</p></div>
+    <div><h2>Your business deserves an AI that <strong>never sleeps.</strong></h2><p>Built for a leading agency. Custom voice, any industry, any language. Live in weeks.</p></div>
     <ul className="cta-checks"><li>Custom voice &amp; personality</li><li>Any industry, any language</li><li>Live in weeks, not months</li></ul>
   </div>
 </div>
@@ -275,7 +275,7 @@ const ProjectDetailsContent = ({ initialActiveTab = 's1' }: Props) => {
 
 
 {/* ═══════════════════════════════════════════════════════════
-     PROJECT 3 — Computer Store Inbound Call System
+     PROJECT 3: Computer Store Inbound Call System
 ═══════════════════════════════════════════════════════════ */}
 <section id="s3" className={activeTab === 's3' ? 'visible' : ''}>
 <div className="hero" data-accent="orange">
@@ -298,7 +298,7 @@ const ProjectDetailsContent = ({ initialActiveTab = 's1' }: Props) => {
 
   <div className="divider"><span>How It Works</span><div className="line"></div></div>
   <div className="flow">
-    <div className="flow-step"><div className="step-num" style={{ color: 'var(--ora)' }}>01</div><h3>Call Received</h3><p>AI agent answers every inbound call — whether the store is open or closed.</p></div>
+    <div className="flow-step"><div className="step-num" style={{ color: 'var(--ora)' }}>01</div><h3>Call Received</h3><p>AI agent answers every inbound call, whether the store is open or closed.</p></div>
     <div className="flow-step"><div className="step-num" style={{ color: 'var(--ora)' }}>02</div><h3>Data Collected</h3><p>Agent gathers customer name, query, and consent for SMS follow-up.</p></div>
     <div className="flow-step"><div className="step-num" style={{ color: 'var(--ora)' }}>03</div><h3>CRM + SMS + Log</h3><p>Customer is written to Vtiger CRM, SMS sent if consented, call logged to Telegram.</p></div>
     <div className="flow-step"><div className="step-num" style={{ color: 'var(--ora)' }}>04</div><h3>Database Built</h3><p>Caller details are saved into a central database for future marketing campaigns and outreach.</p></div>
@@ -315,20 +315,20 @@ const ProjectDetailsContent = ({ initialActiveTab = 's1' }: Props) => {
     <div className="tech-card">
       <span className="tech-badge ac-teal">n8n</span>
       <h3>Automation Backbone</h3>
-      <p>Orchestrates everything after the call — CRM writes, SMS dispatch, Telegram logging, and call forwarding logic based on store hours.</p>
+      <p>Orchestrates everything after the call: CRM writes, SMS dispatch, Telegram logging, and call forwarding logic based on store hours.</p>
       <ul className="feat-list"><li>Vtiger CRM writes</li><li>SMS trigger</li><li>Telegram log dispatch</li></ul>
     </div>
     <div className="tech-card">
       <span className="tech-badge ac-orange">Vtiger + Telegram</span>
       <h3>CRM &amp; Comms Layer</h3>
-      <p>Vtiger stores every customer record. Telegram serves as the team's unified inbox — call summaries arrive here, and two-way SMS replies are managed from the same thread.</p>
+      <p>Vtiger stores every customer record. Telegram serves as the team's unified inbox. Call summaries arrive here, and two-way SMS replies are managed from the same thread.</p>
       <ul className="feat-list"><li>Full customer records</li><li>Call summaries logged</li><li>Two-way SMS from Telegram</li></ul>
     </div>
   </div>
 
   <div className="divider"><span>Live Example</span><div className="line"></div></div>
   <div className="demo-block">
-    <div className="demo-bar"><div className="dot" style={{ background: '#ff5f57' }}></div><div className="dot" style={{ background: '#ffbd2e' }}></div><div className="dot" style={{ background: '#28ca41' }}></div><label>Inbound call — Computer Store Florida</label></div>
+    <div className="demo-bar"><div className="dot" style={{ background: '#ff5f57' }}></div><div className="dot" style={{ background: '#ffbd2e' }}></div><div className="dot" style={{ background: '#28ca41' }}></div><label>Inbound call: Computer Store Florida</label></div>
     <div className="demo-body">
       <div className="chat-wrap">
         <div className="chat-win">
@@ -348,11 +348,11 @@ const ProjectDetailsContent = ({ initialActiveTab = 's1' }: Props) => {
             </div>
             <div className="msg-wrap user-wrap">
               <div className="msg-lbl">User</div>
-              <div className="msg user">Sure — 786-555-0192. And yes, you can text me.</div>
+              <div className="msg user">Sure. 786-555-0192. And yes, you can text me.</div>
             </div>
             <div className="msg-wrap agent-wrap">
               <div className="msg-lbl">Agent</div>
-              <div className="msg confirm" style={{ background: 'var(--ora-d)', borderColor: 'var(--ora-b)', color: 'var(--ora)' }}>Perfect, James. I've logged your enquiry and you'll get a text from us. We open tomorrow at 9 AM — speak soon!</div>
+              <div className="msg confirm" style={{ background: 'var(--ora-d)', borderColor: 'var(--ora-b)', color: 'var(--ora)' }}>Perfect, James. I've logged your enquiry and you'll get a text from us. We open tomorrow at 9 AM. Speak soon!</div>
             </div>
           </div>
         </div>
@@ -373,11 +373,11 @@ const ProjectDetailsContent = ({ initialActiveTab = 's1' }: Props) => {
   <div className="divider"><span>Key Features</span><div className="line"></div></div>
   <div className="feat-grid">
     <div className="feat-item"><div className="feat-ico" style={{ background: 'var(--ora-d)', border: '1px solid var(--ora-b)' }}>🕐</div><div><h4>24/7 Lead Capture</h4><p>Never miss a caller. The AI agent handles calls around the clock and consistently logs their information.</p></div></div>
-    <div className="feat-item"><div className="feat-ico" style={{ background: 'var(--ora-d)', border: '1px solid var(--ora-b)' }}>🗂️</div><div><h4>Auto CRM Logging</h4><p>Every caller's name, query, and contact details are written directly to Vtiger CRM — no data entry needed.</p></div></div>
+    <div className="feat-item"><div className="feat-ico" style={{ background: 'var(--ora-d)', border: '1px solid var(--ora-b)' }}>🗂️</div><div><h4>Auto CRM Logging</h4><p>Every caller's name, query, and contact details are written directly to Vtiger CRM. No data entry needed.</p></div></div>
     <div className="feat-item"><div className="feat-ico" style={{ background: 'var(--ora-d)', border: '1px solid var(--ora-b)' }}>💬</div><div><h4>Consent-Based SMS</h4><p>If the customer agrees to receive a text, an automated follow-up SMS is sent immediately after the call ends.</p></div></div>
     <div className="feat-item"><div className="feat-ico" style={{ background: 'var(--ora-d)', border: '1px solid var(--ora-b)' }}>📲</div><div><h4>Two-Way SMS via Telegram</h4><p>All call summaries land in a Telegram channel. The team can reply to any customer's SMS directly from that same Telegram thread.</p></div></div>
-    <div className="feat-item"><div className="feat-ico" style={{ background: 'var(--ora-d)', border: '1px solid var(--ora-b)' }}>📋</div><div><h4>Full Call Logging</h4><p>Every call — open or closed, answered or missed — is summarized and posted to Telegram for the team's records.</p></div></div>
-    <div className="feat-item"><div className="feat-ico" style={{ background: 'var(--ora-d)', border: '1px solid var(--ora-b)' }}>🔁</div><div><h4>Zero Manual Follow-Up</h4><p>From call answered to CRM record to SMS sent — the entire post-call workflow runs without anyone on the team lifting a finger.</p></div></div>
+    <div className="feat-item"><div className="feat-ico" style={{ background: 'var(--ora-d)', border: '1px solid var(--ora-b)' }}>📋</div><div><h4>Full Call Logging</h4><p>Every call (open or closed, answered or missed) is summarized and posted to Telegram for the team's records.</p></div></div>
+    <div className="feat-item"><div className="feat-ico" style={{ background: 'var(--ora-d)', border: '1px solid var(--ora-b)' }}>🔁</div><div><h4>Zero Manual Follow-Up</h4><p>From call answered to CRM record to SMS sent, the entire post-call workflow runs without anyone on the team lifting a finger.</p></div></div>
   </div>
 
   <div className="cta">
@@ -389,7 +389,7 @@ const ProjectDetailsContent = ({ initialActiveTab = 's1' }: Props) => {
 
 
 {/* ═══════════════════════════════════════════════════════════
-     PROJECT 4 — Multi-Platform SQL Chatbot
+     PROJECT 4: Multi-Platform SQL Chatbot
 ═══════════════════════════════════════════════════════════ */}
 <section id="s4" className={activeTab === 's4' ? 'visible' : ''}>
 <div className="hero" data-accent="purple">
@@ -405,9 +405,9 @@ const ProjectDetailsContent = ({ initialActiveTab = 's1' }: Props) => {
 
   <div className="divider"><span>The Problem</span><div className="line"></div></div>
   <div className="prob-grid">
-    <div className="prob-card"><div className="prob-icon">🧱</div><h3>SQL barrier</h3><p>Non-technical team members couldn't query their own data without involving a developer — every simple question caused a delay.</p></div>
+    <div className="prob-card"><div className="prob-icon">🧱</div><h3>SQL barrier</h3><p>Non-technical team members couldn't query their own data without involving a developer. Every simple question caused a delay.</p></div>
     <div className="prob-card"><div className="prob-icon">⏳</div><h3>Slow turnaround</h3><p>Waiting for a developer to run a report meant decisions were made on stale data or gut feel rather than real numbers.</p></div>
-    <div className="prob-card"><div className="prob-icon">📊</div><h3>No self-serve reporting</h3><p>There was no way for the team to pull formatted reports or charts without custom dashboard work — and those took weeks to build.</p></div>
+    <div className="prob-card"><div className="prob-icon">📊</div><h3>No self-serve reporting</h3><p>There was no way for the team to pull formatted reports or charts without custom dashboard work. Those took weeks to build.</p></div>
   </div>
 
   <div className="divider"><span>How It Works</span><div className="line"></div></div>
@@ -429,20 +429,20 @@ const ProjectDetailsContent = ({ initialActiveTab = 's1' }: Props) => {
     <div className="tech-card">
       <span className="tech-badge ac-teal">LLM Pipeline</span>
       <h3>NL → SQL Engine</h3>
-      <p>Multiple LLM calls handle intent extraction, schema matching, SQL generation, and error recovery — producing reliable queries from free-form questions.</p>
+      <p>Multiple LLM calls handle intent extraction, schema matching, SQL generation, and error recovery, producing reliable queries from free-form questions.</p>
       <ul className="feat-list"><li>Multi-step LLM calls</li><li>Error retry logic</li><li>Schema-aware generation</li></ul>
     </div>
     <div className="tech-card">
       <span className="tech-badge ac-purple">Telegram / Email / Web</span>
       <h3>Multi-Platform Interface</h3>
-      <p>The same pipeline runs across Telegram, email, and a web interface. Users pick whichever channel fits their workflow — the backend is shared.</p>
+      <p>The same pipeline runs across Telegram, email, and a web interface. Users pick whichever channel fits their workflow. The backend is shared.</p>
       <ul className="feat-list"><li>Telegram bot</li><li>Email interface</li><li>Web chatbot</li></ul>
     </div>
   </div>
 
   <div className="divider"><span>Live Example</span><div className="line"></div></div>
   <div className="demo-block">
-    <div className="demo-bar"><div className="dot" style={{ background: '#ff5f57' }}></div><div className="dot" style={{ background: '#ffbd2e' }}></div><div className="dot" style={{ background: '#28ca41' }}></div><label>Telegram — Data Chatbot</label></div>
+    <div className="demo-bar"><div className="dot" style={{ background: '#ff5f57' }}></div><div className="dot" style={{ background: '#ffbd2e' }}></div><div className="dot" style={{ background: '#28ca41' }}></div><label>Telegram: Data Chatbot</label></div>
     <div className="demo-body">
       <div className="chat-wrap">
         <div className="chat-win">
@@ -454,7 +454,7 @@ const ProjectDetailsContent = ({ initialActiveTab = 's1' }: Props) => {
             </div>
             <div className="msg-wrap agent-wrap">
               <div className="msg-lbl">Bot</div>
-              <div className="msg agent" style={{ borderColor: 'var(--pur-b)' }}>Got it — pulling from the orders table…</div>
+              <div className="msg agent" style={{ borderColor: 'var(--pur-b)' }}>Got it. Pulling from the orders table...</div>
             </div>
             <div className="msg-wrap agent-wrap">
               <div className="msg-lbl">Bot</div>

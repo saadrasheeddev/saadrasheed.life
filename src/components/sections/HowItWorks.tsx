@@ -5,7 +5,7 @@ const steps = [
     icon: Inbox,
     number: "01",
     title: "Lead comes in",
-    desc: "From Zillow, Rightmove, Bayut, your website, Facebook ads or Google — any source, any hour.",
+    desc: "From Zillow, Rightmove, Bayut, your website, Facebook ads or Google. Any source, any hour.",
   },
   {
     icon: PhoneCall,
@@ -17,7 +17,7 @@ const steps = [
     icon: CheckCircle2,
     number: "03",
     title: "Lead is qualified",
-    desc: "Budget, timeline, financing, location and intent — all captured before a human gets involved.",
+    desc: "Budget, timeline, financing, location, and intent are all captured before a human gets involved.",
   },
   {
     icon: CalendarCheck,
@@ -33,7 +33,7 @@ const HowItWorks = () => {
       <div className="container">
         <div className="text-center max-w-2xl mx-auto mb-14">
           <p className="text-xs uppercase tracking-[0.2em] text-primary-glow mb-3">How it works</p>
-          <h2 className="text-3xl md:text-5xl font-bold">From inquiry to booked viewing — in 4 steps.</h2>
+          <h2 className="text-3xl md:text-5xl font-bold">From inquiry to booked viewing in 4 simple steps.</h2>
           <p className="mt-4 text-muted-foreground text-base sm:text-lg">
             Your agents stop chasing. They just show up to qualified appointments.
           </p>

@@ -12,7 +12,7 @@ const About = () => {
             </h2>
             <div className="space-y-4 text-muted-foreground text-lg leading-relaxed">
               <p>
-                I'm Saad — a specialist in AI calling agents for real estate.
+                I'm Saad, a specialist in AI calling agents for real estate.
                 I work with agents, brokers and agencies who are tired of losing
                 listing inquiries to whoever picks up the phone first.
               </p>
@@ -22,7 +22,7 @@ const About = () => {
                 depends on an agent being awake at the right minute.
               </p>
               <p className="text-foreground font-medium pt-2">
-                I don't build AI demos — I build systems that put more deals on your board.
+                I don't do flashy AI demos. I build systems that put real deals on your board.
               </p>
             </div>
           </div>

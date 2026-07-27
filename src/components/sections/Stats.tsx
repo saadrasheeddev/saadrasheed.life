@@ -1,10 +1,10 @@
-import { Clock, Home, Zap, ShieldCheck } from "lucide-react";
+import { Zap, Clock, Database, ShieldCheck } from "lucide-react";
 
 const stats = [
   { icon: Zap, value: "< 60 sec", label: "Lead response time" },
-  { icon: Home, value: "+32%", label: "More booked viewings" },
-  { icon: Clock, value: "20+ hrs", label: "Saved per agent / week" },
-  { icon: ShieldCheck, value: "0", label: "Missed leads after hours" },
+  { icon: Clock, value: "24/7", label: "Active lead capture" },
+  { icon: Database, value: "Sync", label: "Direct CRM integration" },
+  { icon: ShieldCheck, value: "Instant", label: "After-hours capture" },
 ];
 
 const Stats = () => {

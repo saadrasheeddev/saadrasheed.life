@@ -29,7 +29,7 @@ const Hero = () => {
             </h1>
 
             <p className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-2xl leading-relaxed">
-              I build AI calling agents for real estate agents and brokerages — so every
+              I build AI calling agents for real estate agents and brokerages, ensuring every
               listing inquiry gets called, qualified and booked into a property viewing
               before your competitor even sees it.
             </p>
@@ -65,7 +65,7 @@ const Hero = () => {
             </p>
 
             <div className="flex flex-wrap items-center gap-x-6 gap-y-2 pt-2 text-sm text-muted-foreground">
-              <div>⚡ Listing inquiries called in &lt; 60 seconds, 24/7</div>
+              <div>Listing inquiries called in &lt; 60 seconds, 24/7</div>
             </div>
           </div>
 
@@ -88,7 +88,7 @@ const Hero = () => {
                   <div className="text-xs text-muted-foreground">AI for Real Estate Agents & Agencies</div>
                 </div>
                 <div className="rounded-lg bg-card/80 backdrop-blur border border-border px-3 py-1.5 text-xs">
-                  50+ deployed
+                  20+ automations deployed
                 </div>
               </div>
             </div>

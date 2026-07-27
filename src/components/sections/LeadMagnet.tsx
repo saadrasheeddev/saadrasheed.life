@@ -55,7 +55,7 @@ const LeadMagnet = () => {
       });
 
       setSubmitted(true);
-      toast.success("Check your inbox — your checklist is on the way!");
+      toast.success("Check your inbox, your checklist is on the way!");
     } catch (err) {
       toast.error("Something went wrong. Please try again.");
     } finally {
@@ -78,7 +78,7 @@ const LeadMagnet = () => {
                 How Top Real Estate Agents<br />Respond to Leads in Under 60 Seconds.
               </h2>
               <p className="text-muted-foreground">
-                Free guide — the exact speed-to-lead playbook top-producing agents and
+                This free guide is the exact speed-to-lead playbook top-producing agents and
                 brokerages use to win more property viewings.
               </p>
             </div>
