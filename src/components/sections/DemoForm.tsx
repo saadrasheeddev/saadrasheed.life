@@ -216,8 +216,8 @@ export default function DemoForm() {
           <div className="bg-card/40 backdrop-blur-sm border border-border/50 rounded-2xl p-6 sm:p-8">
             <Tabs defaultValue="usa" onValueChange={setActiveTab} className="w-full">
               <TabsList className="grid w-full grid-cols-2 mb-6 bg-background/50 p-1 rounded-lg">
-                <TabsTrigger value="usa" className="rounded-md data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">USA Number</TabsTrigger>
-                <TabsTrigger value="intl" className="rounded-md data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">Non-USA Number</TabsTrigger>
+                <TabsTrigger value="usa" className="rounded-md data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">I have a USA number</TabsTrigger>
+                <TabsTrigger value="intl" className="rounded-md data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">I don't have a USA number</TabsTrigger>
               </TabsList>
               
               <form onSubmit={handleSubmit} className="space-y-5">
@@ -332,7 +332,6 @@ export default function DemoForm() {
                       <SelectItem value="$500,000 – $1,000,000">$500,000 – $1,000,000</SelectItem>
                       <SelectItem value="$1M – $3M">$1M – $3M</SelectItem>
                       <SelectItem value="$3M+">$3M+</SelectItem>
-                      <SelectItem value="I'm just testing the demo">I'm just testing the demo</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
