@@ -25,7 +25,7 @@ export default function DemoForm() {
   // Vapi State
   const [vapi, setVapi] = useState<Vapi | null>(null);
   const [isVapiSpeaking, setIsVapiSpeaking] = useState(false);
-  const [vapiTranscript, setVapiTranscript] = useState<Array<{role: string, text: string}>>([]);
+  const [vapiTranscript, setVapiTranscript] = useState<Array<{role: string, text: string, isPartial?: boolean}>>([]);
 
   useEffect(() => {
     // Initialize Vapi only once
@@ -51,10 +51,33 @@ export default function DemoForm() {
 
     vapiInstance.on('message', (message: any) => {
       if (message.type === 'transcript') {
-        setVapiTranscript(prev => [...prev, {
-          role: message.role,
-          text: message.transcript
-        }]);
+        setVapiTranscript(prev => {
+          const newTranscript = [...prev];
+          const lastMsg = newTranscript[newTranscript.length - 1];
+          
+          if (message.transcriptType === 'partial') {
+            if (lastMsg && lastMsg.role === message.role && lastMsg.isPartial) {
+              lastMsg.text = message.transcript;
+            } else {
+              newTranscript.push({ role: message.role, text: message.transcript, isPartial: true });
+            }
+          } else if (message.transcriptType === 'final') {
+            if (lastMsg && lastMsg.role === message.role && lastMsg.isPartial) {
+              lastMsg.text = message.transcript;
+              lastMsg.isPartial = false;
+            } else {
+              newTranscript.push({ role: message.role, text: message.transcript, isPartial: false });
+            }
+          } else {
+            // fallback if transcriptType isn't provided
+            if (lastMsg && lastMsg.role === message.role) {
+              lastMsg.text = message.transcript;
+            } else {
+              newTranscript.push({ role: message.role, text: message.transcript, isPartial: false });
+            }
+          }
+          return newTranscript;
+        });
       }
     });
 
@@ -227,9 +250,9 @@ export default function DemoForm() {
         ) : (
           <div className="bg-card/40 backdrop-blur-sm border border-border/50 rounded-2xl p-6 sm:p-8">
             <Tabs defaultValue="usa" onValueChange={setActiveTab} className="w-full">
-              <TabsList className="grid w-full grid-cols-2 mb-6 bg-background/50 p-1 rounded-lg">
-                <TabsTrigger value="usa" className="rounded-md data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">I have a USA number</TabsTrigger>
-                <TabsTrigger value="intl" className="rounded-md data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">I don't have a USA number</TabsTrigger>
+              <TabsList className="flex flex-col sm:grid w-full sm:grid-cols-2 mb-6 bg-background/50 p-1 rounded-lg h-auto gap-1 sm:gap-0">
+                <TabsTrigger value="usa" className="rounded-md data-[state=active]:bg-primary data-[state=active]:text-primary-foreground py-2 sm:py-1.5 whitespace-normal sm:whitespace-nowrap h-auto">I have a USA number</TabsTrigger>
+                <TabsTrigger value="intl" className="rounded-md data-[state=active]:bg-primary data-[state=active]:text-primary-foreground py-2 sm:py-1.5 whitespace-normal sm:whitespace-nowrap h-auto">I don't have a USA number</TabsTrigger>
               </TabsList>
               
               <form onSubmit={handleSubmit} className="space-y-5">
