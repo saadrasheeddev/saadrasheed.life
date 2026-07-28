@@ -92,6 +92,12 @@ export default function DemoForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!formData.property_interest || !formData.budget_range) {
+      alert("Please select your property interest and budget.");
+      return;
+    }
+
     setStatus('loading');
 
     const callType = activeTab === 'usa' ? 'outbound' : 'inbound';
@@ -117,34 +123,38 @@ export default function DemoForm() {
           setStatus('error');
         }
       } else {
-        // Start Vapi Call for inbound
-        if (vapi) {
-          setVapiTranscript([]);
-          vapi.start('903253e3-c5ac-42bf-baf1-c3f96d6e6145', {
-            variableValues: {
-              name: formData.full_name,
-              property_interest: formData.property_interest,
-              budget_range: formData.budget_range
+        // Inbound web call
+        if (response.ok) {
+          const data = await response.json().catch(() => ({}));
+          
+          if (data.success === true) {
+            if (vapi) {
+              setVapiTranscript([]);
+              const overrides: any = {
+                variableValues: {
+                  name: formData.full_name,
+                  property_interest: formData.property_interest,
+                  budget_range: formData.budget_range
+                }
+              };
+              
+              if (data.summary) {
+                overrides.variableValues.previous_summary = data.summary;
+              } else {
+                overrides.variableValues.previous_summary = "None";
+              }
+              
+              vapi.start('903253e3-c5ac-42bf-baf1-c3f96d6e6145', overrides);
             }
-          });
+          } else {
+            setStatus('error');
+          }
+        } else {
+          setStatus('error');
         }
       }
     } catch (err) {
-      if (callType === 'outbound') {
-        setStatus('error');
-      } else {
-        // Even if webhook fails, try to start the demo for inbound
-        if (vapi) {
-          setVapiTranscript([]);
-          vapi.start('903253e3-c5ac-42bf-baf1-c3f96d6e6145', {
-            variableValues: {
-              name: formData.full_name,
-              property_interest: formData.property_interest,
-              budget_range: formData.budget_range
-            }
-          });
-        }
-      }
+      setStatus('error');
     }
   };
 
@@ -386,7 +396,7 @@ export default function DemoForm() {
                         : 'Start Web Call →'}
                   </Button>
                   
-                  {status === 'error' && activeTab === 'usa' && (
+                  {status === 'error' && (
                     <p className="text-sm text-destructive text-center mt-3 font-medium">
                       The demo system is currently busy. Please email saad@saadrasheed.life and I will trigger it manually for you.
                     </p>
