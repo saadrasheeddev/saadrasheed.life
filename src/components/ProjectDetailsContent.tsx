@@ -56,7 +56,7 @@ const ProjectDetailsContent = ({ initialActiveTab = 's1' }: Props) => {
 {/* ═══════════════════════════════════════════════════════════
      PROJECT 1 — FrontApp → Asana
 ═══════════════════════════════════════════════════════════ */}
-<section id="s1" className={activeTab === 's1' ? 'visible' : ''}>
+{activeTab === 's1' && (<section id="s1" className="visible">
 <div className="hero" data-accent="teal">
   <div className="hero-tag ac-teal">Operations Automation</div>
   <h1>Stop Losing Tasks in<br /><strong>Messy Email Threads</strong></h1>
@@ -149,13 +149,13 @@ const ProjectDetailsContent = ({ initialActiveTab = 's1' }: Props) => {
     <ul className="cta-checks"><li>Custom emoji syntax &amp; routing</li><li>Any project management tool</li><li>Live in days, not months</li></ul>
   </div>
 </div>
-</section>
+</section>)}
 
 
 {/* ═══════════════════════════════════════════════════════════
      PROJECT 2: AI Voice Agent
 ═══════════════════════════════════════════════════════════ */}
-<section id="s2" className={activeTab === 's2' ? 'visible' : ''}>
+{activeTab === 's2' && (<section id="s2" className="visible">
 <div className="hero" data-accent="blue">
   <div className="hero-tag ac-blue">Lead Conversion</div>
   <h1>A Voice Agent That<br /><strong>Never Misses a Call</strong></h1>
@@ -271,13 +271,13 @@ const ProjectDetailsContent = ({ initialActiveTab = 's1' }: Props) => {
     <ul className="cta-checks"><li>Custom voice &amp; personality</li><li>Any industry, any language</li><li>Live in weeks, not months</li></ul>
   </div>
 </div>
-</section>
+</section>)}
 
 
 {/* ═══════════════════════════════════════════════════════════
      PROJECT 3: Computer Store Inbound Call System
 ═══════════════════════════════════════════════════════════ */}
-<section id="s3" className={activeTab === 's3' ? 'visible' : ''}>
+{activeTab === 's3' && (<section id="s3" className="visible">
 <div className="hero" data-accent="orange">
   <div className="hero-tag ac-orange">Customer Database Builder</div>
   <h1>Log Every Caller &amp; Build<br /><strong>Your Marketing Database</strong></h1>
@@ -385,13 +385,13 @@ const ProjectDetailsContent = ({ initialActiveTab = 's1' }: Props) => {
     <ul className="cta-checks"><li>Custom hours &amp; routing logic</li><li>Any CRM integration</li><li>Live in days, not months</li></ul>
   </div>
 </div>
-</section>
+</section>)}
 
 
 {/* ═══════════════════════════════════════════════════════════
      PROJECT 4: Multi-Platform SQL Chatbot
 ═══════════════════════════════════════════════════════════ */}
-<section id="s4" className={activeTab === 's4' ? 'visible' : ''}>
+{activeTab === 's4' && (<section id="s4" className="visible">
 <div className="hero" data-accent="purple">
   <div className="hero-tag ac-purple">Business Intelligence</div>
   <h1>Talk to Your Database<br /><strong>in Plain English</strong></h1>
@@ -498,13 +498,13 @@ const ProjectDetailsContent = ({ initialActiveTab = 's1' }: Props) => {
     <ul className="cta-checks"><li>Any SQL database</li><li>Custom to your schema</li><li>Live in days, not months</li></ul>
   </div>
 </div>
-</section>
+</section>)}
 
 
 {/* ═══════════════════════════════════════════════════════════
      PROJECT 5 — Media Manager
 ═══════════════════════════════════════════════════════════ */}
-<section id="s5" className={activeTab === 's5' ? 'visible' : ''}>
+{activeTab === 's5' && (<section id="s5" className="visible">
 <div className="hero" data-accent="amber">
   <div className="hero-tag ac-amber">Content Automation</div>
   <h1>Scale Your Content Without<br /><strong>Scaling Your Team</strong></h1>
@@ -586,13 +586,13 @@ const ProjectDetailsContent = ({ initialActiveTab = 's1' }: Props) => {
     <ul className="cta-checks"><li>Custom brand voice &amp; format</li><li>Any content type or niche</li><li>Live in days, not months</li></ul>
   </div>
 </div>
-</section>
+</section>)}
 
 
 {/* ═══════════════════════════════════════════════════════════
      PROJECT 6 — NDA Compliance
 ═══════════════════════════════════════════════════════════ */}
-<section id="s6" className={activeTab === 's6' ? 'visible' : ''}>
+{activeTab === 's6' && (<section id="s6" className="visible">
 <div className="hero" data-accent="green">
   <div className="hero-tag ac-green">Legal Risk Mitigation</div>
   <h1>Detect Contract Risks in<br /><strong>Seconds, Not Days</strong></h1>
@@ -674,13 +674,13 @@ const ProjectDetailsContent = ({ initialActiveTab = 's1' }: Props) => {
     <ul className="cta-checks"><li>Custom clause library</li><li>Any contract type</li><li>Live in days, not months</li></ul>
   </div>
 </div>
-</section>
+</section>)}
 
 
 {/* ═══════════════════════════════════════════════════════════
      PROJECT 7 — Wedding Photography Lead Automation
 ═══════════════════════════════════════════════════════════ */}
-<section id="s7" className={activeTab === 's7' ? 'visible' : ''}>
+{activeTab === 's7' && (<section id="s7" className="visible">
 <div className="hero" data-accent="pink">
   <div className="hero-tag ac-pink">Revenue Recovery</div>
   <h1>Recover Visitors Who<br /><strong>Leave Without Booking</strong></h1>
@@ -762,13 +762,13 @@ const ProjectDetailsContent = ({ initialActiveTab = 's1' }: Props) => {
     <ul className="cta-checks"><li>Custom follow-up sequences</li><li>Any booking platform</li><li>Live in days, not months</li></ul>
   </div>
 </div>
-</section>
+</section>)}
 
 
 {/* ═══════════════════════════════════════════════════════════
      PROJECT 8 — AI Virtual Try-On
 ═══════════════════════════════════════════════════════════ */}
-<section id="s8" className={activeTab === 's8' ? 'visible' : ''}>
+{activeTab === 's8' && (<section id="s8" className="visible">
 <div className="hero" data-accent="sky">
   <div className="hero-tag ac-sky">E-Commerce AI</div>
   <h1>Studio-Quality Photos<br /><strong>Without the Photoshoot</strong></h1>
@@ -850,7 +850,7 @@ const ProjectDetailsContent = ({ initialActiveTab = 's1' }: Props) => {
     <ul className="cta-checks"><li>Custom AI model library</li><li>Any garment category</li><li>Live in days, not months</li></ul>
   </div>
 </div>
-</section>
+</section>)}
 
 
 

@@ -35,18 +35,23 @@ const {
     <meta name="description" content={description}>
     <meta name="author" content="Saad Rasheed" />
     <meta name="google-site-verification" content="W_u2fBNjH_rWtC6QNjs2JhiZ8fu4zEbhUC694Z6-MzY" />
-    <link rel="llms-txt" href="/llms.txt" />
-    <link rel="llms-txt" href="/llms-full.txt" />
+    <link rel="alternate" type="text/markdown" href="/llms.txt" title="llms.txt" />
+    <link rel="alternate" type="text/markdown" href="/llms-full.txt" title="llms-full.txt" />
     {canonical && <link rel="canonical" href={canonical} />}
     {schema && <script type="application/ld+json" set:html={JSON.stringify(schema)} />}
 
     <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Saad Rasheed | AI Calling Agents for Real Estate" />
+    {canonical && <meta property="og:url" content={canonical} />}
     <meta name="twitter:card" content="summary_large_image" />
     <meta property="og:title" content={title}>
     <meta name="twitter:title" content={title}>
     <meta property="og:description" content={description}>
     <meta name="twitter:description" content={description}>
     <meta property="og:image" content="https://saadrasheed.life/og-image.png">
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Saad Rasheed — Done-For-You AI Calling Agents for Real Estate Teams" />
     <meta name="twitter:image" content="https://saadrasheed.life/og-image.png">
   </head>
   <body class="bg-background">
@@ -71,17 +76,30 @@ const {
         navigator.modelContext.provideContext({
           tools: [
             {
-              name: "read_blog",
-              description: "Read the latest blog posts on AI automation",
+              name: "browse_projects",
+              description: "Browse deployed Real Estate AI calling agents and workflow automation systems built by Saad Rasheed",
               inputSchema: {
                 type: "object",
                 properties: {
-                  topic: { type: "string", description: "Optional topic to filter" }
+                  category: { type: "string", description: "Optional filter by real estate or operations automation" }
                 }
               },
               execute: async (input) => {
                 return {
-                  text: "You can find Saad's latest thoughts on AI automation at https://saadrasheed.life/blog"
+                  text: "You can explore Saad Rasheed's real estate AI calling agents, speed-to-lead automation systems, and case studies at https://saadrasheed.life/projects or test a live voice demo at https://saadrasheed.life/demo"
+                };
+              }
+            },
+            {
+              name: "book_strategy_call",
+              description: "Book a free 30-minute Strategy Call with Saad Rasheed to map out custom AI calling workflows",
+              inputSchema: {
+                type: "object",
+                properties: {}
+              },
+              execute: async (input) => {
+                return {
+                  text: "Book a free strategy call directly on Saad Rasheed's calendar at https://cal.com/saadrasheed/free-strategy-call"
                 };
               }
             }

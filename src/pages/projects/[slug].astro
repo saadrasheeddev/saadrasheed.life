@@ -27,12 +27,50 @@ const slugToTab: Record<string, string> = {
 };
 
 const activeTab = slugToTab[project.id] || 's1';
+
+const projectSchema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "TechArticle",
+      "@id": `https://saadrasheed.life/projects/${project.id}#article`,
+      "headline": `${project.data.title} — AI Automation & Calling Case Study`,
+      "description": project.data.description,
+      "url": `https://saadrasheed.life/projects/${project.id}`,
+      "author": {
+        "@type": "Person",
+        "name": "Saad Rasheed",
+        "url": "https://saadrasheed.life/"
+      },
+      "about": [
+        { "@type": "Thing", "name": project.data.category },
+        ...project.data.tags.map((tag: string) => ({ "@type": "Thing", "name": tag })),
+        { "@type": "Thing", "name": "Real Estate AI Calling Agents & Speed-to-Lead Automation" }
+      ]
+    },
+    {
+      "@type": "SoftwareApplication",
+      "@id": `https://saadrasheed.life/projects/${project.id}#software`,
+      "name": project.data.title,
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Web, Telephony, Cloud Workflows",
+      "description": project.data.description,
+      "url": `https://saadrasheed.life/projects/${project.id}`,
+      "author": {
+        "@type": "Person",
+        "name": "Saad Rasheed"
+      },
+      "featureList": project.data.tags.join(", ")
+    }
+  ]
+};
 ---
 
 <Layout 
-  title={`${project.data.title} | Saad Rasheed`}
+  title={`${project.data.title} | AI Calling & Automation Case Study — Saad Rasheed`}
   description={project.data.description}
   canonical={`https://saadrasheed.life/projects/${project.id}`}
+  schema={projectSchema}
 >
   <Navbar client:load currentPath={Astro.url.pathname} />
   

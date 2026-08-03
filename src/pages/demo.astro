@@ -3,15 +3,179 @@ import Layout from '../layouts/Layout.astro';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import DemoForm from '../components/sections/DemoForm';
+
+const demoSchema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "SoftwareApplication",
+      "@id": "https://saadrasheed.life/demo#software",
+      "name": "Saad Rasheed Real Estate AI Calling Agent",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Web, Telephony",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD",
+        "description": "Free live test call of the real estate AI appointment booking voice agent."
+      },
+      "description": "Autonomous AI voice agent trained for real estate brokerages that dials property listing inquiries within 60 seconds, qualifies buyers and renters, and books property viewings into calendars.",
+      "url": "https://saadrasheed.life/demo",
+      "provider": {
+        "@type": "Person",
+        "name": "Saad Rasheed",
+        "url": "https://saadrasheed.life/"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://saadrasheed.life/demo#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How fast does the real estate AI agent call new property inquiries?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The AI calling agent responds to every inbound web form, Zillow, Rightmove, or Facebook lead within 60 seconds of submission, guaranteeing maximum speed-to-lead conversion."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does the AI handle TCPA and Do-Not-Call (DNC) compliance?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "All automated outreach workflows are engineered to adhere strictly to telemarketing regulations. The system verifies explicit lead opt-in consent, checks national and internal Do-Not-Call (DNC) registries prior to dialing, respects permitted calling time windows, and provides immediate automated opt-out handling."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I customize the qualification script for my property listings?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Every deployed agent is customized with your brokerage's specific property inventory, price points, qualifying questions (financing status, viewing timeline, property preferences), and calendar booking rules."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What happens after the AI finishes calling a prospect?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Within seconds of call completion, an enriched call transcript, audio recording link, lead qualification score, and scheduled viewing timestamp are synced directly into your CRM (Follow Up Boss, kvCORE, HubSpot, or GoHighLevel) via automated n8n or Make webhooks."
+          }
+        }
+      ]
+    }
+  ]
+};
 ---
 
 <Layout 
-  title="Live AI Demo — Saad Rasheed"
+  title="Live AI Calling Agent Demo for Real Estate | Saad Rasheed"
+  description="Test a live real estate AI voice agent right now. See how our automated appointment setting system calls listing inquiries within 60 seconds and syncs to your CRM."
   canonical="https://saadrasheed.life/demo"
+  schema={demoSchema}
 >
   <Navbar client:load currentPath={Astro.url.pathname} />
-  <main>
+  
+  <main class="pt-20">
     <DemoForm client:load />
+
+    <section class="py-16 md:py-24 bg-secondary/20 border-t border-border/60">
+      <div class="container max-w-5xl mx-auto px-6">
+        <div class="text-center max-w-3xl mx-auto mb-16 fade-in-up">
+          <span class="text-xs font-semibold uppercase tracking-widest text-primary-glow">Live AI Testing Protocol</span>
+          <h2 class="text-3xl md:text-5xl font-extrabold mt-2 mb-4 leading-tight">How to Test Your 24/7 AI Real Estate ISA</h2>
+          <p class="text-muted-foreground text-base md:text-lg">
+            Experience firsthand what your prospective home buyers and property sellers will hear when they inquire about a listing on your website or portal.
+          </p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-8 mb-20">
+          <div class="bg-card border border-border/70 rounded-2xl p-7 relative flex flex-col justify-between shadow-sm">
+            <div>
+              <div class="text-primary-glow text-2xl font-black mb-4">01</div>
+              <h3 class="text-xl font-bold mb-3">Submit Your Number</h3>
+              <p class="text-muted-foreground text-sm leading-relaxed">
+                Enter your name, email, and phone number in the secure form above. We immediately trigger a webhook in our n8n orchestration engine.
+              </p>
+            </div>
+          </div>
+          <div class="bg-card border border-border/70 rounded-2xl p-7 relative flex flex-col justify-between shadow-sm">
+            <div>
+              <div class="text-primary-glow text-2xl font-black mb-4">02</div>
+              <h3 class="text-xl font-bold mb-3">Answer in Under 60 Seconds</h3>
+              <p class="text-muted-foreground text-sm leading-relaxed">
+                Your phone will ring almost instantly. Our low-latency AI voice model (powered by Vapi & OpenAI) connects with human-like conversation flow.
+              </p>
+            </div>
+          </div>
+          <div class="bg-card border border-border/70 rounded-2xl p-7 relative flex flex-col justify-between shadow-sm">
+            <div>
+              <div class="text-primary-glow text-2xl font-black mb-4">03</div>
+              <h3 class="text-xl font-bold mb-3">Role-Play an Inquiry</h3>
+              <p class="text-muted-foreground text-sm leading-relaxed">
+                Pretend you are a lead interested in scheduling a property viewing. Ask about square footage, pricing, or viewing availability to see how smoothly it qualifies and books.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-card border border-primary-glow/35 rounded-3xl p-8 md:p-12 mb-20 shadow-[0_10px_40px_-15px_hsl(270_80%_50%/0.2)]">
+          <div class="grid md:grid-cols-2 gap-10 items-center">
+            <div class="space-y-4">
+              <span class="text-xs uppercase tracking-[0.2em] text-primary-glow font-semibold">Speed-to-Lead Benchmark</span>
+              <h3 class="text-2xl md:text-3xl font-bold leading-snug">Why 60-Second Lead Response Dominates Real Estate</h3>
+              <p class="text-muted-foreground text-sm leading-relaxed">
+                In residential real estate and property leasing, over 70% of transactions go to the agent who responds first. When inquiries arrive from Zillow, Rightmove, Bayut, or Meta Ads after regular business hours, traditional manual follow-up loses deals to competitors.
+              </p>
+              <p class="text-muted-foreground text-sm leading-relaxed">
+                By deploying an autonomous AI calling agent, brokerages eliminate lead decay entirely. Our production deployments average <strong class="text-foreground font-semibold">+19 additional booked meetings per month</strong>, a <strong class="text-foreground font-semibold">47% higher appointment show-up rate</strong>, and save sales teams over <strong class="text-foreground font-semibold">15 to 20 hours weekly</strong> in manual prospecting.
+              </p>
+            </div>
+            <div class="space-y-6 bg-secondary/30 p-6 sm:p-8 rounded-2xl border border-border/50">
+              <div class="border-b border-border/50 pb-5">
+                <h4 class="text-lg font-bold text-foreground mb-2 flex items-center gap-2">
+                  <span>🛡️</span> TCPA Compliance & DNC Protection
+                </h4>
+                <p class="text-muted-foreground text-xs sm:text-sm leading-relaxed">
+                  Every calling system we deploy incorporates strict regulatory controls. Workflows enforce explicit web-form consent validation, pre-call Do-Not-Call (DNC) national registry scrubbing, automatic timezone restriction logic, and instant verbal opt-out logging in compliance with telemarketing standards.
+                </p>
+              </div>
+              <div>
+                <h4 class="text-lg font-bold text-foreground mb-2 flex items-center gap-2">
+                  <span>⚡</span> Native CRM & Calendar Integration
+                </h4>
+                <p class="text-muted-foreground text-xs sm:text-sm leading-relaxed">
+                  Whether your brokerage operates on Follow Up Boss, kvCORE, HubSpot, GoHighLevel, or Salesforce, our n8n and Make.com pipelines sync complete call summaries, audio playback recordings, and confirmed calendar invites directly into your contact records.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="max-w-3xl mx-auto space-y-8">
+          <div class="text-center mb-10">
+            <h3 class="text-2xl md:text-3xl font-extrabold mb-3">Live Demo FAQ & Capabilities</h3>
+            <p class="text-sm sm:text-base text-muted-foreground">Everything you need to know about our automated property appointment booking systems.</p>
+          </div>
+          
+          <div class="space-y-4">
+            {demoSchema["@graph"][1].mainEntity.map((faq: any) => (
+              <details class="group bg-card border border-border/60 rounded-xl px-6 py-5 cursor-pointer hover:border-primary-glow/50 transition-all">
+                <summary class="font-bold text-base sm:text-lg flex items-center justify-between gap-4 select-none outline-none list-none [&::-webkit-details-marker]:hidden">
+                  <span>{faq.name}</span>
+                  <span class="transition group-open:rotate-180 text-primary-glow font-normal text-xl">▼</span>
+                </summary>
+                <p class="mt-4 text-muted-foreground text-sm leading-relaxed pt-3 border-t border-border/40">
+                  {faq.acceptedAnswer.text}
+                </p>
+              </details>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
   </main>
+
   <Footer client:visible />
 </Layout>
